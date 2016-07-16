@@ -2,15 +2,42 @@
 <html>
 
 <head>
-		<title>
-				translit tests
-		</title>
-		<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+	<title>
+		translit tests
+	</title>
+	<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
 
+	<style>
+		.translit__textarea {
+			width: 100%;
+			min-height: 400px;
+		}
+	</style>
 </head>
 
 <body>
-		<script type="text/javascript" src="../src/translit.js" ></script>
-		<script type="text/javascript" src="test_translit.js" ></script>
+	<script type="text/javascript" src="../src/translit.js" ></script>
+	<script type="text/javascript" src="test_translit.js" ></script>
+	<script   src="https://code.jquery.com/jquery-3.1.0.min.js"   integrity="sha256-cCueBR6CsyA4/9szpPfrX3s49M9vUU5BgtiJj06wt/s="   crossorigin="anonymous"></script>
+
+	<div class="row">
+		<div class="col-xs-12">
+			<div class="translit__action-area">
+				<button id="action_lat_azb" class="translit__action btn btn-primary">do azbuky</button>
+				<button id="action_azb_lat" class="translit__action btn btn-primary">do latinky</button>
+			</div>
+			<textarea id="translit-textarea" class="translit__textarea" placeholder="Vlož text k transliterácii" autofocus="" class="translit__textarea"></textarea>
+		</div>
+	</div>
+
+	<script>
+		$("#action_lat_azb").click(function() {
+			$('#translit-textarea').val(translit_lat_azb($('#translit-textarea').val()));
+		});
+		$("#action_azb_lat").click(function() {
+			$('#translit-textarea').val(translit_azb_lat($('#translit-textarea').val()));
+		});
+	</script>
+
 </body>
 </html>
