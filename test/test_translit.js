@@ -43,32 +43,35 @@
 			"Chlopci":"Хлопці",
 			"chyža":"хижа",
 			"Joj": "Ёй",
-			"Ji": "Ї",        
+			"Ji": "Ї",
+			"joho" : "ёго",
+			"Joho" : "Ёго",
+			"jomu" : "ёму",
+			"Jomu" : "Ёму",
+			"серьёзно" : "ser'jozno",
 		}
 
 		test_dict_apostrophe = {
 			"str‘is‘i" : "стрїсї",
-				"car‘u" : "царю",
+			"car‘u" : "царю",
 			"Otec’" : "Отець",
-
 		}
 
 
 		// Test translations from latin to azbuka
 		for (var key in test_dict){
-				assert(translit_lat_azb(key), (test_dict[key]),"Assertion error: " + key + " transliterates to " + translit_lat_azb(key) + ", but should trans' to " + test_dict[key]);
+				assert(translit_lat_azb(key), (test_dict[key]),"Assertion error: " + key + " transliterates to " + translit_lat_azb(key) + ", but should trans’ to " + test_dict[key]);
 		}
 
 		// Test translations from azbuka to latin
 		for (var key in test_dict){
-				assert(translit_azb_lat(test_dict[key]), (key),"Assertion error: " + test_dict[key] + " transliterates to " + translit_azb_lat(test_dict[key]) + ", but should trans' to " + key);
+				assert(translit_azb_lat(test_dict[key]), (key),"Assertion error: " + test_dict[key] + " transliterates to " + translit_azb_lat(test_dict[key]) + ", but should trans’ to " + key);
 		}
 
 		// Test if script takes different apostrophes
 		assert(streamline_apostrophes("ja‘nk‘o"),"ja'nk'o","Assertion error: apostrophe is not streamlined");
 		for (var key in test_dict_apostrophe){
-				assert(translit_lat_azb(key), (test_dict_apostrophe[key]),"Assertion error: " + key + " transliterates to " + translit_lat_azb(key) + ", but should trans' to " + test_dict[key] + "+ — this is an apostrophe error.");
+				assert(translit_lat_azb(key), (test_dict_apostrophe[key]),"Assertion error: " + key + " transliterates to " + translit_lat_azb(key) + ", but should trans’ to " + test_dict[key] + "+ — this is an apostrophe error.");
 		}
-
 
 })();
