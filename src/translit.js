@@ -11,6 +11,8 @@
 (function(){
 	var mapping = {
 		"very-special": {
+			"zja" : "зъя",
+			"Zja" : "Зъя",
 			"r'jo" : "рьё",
 			"R'jo" : "Рьё",
 			"ojo": "оё",

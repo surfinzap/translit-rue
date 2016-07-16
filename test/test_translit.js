@@ -49,6 +49,8 @@
 		"jomu" : "ёму",
 		"Jomu" : "Ёму",
 		"ser'jozno" : "серьёзно",
+		"zjazvene" : "зъязвене",
+		"Zjavyla" : "Зъявила",
 	}
 
 	test_dict_apostrophe = {
