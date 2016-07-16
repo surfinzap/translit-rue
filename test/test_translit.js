@@ -48,7 +48,7 @@
 			"Joho" : "Ёго",
 			"jomu" : "ёму",
 			"Jomu" : "Ёму",
-			"серьёзно" : "ser'jozno",
+			"ser'jozno" : "серьёзно",
 		}
 
 		test_dict_apostrophe = {
