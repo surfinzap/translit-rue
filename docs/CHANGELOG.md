@@ -2,7 +2,7 @@
 
 ## 2016-07-X
  * 0.30 released
- * include exceptions for "Joho, joho, Jomu, jomu, ser'jozno, ňoj, ťoj, zjavyla, zjemnyty, ...ľľa..., plaksyvo ..."
+ * include exceptions for "Joho, joho, Jomu, jomu, ser'jozno, ...ňo..., ťoj, zjavyla, zjemnyty, ...ľľa..., plaksyvo ..."
  * improve transliteration of soft and hard signs
  * improve transliteration of "vowel + ё"
 
