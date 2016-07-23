@@ -1,5 +1,11 @@
 # Changelog for Rusyn transliterate
 
+## 2016-07-X
+ * 0.30 released
+ * include exceptions for "Joho, joho, Jomu, jomu, ser'jozno, ňoj, ťoj, zjavyla, zjemnyty, ...ľľa..., plaksyvo ..."
+ * improve transliteration of soft and hard signs
+ * improve transliteration of "vowel + ё"
+
 ## 2016-01-21
  * 0.29 released
  * fix streamline_apostrophes
@@ -19,23 +25,23 @@
  * closure to set the scope of javascript functions
  * tests rewritten for javascript
  * added support in javascript for:
-    *	"c'u" —> "цю",
-    *	"s'u" —> "сю",
-    * "r'u" —> "рю",
-    * "z'u" —> "зю",
+		*	"c'u" —> "цю",
+		*	"s'u" —> "сю",
+		* "r'u" —> "рю",
+		* "z'u" —> "зю",
 
 ## 2015-09-17
  * 0.25 released
- * script rewritten to javscript
+ * script rewritten to javascript
  * text —> текст error fixed
 
 ## 2015-09-13
  * 0.24 released
  * added support for
-    *	"c'u" —> "цю",
-    *	"s'u" —> "сю",
-    * "r'u" —> "рю",
-    * "z'u" —> "зю",
+		*	"c'u" —> "цю",
+		*	"s'u" —> "сю",
+		* "r'u" —> "рю",
+		* "z'u" —> "зю",
 
 ## 2015-08-04
  * 0.23 released

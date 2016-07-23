@@ -10,11 +10,32 @@
 
 (function(){
 	var mapping = {
-		"very-special": {
+		"exceptions": {
+			"taksamo": "таксамо",
+			"plaksyvo" : "плаксиво",
+		},
+		"priority-set-1": {
+			"ňoj" : "нёй",
+			"Ňoj" : "Нёй",
+			"ťoj" : "тёй",
+			"Ťoj" : "Тёй",
+		},
+		"priority-set-2": {
+			"ľľa" : "лля",
+			"Ľľa" : "Лля",
 			"zja" : "зъя",
 			"Zja" : "Зъя",
+			"zje":"зъє",
 			"r'jo" : "рьё",
 			"R'jo" : "Рьё",
+			"ajo": "аё",
+			"Ajo": "Аё",
+			"ejo": "её",
+			"Ejo": "Её",
+			"ďijo" : "дїё",
+			"Ďijo" : "Дїё",
+			"yjo":"иё",
+			"Yjo":"Иё",
 			"ojo": "оё",
 			"Ojo": "Оё",
 			"joj": "ёй",
@@ -24,7 +45,7 @@
 			"jomu" : "ёму",
 			"Jomu" : "Ёму",
 		},
-		"special": {
+		"priority-set-3": {
 			// di ti ni li
 			"ďi": "дї",
 			"Ďi": "Дї",
@@ -139,6 +160,8 @@
 			"R'" : "Рь",
 			"z'" : "зь",
 			"Z'" : "Зь",
+			"ž'" : "жь",
+			"Ž'" : "Жь",
 		},
 		"chars"  : {
 			"a" : "а",
@@ -163,9 +186,9 @@
 			"t" : "т",
 			"u" : "у",
 			"f" : "ф",
-			"'" : "ъ",
+			// "'" : "ъ",
 			"ŷ" : "ы",
-			"'" : "ь",
+			// "'" : "ь",
 			"c" : "ц",
 			"č" : "ч",
 			"ž" : "ж",
@@ -192,9 +215,9 @@
 			"T" : "Т",
 			"U" : "У",
 			"F" : "Ф",
-			"'" : "Ъ",
+			// "'" : "Ъ",
 			"Ŷ" : "Ы",
-			"'" : "Ь",
+			// "'" : "Ь",
 			"C" : "Ц",
 			"Č" : "Ч",
 			"Ž" : "Ж",
@@ -215,8 +238,10 @@
 	}
 
 	function translit_azb_lat(string) {
-		string = map_azb_lat(string, 'very-special');
-		string = map_azb_lat(string, 'special');
+		string = map_azb_lat(string, 'exceptions');
+		string = map_azb_lat(string, 'priority-set-1');
+		string = map_azb_lat(string, 'priority-set-2');
+		string = map_azb_lat(string, 'priority-set-3');
 		string = map_azb_lat(string, 'carons');
 		string = map_azb_lat(string, 'basic');
 		string = map_azb_lat(string, 'chars');
@@ -233,8 +258,10 @@
 
 	function translit_lat_azb(string) {
 		string = streamline_apostrophes(string);
-		string = map_lat_azb(string, 'very-special');
-		string = map_lat_azb(string, 'special');
+		string = map_lat_azb(string, 'exceptions');
+		string = map_lat_azb(string, 'priority-set-1');
+		string = map_lat_azb(string, 'priority-set-2');
+		string = map_lat_azb(string, 'priority-set-3');
 		string = map_lat_azb(string, 'carons');
 		string = map_lat_azb(string, 'basic');
 		string = map_lat_azb(string, 'chars');

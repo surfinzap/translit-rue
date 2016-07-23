@@ -51,7 +51,23 @@
 		"ser'jozno" : "серьёзно",
 		"zjazvene" : "зъязвене",
 		"Zjavyla" : "Зъявила",
+		"Myž'ko" : "Мижько",
+		"ňoj" : "нёй",
+		"Bardejov" : "Бардеёв",
+		"naďijov" : "надїёв",
+		"treťoj" : "третёй",
+		"plaksyvo" : "плаксиво",
+		"Čornyjova":"Чорниёва",
+		"Obľľav" : "Облляв",
+		"plaksyvo" : "плаксиво",
+		"taksamo": "таксамо",
+		"zjemňovaly":"зъємнёвали",
+		"ňoho":"нёго",
+		"blyžňoho":"ближнёго",
+		"Nyžňoho":"Нижнёго",
+
 	}
+
 
 	test_dict_apostrophe = {
 		"str‘is‘i" : "стрїсї",
