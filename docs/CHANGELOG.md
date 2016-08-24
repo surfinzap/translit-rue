@@ -1,10 +1,11 @@
 # Changelog for Rusyn transliterate
 
-## 2016-07-X
- * 0.30 released
+## 2016-08-24
+ * 1.0.0 released. This is a major version as it was tested on and used for transliteration of a book Червеный берег (by Людміла Шандалова).
  * include exceptions for "Joho, joho, Jomu, jomu, ser'jozno, ...ňo..., ťoj, zjavyla, zjemnyty, ...ľľa..., plaksyvo ..."
  * improve transliteration of soft and hard signs
  * improve transliteration of "vowel + ё"
+ * set exceptions for taxi and text
 
 ## 2016-01-21
  * 0.29 released

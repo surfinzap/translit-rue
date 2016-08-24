@@ -5,7 +5,7 @@
  * Copyright 2014-16 Braňo Šandala
  * Released under the MIT license
  *
- * Date: 2016-07-17
+ * Date: 2016-08-24
  */
 
 (function(){
