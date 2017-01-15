@@ -69,7 +69,8 @@
 			"Ňe": "Hє",
 			"ľe": "лє",
 			"Ľe": "Лє",
-			// cja, cji, cjo, cju, sja, sji, sjo, sju, rja, rji, rjo, rju, zja, zji, zjo, zju -- it is important to hold these characters together, do not optimalize by removing first letters
+			// cja, cji, cjo, cju, sja, sji, sjo, sju, rja, rji, rjo, rju, zja, zji, zjo, zju
+			// it is important to hold these characters together, do not optimalize by removing first letters
 			"c'a": "ця",
 			"C'a": "Ця",
 			"c'i": "цї",
@@ -102,6 +103,15 @@
 			"Z'o": "Зё",
 			"z'u": "зю",
 			"Z'u": "Зю",
+			"ž'a" : "жя",
+			"Ž'a" : "Жя",
+			"ž'i" : "жї",
+			"Ž'i" : "Жї",
+			"ž'o" : "жё",
+			"Ž'o" : "Жё",
+			"ž'u" : "жю",
+			"Ž'u" : "Жю",
+
 		},
 
 		"priority-set-3" : {
