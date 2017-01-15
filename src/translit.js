@@ -71,46 +71,46 @@
 			"Ľe": "Лє",
 			// cja, cji, cjo, cju, sja, sji, sjo, sju, rja, rji, rjo, rju, zja, zji, zjo, zju
 			// it is important to hold these characters together, do not optimalize by removing first letters
-			"c'a": "ця",
-			"C'a": "Ця",
-			"c'i": "цї",
-			"C'i": "Цї",
-			"c'o": "цё",
-			"C'o": "Цё",
-			"c'u": "цю",
-			"C'u": "Цю",
-			"s'a": "ся",
-			"S'a": "Ся",
-			"s'i": "сї",
-			"S'i": "Сї",
-			"s'o": "сё",
-			"S'o": "Сё",
-			"s'u": "сю",
-			"S'u": "Сю",
-			"r'a": "ря",
-			"R'a": "Ря",
-			"r'i": "рї",
-			"R'i": "Рї",
-			"r'o": "рё",
-			"R'o": "Рё",
-			"r'u": "рю",
-			"R'u": "Рю",
-			"z'a": "зя",
-			"Z'a": "Зя",
-			"z'i": "зї",
-			"Z'i": "Зї",
-			"z'o": "зё",
-			"Z'o": "Зё",
-			"z'u": "зю",
-			"Z'u": "Зю",
-			"ž'a" : "жя",
-			"Ž'a" : "Жя",
-			"ž'i" : "жї",
-			"Ž'i" : "Жї",
-			"ž'o" : "жё",
-			"Ž'o" : "Жё",
-			"ž'u" : "жю",
-			"Ž'u" : "Жю",
+			"c’a": "ця",
+			"C’a": "Ця",
+			"c’i": "цї",
+			"C’i": "Цї",
+			"c’o": "цё",
+			"C’o": "Цё",
+			"c’u": "цю",
+			"C’u": "Цю",
+			"s’a": "ся",
+			"S’a": "Ся",
+			"s’i": "сї",
+			"S’i": "Сї",
+			"s’o": "сё",
+			"S’o": "Сё",
+			"s’u": "сю",
+			"S’u": "Сю",
+			"r’a": "ря",
+			"R’a": "Ря",
+			"r’i": "рї",
+			"R’i": "Рї",
+			"r’o": "рё",
+			"R’o": "Рё",
+			"r’u": "рю",
+			"R’u": "Рю",
+			"z’a": "зя",
+			"Z’a": "Зя",
+			"z’i": "зї",
+			"Z’i": "Зї",
+			"z’o": "зё",
+			"Z’o": "Зё",
+			"z’u": "зю",
+			"Z’u": "Зю",
+			"ž’a" : "жя",
+			"Ž’a" : "Жя",
+			"ž’i" : "жї",
+			"Ž’i" : "Жї",
+			"ž’o" : "жё",
+			"Ž’o" : "Жё",
+			"ž’u" : "жю",
+			"Ž’u" : "Жю",
 
 		},
 
@@ -125,8 +125,8 @@
 			"Zjo" : "Зъё",
 			"zju" : "зъю",
 			"Zju" : "Зъю",
-			"r'jo" : "рьё",
-			"R'jo" : "Рьё",
+			"r’jo" : "рьё",
+			"R’jo" : "Рьё",
 			"ajo": "аё",
 			"Ajo": "Аё",
 			"ejo": "её",
@@ -165,24 +165,24 @@
 			"Je": "Є",
 			// "jo": "ё",
 			// "Jo": "Ё",
-			"'o": "ё",
-			"'O": "Ë",
+			"’o": "ё",
+			"’O": "Ë",
 			"ji": "ї",
 			"Ji": "Ї",
 			"ch": "х",
 			"Ch": "Х",
 			"šč": "щ",
 			"Šč": "Щ",
-			"c'" : "ць",
-			"C'" : "Ць",
-			"s'" : "сь",
-			"S'" : "Сь",
-			"r'" : "рь",
-			"R'" : "Рь",
-			"z'" : "зь",
-			"Z'" : "Зь",
-			"ž'" : "жь",
-			"Ž'" : "Жь",
+			"c’" : "ць",
+			"C’" : "Ць",
+			"s’" : "сь",
+			"S’" : "Сь",
+			"r’" : "рь",
+			"R’" : "Рь",
+			"z’" : "зь",
+			"Z’" : "Зь",
+			"ž’" : "жь",
+			"Ž’" : "Жь",
 		},
 		"chars" : {
 			"a" : "а",
@@ -243,7 +243,13 @@
 	}
 
 	function streamline_apostrophes(string) {
-		return string.replace(/’|ʼ|‘/g , '\'');
+		/*
+			 (39) dumb single quote,
+			 (8217) right single quotation mark
+			 (700) modifier letter apostrophe; https://en.wikipedia.org/wiki/Modifier_letter_apostrophe
+			 (8216) left single quotation mark
+		*/
+		return string.replace(/\'|’|ʼ|‘/g , '’');
 	}
 
 	function map_azb_lat(string, mapping_option) {
@@ -255,13 +261,13 @@
 	}
 
 	function translit_azb_lat(string) {
-		string = map_azb_lat(string, 'exceptions');
-		string = map_azb_lat(string, 'priority-set-1');
-		string = map_azb_lat(string, 'priority-set-2');
-		string = map_azb_lat(string, 'priority-set-3');
-		string = map_azb_lat(string, 'carons');
-		string = map_azb_lat(string, 'basic');
-		string = map_azb_lat(string, 'chars');
+		string = map_azb_lat(string, "exceptions");
+		string = map_azb_lat(string, "priority-set-1");
+		string = map_azb_lat(string, "priority-set-2");
+		string = map_azb_lat(string, "priority-set-3");
+		string = map_azb_lat(string, "carons");
+		string = map_azb_lat(string, "basic");
+		string = map_azb_lat(string, "chars");
 		return string;
 	}
 

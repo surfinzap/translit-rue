@@ -6,29 +6,29 @@
 	}
 
 	test_dict = {
-		"c'ile" : "цїле",
-		"kur'atko" : "курятко",
-		"klynec'" : "клинець",
-		"s'a" : "ся",
-		"mis'ac'" : "місяць",
+		"c’ile" : "цїле",
+		"kur’atko" : "курятко",
+		"klynec’" : "клинець",
+		"s’a" : "ся",
+		"mis’ac’" : "місяць",
 		"znajuť" : "знають",
 		"ŷ": "ы",
-		"štos'ka": "штоська",
-		"jes'" : "єсь",
+		"štos’ka": "штоська",
+		"jes’" : "єсь",
 		"virnŷj" : "вірный",
-		"Tr'om" : "Трём",
-		"muľar'iv" : "мулярїв",
-		"džmur'klo" : "джмурькло",
-		"Teper'" : "Теперь",
-		"vz'ala" : "взяла",
-		"Voz'" : "Возь",
+		"Tr’om" : "Трём",
+		"muľar’iv" : "мулярїв",
+		"džmur’klo" : "джмурькло",
+		"Teper’" : "Теперь",
+		"vz’ala" : "взяла",
+		"Voz’" : "Возь",
 		"gazdŷňa" : "ґаздыня",
-		"ľis'i" : "лїсї",
-		"C'ilŷj" : "Цїлый",
+		"ľis’i" : "лїсї",
+		"C’ilŷj" : "Цїлый",
 		"ďity" : "дїти",
 		"jich" : "їх",
-		"str'is'i" : "стрїсї",
-		"noz'i" : "нозї",
+		"str’is’i" : "стрїсї",
+		"noz’i" : "нозї",
 		"stojiť" : "стоїть",
 		"merenďu" : "мерендю",
 		"ňej" : "нєй",
@@ -38,7 +38,7 @@
 		"Vlaďo" : "Владё",
 		"Oťo" : "Отё",
 		"veľo" : "велё",
-		"car'u" : "царю",
+		"car’u" : "царю",
 		"text" : "текст",
 		"taxi" : "таксі",
 		"Chlopci":"Хлопці",
@@ -49,10 +49,10 @@
 		"Joho" : "Ёго",
 		"jomu" : "ёму",
 		"Jomu" : "Ёму",
-		"ser'jozno" : "серьёзно",
+		"ser’jozno" : "серьёзно",
 		"zjazvene" : "зъязвене",
 		"Zjavyla" : "Зъявила",
-		"Myž'ko" : "Мижько",
+		"Myž’ko" : "Мижько",
 		"ňoj" : "нёй",
 		"Bardejov" : "Бардеёв",
 		"naďijov" : "надїёв",
@@ -68,10 +68,9 @@
 		"Nyžňoho":"Нижнёго",
 		"zjojkla":"зъёйкла",
 		"predjidlo":"предъїдло",
-		"Myž'o" : "Мижё",
-		"Myž'a" : "Мижя",
-		"Myž'u" : "Мижю",
-
+		"Myž’o" : "Мижё",
+		"Myž’a" : "Мижя",
+		"Myž’u" : "Мижю",
 	}
 
 
@@ -94,7 +93,7 @@
 	}
 
 	// Test if script takes different apostrophes
-	assert(streamline_apostrophes("ja‘nk‘o"),"ja'nk'o","Assertion error: apostrophe is not streamlined");
+	assert(streamline_apostrophes("ja‘nk‘o"),"ja’nk’o","Assertion error: apostrophe is not streamlined");
 	for (var key in test_dict_apostrophe){
 		assert(translit_lat_azb(key), (test_dict_apostrophe[key]),"Assertion error: " + key + "\ntransliterates to: " + translit_lat_azb(key) + ",\nshould trans’ to: " + test_dict[key] + "+\n— this is an apostrophe error.");
 	}
