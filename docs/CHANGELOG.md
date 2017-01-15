@@ -1,5 +1,9 @@
 # Changelog for Rusyn transliterate
 
+## 1.0.1 // 2017-01-15
+* hotfix: dji > дъї (e.g. predjidlo > предъїдло)
+
+
 ## 2016-08-24
  * 1.0.0 released. This is a major version as it was tested on and used for transliteration of a book Червеный берег (by Людміла Шандалова).
  * include exceptions for "Joho, joho, Jomu, jomu, ser'jozno, ...ňo..., ťoj, zjavyla, zjemnyty, ...ľľa..., plaksyvo ..."
