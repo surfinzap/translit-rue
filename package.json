@@ -1,0 +1,22 @@
+{
+	"name": "translit-rue",
+	"version": "1.0.2",
+	"description": "Translit is a javascript library to transliterate Rusyn language from Latin alphabet to Cyrillic script and vice versa.",
+	"license": "MIT",
+	"author": {
+		"name": "Braňo Šandala",
+		"email": "surfin.zap@gmail.com"
+	},
+	"main": "dist/translit.min.js",
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/surfinzap/translit"
+	},
+	"bugs": {
+		"url": "https://github.com/surfinzap/translit/issues"
+	},
+	"keywords": [
+		"transliteration",
+		"Rusyn"
+	]
+}
