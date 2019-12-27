@@ -2,6 +2,10 @@ var gulp = require('gulp');
 var babel = require('gulp-babel');
 var concat = require('gulp-concat');
 var uglify = require('gulp-uglify');
+const browserify = require('browserify');
+const babelify = require('babelify');
+const source = require('vinyl-source-stream');
+const buffer = require('vinyl-buffer');
 
 
 var paths = {
@@ -18,16 +22,17 @@ var paths = {
 };
 
 
-
 /*
  * Define our tasks using plain functions
  */
 
 function browserBuild() {
-	return gulp.src(paths.browser.src, { sourcemaps: false })
-		.pipe(babel())
+	return browserify({ entries: paths.browser.src, debug: false })
+		.transform(babelify)
+		.bundle()
+		.pipe(source(paths.browser.name))
+		.pipe(buffer())
 		.pipe(uglify())
-		.pipe(concat(paths.browser.name))
 		.pipe(gulp.dest(paths.browser.dest));
 }
 
