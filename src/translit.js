@@ -8,8 +8,8 @@
  * Date: 2019-12-23
  */
 
-(function(){
-	var mapping = {
+// (function(){
+	const mapping = {
 		"exceptions" : {
 			"text" : "текст",
 			"taxi" : "таксі",
@@ -260,7 +260,7 @@
 		return string;
 	}
 
-	function translit_azb_lat(string) {
+	export function translit_azb_lat(string) {
 		string = map_azb_lat(string, "exceptions");
 		string = map_azb_lat(string, "priority-set-1");
 		string = map_azb_lat(string, "priority-set-2");
@@ -279,7 +279,7 @@
 		return string;
 	}
 
-	function translit_lat_azb(string) {
+	export function translit_lat_azb(string) {
 		string = streamline_apostrophes(string);
 		string = map_lat_azb(string, 'exceptions');
 		string = map_lat_azb(string, 'priority-set-1');
@@ -291,8 +291,8 @@
 		return string;
 	}
 
-	// Export public methods:
-	window.translit_azb_lat = translit_azb_lat;
-	window.translit_lat_azb = translit_lat_azb;
-	window.streamline_apostrophes = streamline_apostrophes;
-})();
+	// // Export public methods:
+	// window.translit_azb_lat = translit_azb_lat;
+	// window.translit_lat_azb = translit_lat_azb;
+	// window.streamline_apostrophes = streamline_apostrophes;
+// })();

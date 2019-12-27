@@ -7,7 +7,7 @@
 		"name": "Braňo Šandala",
 		"email": "surfin.zap@gmail.com"
 	},
-	"main": "dist/translit.min.js",
+	"main": "dist/translit_dist.min.js",
 	"repository": {
 		"type": "git",
 		"url": "https://github.com/surfinzap/translit"
@@ -18,5 +18,18 @@
 	"keywords": [
 		"transliteration",
 		"Rusyn"
-	]
+	],
+	"engines": {
+		"node": ">=6.9.4"
+	},
+	"devDependencies": {
+		"@babel/cli": "^7.7.0",
+		"@babel/core": "^7.7.7",
+		"@babel/preset-env": "^7.7.7",
+		"gulp": "^4.0.2",
+		"gulp-babel": "^8.0.0",
+		"gulp-cli": "^2.2.0",
+		"gulp-concat": "^2.6.1",
+		"gulp-uglify": "^2.0.0"
+	}
 }
