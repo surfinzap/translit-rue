@@ -1,5 +1,14 @@
 # Changelog for Rusyn transliterate
 
+## 2.0.0 // 2019-12-28
+* Refactor translit so it can be used as NPM package ([translit-rue](https://www.npmjs.com/package/translit-rue)) or minified JavaScript library
+* Labeled as major version because it introduces breaking changes (different function names). ([View README.md](https://github.com/surfinzap/translit/blob/master/README.md)) for details of use.
+
+
+## 1.0.2 // 2019-12-23
+* Release translit as an NPM package ([translit-rue](https://www.npmjs.com/package/translit-rue))
+
+
 ## 1.0.1 // 2017-01-15
 * hotfix: dji > дъї (e.g. predjidlo > предъїдло)
 * hotfix: ž'a > жя, ž'i > жї, ž'o > жё, ž'u > жю (e.g. Myž'a > Мижя)
@@ -15,7 +24,7 @@
 
 ## 2016-01-21
  * 0.29 released
- * fix streamline_apostrophes
+ * fix streamlineApostrophes
 
 ## 2015-10-13
  * 0.28 released
