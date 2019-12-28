@@ -1,6 +1,7 @@
 # translit — Rusyn transliteration
 
 Rusyn language is written in Cyrillic script. If you lack a proper keyboard or an extra software, writing in Rusyn can take a while.
+
 Translit is a javascript library to transliterate Rusyn language from Latin alphabet to Cyrillic script and vice versa. You can write your text in Latin alphabet and then transliterate it automatically.
 
 
@@ -21,12 +22,12 @@ npm install translit-rue
 
 
 ## Documentation
-Transliterate text from Cyrillic script to Latin alphabet
+Transliterate text from Cyrillic script to Latin alphabet:
 ```javascript
 translitAzbLat(string)
 ```
 
-Transliterate text from Latin alphabet to Cyrillic script
+Transliterate text from Latin alphabet to Cyrillic script:
 ```javascript
 translitLatAzb(string)
 ```
