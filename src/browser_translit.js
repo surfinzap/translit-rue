@@ -1,5 +1,5 @@
-import { translitLatAzb,
- 				 translitAzbLat} from './translit';
+import { translitLatCyr,
+ 				 translitCyrLat} from './translit';
 
-window.translitAzbLat = translitAzbLat;
-window.translitLatAzb = translitLatAzb;
+window.translitCyrLat = translitCyrLat;
+window.translitLatCyr = translitLatCyr;

@@ -251,7 +251,7 @@ function streamlineApostrophes(string) {
 	return string.replace(/\'|’|ʼ|‘/g , '’');
 }
 
-function mapAzbLat(string, mappingOption) {
+function mapCyrLat(string, mappingOption) {
 	for (var rule in mapping[mappingOption]){
 		var re = new RegExp(mapping[mappingOption][rule],"g");
 		string =  string.replace(re, rule);
@@ -259,18 +259,18 @@ function mapAzbLat(string, mappingOption) {
 	return string;
 }
 
-export function translitAzbLat(string) {
-	string = mapAzbLat(string, "exceptions");
-	string = mapAzbLat(string, "priority-set-1");
-	string = mapAzbLat(string, "priority-set-2");
-	string = mapAzbLat(string, "priority-set-3");
-	string = mapAzbLat(string, "carons");
-	string = mapAzbLat(string, "basic");
-	string = mapAzbLat(string, "chars");
+export function translitCyrLat(string) {
+	string = mapCyrLat(string, "exceptions");
+	string = mapCyrLat(string, "priority-set-1");
+	string = mapCyrLat(string, "priority-set-2");
+	string = mapCyrLat(string, "priority-set-3");
+	string = mapCyrLat(string, "carons");
+	string = mapCyrLat(string, "basic");
+	string = mapCyrLat(string, "chars");
 	return string;
 }
 
-function mapLatAzb(string, mappingOption) {
+function mapLatCyr(string, mappingOption) {
 	for (var rule in mapping[mappingOption]){
 		var re = new RegExp(rule,"g");
 		string =  string.replace(re, mapping[mappingOption][rule]);
@@ -278,14 +278,14 @@ function mapLatAzb(string, mappingOption) {
 	return string;
 }
 
-export function translitLatAzb(string) {
+export function translitLatCyr(string) {
 	string = streamlineApostrophes(string);
-	string = mapLatAzb(string, 'exceptions');
-	string = mapLatAzb(string, 'priority-set-1');
-	string = mapLatAzb(string, 'priority-set-2');
-	string = mapLatAzb(string, 'priority-set-3');
-	string = mapLatAzb(string, 'carons');
-	string = mapLatAzb(string, 'basic');
-	string = mapLatAzb(string, 'chars');
+	string = mapLatCyr(string, 'exceptions');
+	string = mapLatCyr(string, 'priority-set-1');
+	string = mapLatCyr(string, 'priority-set-2');
+	string = mapLatCyr(string, 'priority-set-3');
+	string = mapLatCyr(string, 'carons');
+	string = mapLatCyr(string, 'basic');
+	string = mapLatCyr(string, 'chars');
 	return string;
 }

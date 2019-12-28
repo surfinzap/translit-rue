@@ -24,12 +24,12 @@ npm install translit-rue
 ## Documentation
 Transliterate text from Cyrillic script to Latin alphabet:
 ```javascript
-translitAzbLat(string)
+translitCyrLat(string)
 ```
 
 Transliterate text from Latin alphabet to Cyrillic script:
 ```javascript
-translitLatAzb(string)
+translitLatCyr(string)
 ```
 
 
@@ -38,4 +38,4 @@ Licensed under MIT license. (See [LICENCE.TXT](//github.com/surfinzap/translit/b
 
 
 ## Special thanks
-* [@vit-svoboda](https://github.com/vit-svoboda) for help with gulp pipeline (2.0.0)
+* [@vit-svoboda](https://github.com/vit-svoboda) for a help with gulp pipeline (2.0.0)
