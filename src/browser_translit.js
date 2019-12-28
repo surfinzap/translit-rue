@@ -1,5 +1,5 @@
-import { translit_lat_azb,
- 				 translit_azb_lat} from './translit';
+import { translitLatAzb,
+ 				 translitAzbLat} from './translit';
 
-window.translit_azb_lat = translit_azb_lat;
-window.translit_lat_azb = translit_lat_azb;
+window.translitAzbLat = translitAzbLat;
+window.translitLatAzb = translitLatAzb;
