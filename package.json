@@ -1,6 +1,6 @@
 {
 	"name": "translit-rue",
-	"version": "1.0.2",
+	"version": "2.0.0",
 	"description": "Translit is a javascript library to transliterate Rusyn language from Latin alphabet to Cyrillic script and vice versa.",
 	"license": "MIT",
 	"author": {
