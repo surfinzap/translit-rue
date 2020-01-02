@@ -1,11 +1,9 @@
-(function(){
-	function assert(expected,actual,message){
-		if(expected !== actual){
-			console.error(message);
-		}
-	}
+import {translitCyrLat,
+				translitLatCyr} from '../translit.js';
+import assert from 'assert';
 
-	test_dict = {
+describe('Test transliteration:\n', () => {
+	let testCase = {
 		"c’ile" : "цїле",
 		"kur’atko" : "курятко",
 		"klynec’" : "клинець",
@@ -71,31 +69,30 @@
 		"Myž’o" : "Мижё",
 		"Myž’a" : "Мижя",
 		"Myž’u" : "Мижю",
-	}
+	};
+
+	Object.keys(testCase).forEach((key) => {
+		it("Latin → Cyrillic:\n", () => {
+			assert.equal(translitLatCyr(key), testCase[key]);
+		});
+		it("Cyrillic → Latin:\n", () => {
+			assert.equal(translitCyrLat(testCase[key]), key);
+		});
+	});
+});
 
 
-	test_dict_apostrophe = {
+describe('Test apostrophes:\n', () => {
+	let testCase = {
 		"str‘is‘i" : "стрїсї",
 		"car‘u" : "царю",
 		"Otec’" : "Отець",
 		"Otec'" : "Отець",
-	}
+	};
 
-
-	// Test translations from latin to azbuka
-	for (var key in test_dict){
-		assert(translitLatCyr(key), (test_dict[key]),"Assertion error: " + key + "\ntransliterates to: " + translitLatCyr(key) + "\nshould trans’ to: " + test_dict[key]);
-	}
-
-	// Test translations from azbuka to latin
-	for (var key in test_dict){
-		assert(translitCyrLat(test_dict[key]), (key),"Assertion error: " + test_dict[key] + "\ntransliterates to: " + translitCyrLat(test_dict[key]) + "\nshould trans’ to: " + key);
-	}
-
-	// Test if script takes different apostrophes
-	assert(streamlineApostrophes("ja‘nk‘o"),"ja’nk’o","Assertion error: apostrophe is not streamlined");
-	for (var key in test_dict_apostrophe){
-		assert(translitLatCyr(key), (test_dict_apostrophe[key]),"Assertion error: " + key + "\ntransliterates to: " + translitLatCyr(key) + ",\nshould trans’ to: " + test_dict[key] + "+\n— this is an apostrophe error.");
-	}
-
-})();
+	Object.keys(testCase).forEach((key) => {
+		it("Latin → Cyrillic:\n", () => {
+			assert.equal(translitLatCyr(key), testCase[key]);
+		});
+	});
+});
