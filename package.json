@@ -1,6 +1,6 @@
 {
 	"name": "translit-rue",
-	"version": "2.0.0",
+	"version": "2.0.1",
 	"description": "Translit is a javascript library to transliterate Rusyn language from Latin alphabet to Cyrillic script and vice versa.",
 	"license": "MIT",
 	"author": {
@@ -27,18 +27,18 @@
 		"node": ">=6.9.4"
 	},
 	"devDependencies": {
-		"@babel/cli": "^7.7.0",
-		"@babel/core": "^7.7.7",
-		"@babel/preset-env": "^7.7.7",
-		"@babel/register": "^7.7.7",
+		"@babel/cli": "^7.10.5",
+		"@babel/core": "^7.10.5",
+		"@babel/preset-env": "^7.10.4",
+		"@babel/register": "^7.10.5",
 		"babelify": "^10.0.0",
-		"browserify": "^16.5.0",
+		"browserify": "^16.5.1",
 		"gulp": "^4.0.2",
 		"gulp-babel": "^8.0.0",
-		"gulp-cli": "^2.2.0",
+		"gulp-cli": "^2.3.0",
 		"gulp-concat": "^2.6.1",
-		"gulp-uglify": "^2.0.0",
-		"mocha": "^6.2.2",
+		"gulp-uglify": "^3.0.2",
+		"mocha": "^8.0.1",
 		"vinyl-buffer": "^1.0.1",
 		"vinyl-source-stream": "^2.0.0"
 	}
