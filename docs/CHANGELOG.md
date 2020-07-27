@@ -1,5 +1,12 @@
 # Changelog for Rusyn transliterate
 
+## 2.0.1 // 2020-07-27
+There are no changes in functionality in this release
+
+### Maintenance
+* Update packages to newest version
+
+
 ## 2.0.0 // 2019-12-28
 * Refactor translit so it can be used as NPM package ([translit-rue](https://www.npmjs.com/package/translit-rue)) or minified JavaScript library
 * Labeled as major version because it introduces breaking changes (different function names). ([View README.md](https://github.com/surfinzap/translit/blob/master/README.md)) for details of use.

@@ -1,11 +1,11 @@
 /*!
- * Translit (Rusyn transliteration) 2.0.0
+ * Translit (Rusyn transliteration) 2.0.1
  * https://tota.sk/translit
  *
  * Copyright 2014-20 Braňo Šandala
  * Released under the MIT license
  *
- * Date: 2019-12-28
+ * Date: 2020-07-27
  */
 
 const mapping = {
