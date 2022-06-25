@@ -1,10 +1,16 @@
 # Changelog for Rusyn transliterate
 
+## 2.O.6 // 2022-06-25
+There are no changes in functionality in this release.
+
+### Maintenance
+- Update NPM packages to their latest versions
+
 ## 2.0.1 // 2020-07-27
 There are no changes in functionality in this release
 
 ### Maintenance
-* Update packages to newest version
+- Update NPM packages to their latest versions
 
 
 ## 2.0.0 // 2019-12-28
