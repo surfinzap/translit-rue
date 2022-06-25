@@ -1,6 +1,6 @@
 # Changelog for Rusyn transliterate
 
-## 2.O.6 // 2022-06-25
+## 2.0.6 // 2022-06-25
 There are no changes in functionality in this release.
 
 ### Maintenance
