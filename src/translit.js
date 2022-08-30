@@ -8,6 +8,23 @@
  * Date: 2020-07-27
  */
 
+
+/*
+Notes for improvement
+
+Move "ďijo" as "ijo" from priority-set-3 to priority-set-1
+- thought begind that vowel + (ja|jo|je...) is part where the word could be split, so that's case where no apostrophe should be
+
+Establish function and test for superlatives
+- naj + vowel
+
+Establish rules for ja, jo, je... teda hlavni jo
+- ze koli sa pise jak 'o (v stredi slova)
+- ze koli sa pise jak jo (na zacatku slova)
+
+
+*/
+
 const mapping = {
 	"exceptions" : {
 		"text" : "текст",
