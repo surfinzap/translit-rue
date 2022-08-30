@@ -69,6 +69,10 @@ describe('Test transliteration:\n', () => {
 		"Myž’o" : "Мижё",
 		"Myž’a" : "Мижя",
 		"Myž’u" : "Мижю",
+		"o-jo-joj" : "о-ё-ёй",
+		"o-joj-joj" : "о-ёй-ёй",
+		"oj-joj-joj" : "ой-ёй-ёй",
+		"najobľubleňišŷj" : "найоблюбленїшый"
 	};
 
 	Object.keys(testCase).forEach((key) => {
