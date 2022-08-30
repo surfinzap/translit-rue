@@ -1,5 +1,5 @@
 /*!
- * Translit (Rusyn transliteration) 2.0.1
+ * Translit (Rusyn transliteration) 2.0.7
  * https://tota.sk/translit
  *
  * Copyright 2014-20 Braňo Šandala
