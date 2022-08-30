@@ -1,5 +1,13 @@
 # Changelog for Rusyn transliterate
 
+## 2.1.0 // 2022-09-
+
+### 🐛 Fixes
+- superlative adjectives where a prefix “naj” follows a vowel are now transliterated properly:
+	- ⛔ before: najatraktivňišŷj → наятрактівнїшый
+	- ✅ now: najatraktivňišŷj → найатрактівнїшый
+
+
 ## 2.0.7 // 2022-06-25
 There are no changes in functionality in this release.
 

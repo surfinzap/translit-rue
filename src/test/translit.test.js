@@ -1,8 +1,10 @@
-import {translitCyrLat,
+import {
+				mapSuperlativeLatCyr,
+				translitCyrLat,
 				translitLatCyr} from '../translit.js';
 import assert from 'assert';
 
-describe('Test transliteration:\n', () => {
+describe('Basic transliteration:\n', () => {
 	let testCase = {
 		"c’ile" : "цїле",
 		"kur’atko" : "курятко",
@@ -86,7 +88,78 @@ describe('Test transliteration:\n', () => {
 });
 
 
-describe('Test apostrophes:\n', () => {
+describe(' (unit) Superlative transliteration:\n', () => {
+	let testCase = {
+
+		// lower case
+		"najatraktivňišŷj" :  "найatraktivňišŷj", 
+		"najelegantňišŷj" :   "найelegantňišŷj",
+		"najinteligentňišŷj" : "найinteligentňišŷj",
+		"najobľubleňišŷj" : "найobľubleňišŷj",
+		"najužasňišŷj" : "найužasňišŷj",
+
+		// Title Case
+		"Najatraktivňišŷj" :  "Найatraktivňišŷj", 
+		"Najelegantňišŷj" :   "Найelegantňišŷj",
+		"Najinteligentňišŷj" : "Найinteligentňišŷj",
+		"Najobľubleňišŷj" : "Найobľubleňišŷj",
+		"Najužasňišŷj" : "Найužasňišŷj",
+
+		// upper case
+		"NAJATRAKTIVŇIŠŶJ" :  "НАЙATRAKTIVŇIŠŶJ", 
+		"NAJELEGANTŇIŠŶJ" :   "НАЙELEGANTŇIŠŶJ",
+		"NAJINTELIGENTŇIŠŶJ" : "НАЙINTELIGENTŇIŠŶJ",
+		"NAJOBĽUBLEŇIŠŶJ" : "НАЙOBĽUBLEŇIŠŶJ",
+		"NAJUŽASŇIŠŶJ" : "НАЙUŽASŇIŠŶJ",
+
+		// false positive
+		"najidž" : "najidž",
+		"najveksyj" : "najveksyj" //naj following a consonant
+	};
+
+	Object.keys(testCase).forEach((key) => {
+		it("Latin → Cyrillic:\n", () => {
+			assert.equal(mapSuperlativeLatCyr(key), testCase[key]);
+		});
+
+	});
+});
+
+
+
+describe(' (module) Superlative transliteration:\n', () => {
+	let testCase = {
+
+		// lower case
+		"najatraktivňišŷj" :  "найатрактівнїшый", 
+		"najelegantňišŷj" :   "найелеґантнїшый",
+		"najinteligentňišŷj" : "найінтеліґентнїшый",
+		"najobľubleňišŷj" : "найоблюбленїшый",
+		"najužasňišŷj" : "найужаснїшый",
+
+		// title case
+		"Najatraktivňišŷj" :  "Найатрактівнїшый", 
+		"Najelegantňišŷj" :   "Найелеґантнїшый",
+		"Najinteligentňišŷj" : "Найінтеліґентнїшый",
+		"Najobľubleňišŷj" : "Найоблюбленїшый",
+		"Najužasňišŷj" : "Найужаснїшый",
+
+	};
+
+	Object.keys(testCase).forEach((key) => {
+		it("Latin → Cyrillic:\n", () => {
+			assert.equal(translitLatCyr(key), testCase[key]);
+		});
+		it("Cyrillic → Latin:\n", () => {
+			assert.equal(translitCyrLat(testCase[key]), key);
+		});
+	});
+});
+
+
+
+
+describe('Apostrophes:\n', () => {
 	let testCase = {
 		"str‘is‘i" : "стрїсї",
 		"car‘u" : "царю",

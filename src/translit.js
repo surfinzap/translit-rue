@@ -15,15 +15,21 @@ Notes for improvement
 Move "ďijo" as "ijo" from priority-set-3 to priority-set-1
 - thought begind that vowel + (ja|jo|je...) is part where the word could be split, so that's case where no apostrophe should be
 
-Establish function and test for superlatives
-- naj + vowel
-
 Establish rules for ja, jo, je... teda hlavni jo
 - ze koli sa pise jak 'o (v stredi slova)
 - ze koli sa pise jak jo (na zacatku slova)
 
-
 */
+
+
+/* Constants */
+
+const nonLatinLowercase = "áäčďéěíĺľňóôöőŕřšťúüűůýŷžабвгґдезіийклмнопрстуфъыьцчжшїщёєюях";
+const nonLatinUppercase = "ÁÄČĎÉĚÍĹĽŇÓÔÖŐŔŘŠŤÚÜŰŮÝŶŽАБВГҐДЕЗІИЙКЛМНОПРСТУФЪЫЬЦЧЖШЇЩЁЄЮЯХ";
+const nonLatinChars = nonLatinLowercase + nonLatinUppercase;
+const lowercaseChars = "a-z" + nonLatinLowercase;
+const uppercaseChars = "A-Z" + nonLatinUppercase;
+const allChars = lowercaseChars + uppercaseChars;
 
 const mapping = {
 	"exceptions" : {
@@ -276,6 +282,67 @@ function mapCyrLat(string, mappingOption) {
 	return string;
 }
 
+
+function mapLatCyr(string, mappingOption) {
+	for (var rule in mapping[mappingOption]){
+		var re = new RegExp(rule,"g");
+		string =  string.replace(re, mapping[mappingOption][rule]);
+	}
+	return string;
+}
+
+
+/*
+  Transliterate words that begin with "naj|Naj|NAJ" followed by a vowel to "най|Най|НАЙ"
+
+	Standard transliteration for "ja", "je", "ji", "jo", "ju" is:
+	ja → я
+	je → є
+	ji → ї
+	jo → ё
+	ju → ю
+
+	
+	However, when "j" + "vowel" is in place where you could hyphenate a word, 
+	then you translitate "j" + "vowel" to "й" + "vowel" and vice versa.
+	
+	Examples
+	"najatraktivňišŷj" → "найатрактівнїшый"
+
+	Counterexamples
+	"najidž" → "наїдж"
+
+	Algorithm
+	match all words beginning with naj, following with a vowel and not ending with any of superlative suffixes
+
+	@param {string} string: input text for mapping
+	@returns {string} where all words that begin with "naj|Naj|NAJ" followed by a vowel will be transliterated to "най|Най|НАЙ"
+*/
+export function mapSuperlativeLatCyr(string){
+		let pattern =
+			'(\\b)'
+		+ '(naj)'
+		+ '([aeiou])'
+		+ '([' + lowercaseChars + ']+?)'
+		+ '(šŷj|šoho|šomu|šom|šŷm|šŷ|šŷch|šŷmi|šŷmy|ša|šoj|šu|šov|šŷch|še)';
+		let re = new RegExp(pattern, 'gi');
+
+		return string.replace(re, function($0, $1, $2, $3, $4, $5){
+			return $1 + mapLatCyr($2, 'chars') + $3 + $4 + $5;
+		});
+
+}
+
+
+
+
+
+
+
+
+/*
+	 Public API
+*/
 export function translitCyrLat(string) {
 	string = mapCyrLat(string, "exceptions");
 	string = mapCyrLat(string, "priority-set-1");
@@ -287,16 +354,11 @@ export function translitCyrLat(string) {
 	return string;
 }
 
-function mapLatCyr(string, mappingOption) {
-	for (var rule in mapping[mappingOption]){
-		var re = new RegExp(rule,"g");
-		string =  string.replace(re, mapping[mappingOption][rule]);
-	}
-	return string;
-}
+
 
 export function translitLatCyr(string) {
 	string = streamlineApostrophes(string);
+	string = mapSuperlativeLatCyr(string);
 	string = mapLatCyr(string, 'exceptions');
 	string = mapLatCyr(string, 'priority-set-1');
 	string = mapLatCyr(string, 'priority-set-2');
