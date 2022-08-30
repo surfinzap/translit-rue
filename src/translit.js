@@ -241,13 +241,13 @@ const mapping = {
 	}
 }
 
+/*
+	 (39) dumb single quote,
+	 (8217) right single quotation mark
+	 (700) modifier letter apostrophe; https://en.wikipedia.org/wiki/Modifier_letter_apostrophe
+	 (8216) left single quotation mark
+*/
 function streamlineApostrophes(string) {
-	/*
-		 (39) dumb single quote,
-		 (8217) right single quotation mark
-		 (700) modifier letter apostrophe; https://en.wikipedia.org/wiki/Modifier_letter_apostrophe
-		 (8216) left single quotation mark
-	*/
 	return string.replace(/\'|’|ʼ|‘/g , '’');
 }
 
