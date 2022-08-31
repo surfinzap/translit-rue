@@ -167,7 +167,7 @@ const mapping = {
 
 
 
-	"carons" : {
+	"dtnl" : {
 		"ď": "дь",
 		"Ď": "Дь",
 		"ť": "ть",
@@ -420,7 +420,7 @@ export function translitCyrLat(string) {
 	string = mapCyrLat(string, "priority-set-1");
 	string = mapCyrLat(string, "priority-set-2");
 	string = mapCyrLat(string, "priority-set-3");
-	string = mapCyrLat(string, "carons");
+	string = mapCyrLat(string, "dtnl");
 	string = mapCyrLat(string, "basic");
 	string = mapCyrLat(string, "chars");
 	return string;
@@ -436,7 +436,7 @@ export function translitLatCyr(string) {
 	string = mapLatCyr(string, 'priority-set-1');
 	string = mapLatCyr(string, 'priority-set-2');
 	string = mapLatCyr(string, 'priority-set-3');
-	string = mapLatCyr(string, 'carons');
+	string = mapLatCyr(string, 'dtnl');
 	string = mapLatCyr(string, 'basic');
 	string = mapLatCyr(string, 'chars');
 	return string;
