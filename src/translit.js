@@ -19,8 +19,9 @@ Move "ďijo" as "ijo" from priority-set-3 to priority-set-1
 
 /* Constants */
 
-const latinVowelsUnaccentedLowerCase = "aeiouy";
-const cyrillicJajejijoju = "яєїёю";
+const latinVowelsUnaccentedLowerCase = "aeiouyŷ";
+const cyrillicVowelsLowerCase = "аеіоуиы"
+const cyrillicJaje = "яєїёю";
 
 const nonLatinLowercase = "áäčďéěíĺľňóôöőŕřšťúüűůýŷžабвгґдезіийклмнопрстуфъыьцчжшїщёєюях";
 const nonLatinUppercase = nonLatinLowercase.toUpperCase();
@@ -336,7 +337,7 @@ export function mapSuperlativeLatCyr(string){
 		'(\\b)'
 	+ '(naj)'
 	+ '([' + latinVowelsUnaccentedLowerCase + '])'
-	+ '([' + lowercaseChars + ']+?)'
+	+ '([' + lowerCaseChars + ']+?)'
 	+ '(šŷj|šoho|šomu|šom|šŷm|šŷ|šŷch|šŷmi|šŷmy|ša|šoj|šu|šov|šŷch|še)';
 	let re = new RegExp(pattern, 'gi');
 
@@ -349,7 +350,7 @@ export function mapSuperlativeLatCyr(string){
 
 
 /*
-	Transliaterate ja, je, ji, jo, ju at the beginning of the word
+	Transliterate ja, je, ji, jo, ju at the beginning of the word
 
 	Transliteration rules:
 	ja ↔ я
@@ -372,8 +373,10 @@ export function mapSuperlativeLatCyr(string){
 	zrivňovaty ↔ зрiвнёвати
 	čeľustnŷj ↔ чeлюстный
 
+	@param {string} string: latin text for mapping
+	@returns {string} cyrillic text with mapped ja, je, ji, jo, ju
 */
-export function mapJajejijojuBeginningLatCyr(string) {
+export function mapJajeBeginningLatCyr(string) {
 	let pattern =
 			'(\\b)'
 		+ '(j)'
@@ -388,7 +391,7 @@ export function mapJajejijojuBeginningLatCyr(string) {
 
 
 /*
-	Transliaterate я, є, ї, ё, ю at the beginning of the word
+	Transliterate я, є, ї, ё, ю at the beginning of the word
 
 	Transliteration rules:
 	ja ↔ я
@@ -411,11 +414,14 @@ export function mapJajejijojuBeginningLatCyr(string) {
 	zrivňovaty ↔ зрiвнёвати
 	čeľustnŷj ↔ чeлюстный
 
+	@param {string} string: cyrillic text for mapping
+	@returns {string} latin text with mapped я, є, ї, ё, ю
+
 */
-export function mapJajejijojuBeginningCyrLat(string) {
+export function mapJajeBeginningCyrLat(string) {
 	let pattern =
 			'([^' + allChars + ']|^)'
-		+ '([' + cyrillicJajejijoju + '])';
+		+ '([' + cyrillicJaje + '])';
 	let re = new RegExp(pattern, 'gi');
 
 	return string.replace(re, function($0, $1, $2){
@@ -429,7 +435,7 @@ export function mapJajejijojuBeginningCyrLat(string) {
 	 Public API
 */
 export function translitCyrLat(string) {
-	string = mapJajejijojuBeginningCyrLat(string);
+	string = mapJajeBeginningCyrLat(string);
 	string = mapCyrLat(string, "exceptions");
 	string = mapCyrLat(string, "priority-set-1");
 	string = mapCyrLat(string, "priority-set-2");
@@ -445,7 +451,7 @@ export function translitCyrLat(string) {
 export function translitLatCyr(string) {
 	string = streamlineApostrophes(string);
 	string = mapSuperlativeLatCyr(string);
-	string = mapJajejijojuBeginningLatCyr(string);
+	string = mapJajeBeginningLatCyr(string);
 	string = mapLatCyr(string, 'exceptions');
 	string = mapLatCyr(string, 'priority-set-1');
 	string = mapLatCyr(string, 'priority-set-2');
