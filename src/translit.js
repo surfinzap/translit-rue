@@ -14,11 +14,6 @@ Notes for improvement
 
 Move "ďijo" as "ijo" from priority-set-3 to priority-set-1
 - thought begind that vowel + (ja|jo|je...) is part where the word could be split, so that's case where no apostrophe should be
-
-Establish rules for ja, jo, je... teda hlavni jo
-- ze koli sa pise jak 'o (v stredi slova)
-- ze koli sa pise jak jo (na zacatku slova)
-
 */
 
 
@@ -30,9 +25,9 @@ const cyrillicJajejijoju = "яєїёю";
 const nonLatinLowercase = "áäčďéěíĺľňóôöőŕřšťúüűůýŷžабвгґдезіийклмнопрстуфъыьцчжшїщёєюях";
 const nonLatinUppercase = nonLatinLowercase.toUpperCase();
 const nonLatinChars = nonLatinLowercase + nonLatinUppercase;
-const lowercaseChars = "a-z" + nonLatinLowercase;
-const uppercaseChars = "A-Z" + nonLatinUppercase;
-const allChars = lowercaseChars + uppercaseChars;
+const lowerCaseChars = "a-z" + nonLatinLowercase;
+const upperCaseChars = "A-Z" + nonLatinUppercase;
+const allChars = lowerCaseChars + upperCaseChars;
 
 
 
@@ -196,6 +191,7 @@ const mapping = {
 		"ľ": "ль",
 		"Ľ": "Ль",
 	},
+
 	"basic" : {
 		"ja": "я",
 		"Ja": "Я",
@@ -319,7 +315,6 @@ function mapLatCyr(string, mappingOption) {
 	ji → ї
 	jo → ё
 	ju → ю
-
 	
 	However, when "j" + "vowel" is in place where you could hyphenate a word, 
 	then you translitate "j" + "vowel" to "й" + "vowel" and vice versa.
