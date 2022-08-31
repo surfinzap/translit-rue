@@ -1,7 +1,7 @@
 import {
 				mapSuperlativeLatCyr,
-				mapJajejijojuBeginningLatCyr,
-				mapJajejijojuBeginningCyrLat,
+				mapJajeBeginningLatCyr,
+				mapJajeBeginningCyrLat,
 				translitCyrLat,
 				translitLatCyr} from '../translit.js';
 import assert from 'assert';
@@ -187,10 +187,10 @@ describe(' (unit) Ja, je, ji, jo, ju at the beginning of the word:\n', () => {
 
 	Object.keys(testCase).forEach((key) => {
 		it("Latin → Cyrillic:\n", () => {
-			assert.equal(mapJajejijojuBeginningLatCyr(key), testCase[key]);
+			assert.equal(mapJajeBeginningLatCyr(key), testCase[key]);
 		});
 		it("Cyrillic → Latin:\n", () => {
-			assert.equal(mapJajejijojuBeginningCyrLat(testCase[key]), key);
+			assert.equal(mapJajeBeginningCyrLat(testCase[key]), key);
 		});
 	});
 });
@@ -200,6 +200,8 @@ describe(' (unit) Ja, je, ji, jo, ju at the beginning of the word:\n', () => {
 
 describe('(module) Ja, je, ji, jo, ju at the beginning of the word:\n', () => {
 	let testCase = {
+
+	"jabčanka jabčanka" : "ябчанка ябчанка",
 
 	"jabčanka" : "ябчанка",
 	"jedenastka" : "єденастка",
