@@ -45,21 +45,12 @@ const mapping = {
 	"priority-set-1" : {
 		"ľľa" : "лля",
 		"Ľľa" : "Лля",
-		"ďijo" : "дїё",
-		"Ďijo" : "Дїё",
-		"dji" : "дъї",
+	// 	"ďijo" : "дїё",
+	// 	"Ďijo" : "Дїё",
+	// 	"dji" : "дъї",
 	},
 
 	"priority-set-2" : {
-		// di ti ni li
-		"ďi": "дї",
-		"Ďi": "Дї",
-		"ťi": "тї",
-		"Ťi": "Тї",
-		"ňi": "нї",
-		"Ňi": "Нї",
-		"ľi": "лї",
-		"Ľi": "Лї",
 		// da ta na la
 		"ďa": "дя",
 		"Ďa": "Дя",
@@ -69,24 +60,7 @@ const mapping = {
 		"Ňa": "Ня",
 		"ľa": "ля",
 		"Ľa": "Ля",
-		// du tu nu lu
-		"ďu": "дю",
-		"Ďu": "Дю",
-		"ťu": "тю",
-		"Ťu": "Тю",
-		"ňu": "ню",
-		"Ňu": "Hю",
-		"ľu": "лю",
-		"Ľu": "Лю",
-		// do to no lo
-		"ďo": "дё",
-		"Ďo": "Дё",
-		"ťo": "тё",
-		"Ťo": "Тё",
-		"ňo": "нё",
-		"Ňo": "Hё",
-		"ľo": "лё",
-		"Ľo": "Лё",
+
 		// de te ne le
 		"ďe": "дє",
 		"Ďe": "Дє",
@@ -96,8 +70,41 @@ const mapping = {
 		"Ňe": "Hє",
 		"ľe": "лє",
 		"Ľe": "Лє",
+
+		// di ti ni li
+		"ďi": "дї",
+		"Ďi": "Дї",
+		"ťi": "тї",
+		"Ťi": "Тї",
+		"ňi": "нї",
+		"Ňi": "Нї",
+		"ľi": "лї",
+		"Ľi": "Лї",
+
+		// do to no lo
+		"ďo": "дё",
+		"Ďo": "Дё",
+		"ťo": "тё",
+		"Ťo": "Тё",
+		"ňo": "нё",
+		"Ňo": "Hё",
+		"ľo": "лё",
+		"Ľo": "Лё",
+
+
+		// du tu nu lu
+		"ďu": "дю",
+		"Ďu": "Дю",
+		"ťu": "тю",
+		"Ťu": "Тю",
+		"ňu": "ню",
+		"Ňu": "Hю",
+		"ľu": "лю",
+		"Ľu": "Лю",
+
+
 		// cja, cji, cjo, cju, sja, sji, sjo, sju, rja, rji, rjo, rju, zja, zji, zjo, zju
-		// it is important to hold these characters together, do not optimalize by removing first letters
+		// keep these characters together, do not optimalize by removing first letters
 		"c’a": "ця",
 		"C’a": "Ця",
 		"c’i": "цї",
