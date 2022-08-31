@@ -19,7 +19,7 @@ Move "ďijo" as "ijo" from priority-set-3 to priority-set-1
 
 /* Constants */
 
-const latinVowelsUnaccentedLowerCase = "aeiouyŷ";
+const latinVowelsLowerCase = "aeiouyŷ";
 const cyrillicVowelsLowerCase = "аеіоуиы"
 const cyrillicJaje = "яєїёю";
 
@@ -157,14 +157,6 @@ const mapping = {
 		"Zju" : "Зъю",
 		"r’jo" : "рьё",
 		"R’jo" : "Рьё",
-		"ajo": "аё",
-		"Ajo": "Аё",
-		"ejo": "её",
-		"Ejo": "Её",
-		"yjo":"иё",
-		"Yjo":"Иё",
-		"ojo": "оё",
-		"Ojo": "Оё",
 	},
 
 
@@ -289,6 +281,8 @@ function streamlineApostrophes(string) {
 	return string.replace(/\'|’|ʼ|‘/g , '’');
 }
 
+
+
 function mapCyrLat(string, mappingOption) {
 	for (var rule in mapping[mappingOption]){
 		var re = new RegExp(mapping[mappingOption][rule],"g");
@@ -336,7 +330,7 @@ export function mapSuperlativeLatCyr(string){
 	let pattern =
 		'(\\b)'
 	+ '(naj)'
-	+ '([' + latinVowelsUnaccentedLowerCase + '])'
+	+ '([' + latinVowelsLowerCase + '])'
 	+ '([' + lowerCaseChars + ']+?)'
 	+ '(šŷj|šoho|šomu|šom|šŷm|šŷ|šŷch|šŷmi|šŷmy|ša|šoj|šu|šov|šŷch|še)';
 	let re = new RegExp(pattern, 'gi');
@@ -380,7 +374,7 @@ export function mapJajeBeginningLatCyr(string) {
 	let pattern =
 			'(\\b)'
 		+ '(j)'
-		+ '([' + latinVowelsUnaccentedLowerCase + '])';
+		+ '([' + latinVowelsLowerCase + '])';
 	let re = new RegExp(pattern, 'gi');
 
 	return string.replace(re, function($0, $1, $2, $3){
@@ -432,10 +426,71 @@ export function mapJajeBeginningCyrLat(string) {
 
 
 /*
+	Transliterate ja, je, ji, jo, ju before a vowel (a, e, i, o, u, y, ŷ)
+
+	Examples
+	bajusatŷj	↔ баюсaтый
+	akciji ↔ aкції
+	čornyjova ↔ чорниёвa
+	oklejuju ↔ оклеюю
+	svojoj ↔ своёй
+	šŷje ↔ šŷje
+	ujidaty ↔ уїдaти
+
+	@param {string} string: latin text for mapping
+	@returns {string} cyrillic text with mapped ja, je, ji, jo, ju
+*/
+export function mapJajeBeforeVowelLatCyr(string) {
+
+	let pattern =
+			'([' + latinVowelsLowerCase + '])'
+		+ '(ja|je|ji|jo|ju)';
+	let re = new RegExp(pattern, 'gi');
+
+	return string.replace(re, function($0, $1, $2){
+		return $1 + mapLatCyr($2, 'jajejijoju');
+	});
+}
+
+
+
+
+
+/*
+	Transliterate я, є, ї, ё, ю before a vowel (а, е, і, о, у, и, ы)
+
+	Examples
+	bajusatŷj	↔ баюсaтый
+	akciji ↔ aкції
+	čornyjova ↔ чорниёвa
+	oklejuju ↔ оклеюю
+	svojoj ↔ своёй
+	šŷje ↔ šŷje
+	ujidaty ↔ уїдaти
+
+	@param {string} string: latin text for mapping
+	@returns {string} cyrillic text with mapped я, є, ї, ё, ю
+*/
+export function mapJajeBeforeVowelCyrLat(string) {
+
+	let pattern =
+			'([' + cyrillicVowelsLowerCase + '])'
+		+ '([' + cyrillicJaje + '])';
+	let re = new RegExp(pattern, 'gi');
+
+	return string.replace(re, function($0, $1, $2){
+		return $1 + mapCyrLat($2, 'jajejijoju');
+	});
+}
+
+
+
+/*
 	 Public API
 */
 export function translitCyrLat(string) {
 	string = mapJajeBeginningCyrLat(string);
+	string = mapJajeBeforeVowelCyrLat(string);
 	string = mapCyrLat(string, "exceptions");
 	string = mapCyrLat(string, "priority-set-1");
 	string = mapCyrLat(string, "priority-set-2");
@@ -452,6 +507,7 @@ export function translitLatCyr(string) {
 	string = streamlineApostrophes(string);
 	string = mapSuperlativeLatCyr(string);
 	string = mapJajeBeginningLatCyr(string);
+	string = mapJajeBeforeVowelLatCyr(string);
 	string = mapLatCyr(string, 'exceptions');
 	string = mapLatCyr(string, 'priority-set-1');
 	string = mapLatCyr(string, 'priority-set-2');

@@ -6,9 +6,13 @@
 - superlative adjectives where a prefix “naj” follows a vowel are now transliterated properly:
 	- ⛔ before: najatraktivňišŷj → наятрактівнїшый
 	- ✅ now: najatraktivňišŷj → найатрактівнїшый
-- improve identification of ja, je, ji, jo, ju at the beginning of the word
+- improve identification of “ja”, “je”, “ji”, “jo”, “ju” at the beginning of the word
 	- ⛔ before: O-Jo-Joj → О-Йо-Ёй
 	- ✅ now: O-Jo-Joj → O-Ё-Ёj
+- improve identification of “ja”, “je”, “ji”, “jo”, “ju” before a vowel:
+	- ⛔ before: функціёв → funkci’ov
+	- ✅ now: функціёв → funkcijov
+
 
 
 
