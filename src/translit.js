@@ -24,12 +24,17 @@ Establish rules for ja, jo, je... teda hlavni jo
 
 /* Constants */
 
+const latinVowelsUnaccentedLowerCase = "aeiouy";
+const cyrillicJajejijoju = "яєїёю";
+
 const nonLatinLowercase = "áäčďéěíĺľňóôöőŕřšťúüűůýŷžабвгґдезіийклмнопрстуфъыьцчжшїщёєюях";
-const nonLatinUppercase = "ÁÄČĎÉĚÍĹĽŇÓÔÖŐŔŘŠŤÚÜŰŮÝŶŽАБВГҐДЕЗІИЙКЛМНОПРСТУФЪЫЬЦЧЖШЇЩЁЄЮЯХ";
+const nonLatinUppercase = nonLatinLowercase.toUpperCase();
 const nonLatinChars = nonLatinLowercase + nonLatinUppercase;
 const lowercaseChars = "a-z" + nonLatinLowercase;
 const uppercaseChars = "A-Z" + nonLatinUppercase;
 const allChars = lowercaseChars + uppercaseChars;
+
+
 
 const mapping = {
 	"exceptions" : {
@@ -157,12 +162,6 @@ const mapping = {
 		"Yjo":"Иё",
 		"ojo": "оё",
 		"Ojo": "Оё",
-		"joj": "ёй",
-		"Joj": "Ёй",
-		"joho" : "ёго",
-		"Joho" : "Ёго",
-		"jomu" : "ёму",
-		"Jomu" : "Ёму",
 	},
 
 
@@ -331,12 +330,80 @@ export function mapSuperlativeLatCyr(string){
 			return $1 + mapLatCyr($2, 'chars') + $3 + $4 + $5;
 		});
 
+/*
+	Transliaterate ja, je, ji, jo, ju at the beginning of the word
+
+	Transliteration rules:
+	ja ↔ я
+	je ↔ є
+	ji ↔ ї
+	jo ↔ ё
+	ju ↔ ю
+
+	Examples
+	jabčanka ↔ ябчaнка
+	jedenastka ↔ єденастка
+	jidnaňa ↔ їднaня
+	joho ↔ ёгo
+	o-jo-joj ↔ о-ё-ёй
+	jubilant ↔ юбілaнт
+		
+	Counterexamples
+	jedenadc’atŷj ↔ єденадцятый (ja in the middle)
+	každopadňi ↔ каждопаднї
+	zrivňovaty ↔ зрiвнёвати
+	čeľustnŷj ↔ чeлюстный
+
+*/
+export function mapJajejijojuBeginningLatCyr(string) {
+	let pattern =
+			'(\\b)'
+		+ '(j)'
+		+ '([' + latinVowelsUnaccentedLowerCase + '])';
+	let re = new RegExp(pattern, 'gi');
+
+	return string.replace(re, function($0, $1, $2, $3){
+		return $1 + mapLatCyr($2 + $3, 'jajejijoju');
+	});
 }
 
 
 
+/*
+	Transliaterate я, є, ї, ё, ю at the beginning of the word
 
+	Transliteration rules:
+	ja ↔ я
+	je ↔ є
+	ji ↔ ї
+	jo ↔ ё
+	ju ↔ ю
 
+	Examples
+	jabčanka ↔ ябчaнка
+	jedenastka ↔ єденастка
+	jidnaňa ↔ їднaня
+	joho ↔ ёгo
+	o-jo-joj ↔ о-ё-ёй
+	jubilant ↔ юбілaнт
+		
+	Counterexamples
+	jedenadc’atŷj ↔ єденадцятый (ja in the middle)
+	každopadňi ↔ каждопаднї
+	zrivňovaty ↔ зрiвнёвати
+	čeľustnŷj ↔ чeлюстный
+
+*/
+export function mapJajejijojuBeginningCyrLat(string) {
+	let pattern =
+			'([^' + allChars + ']|^)'
+		+ '([' + cyrillicJajejijoju + '])';
+	let re = new RegExp(pattern, 'gi');
+
+	return string.replace(re, function($0, $1, $2){
+		return $1 + mapCyrLat($2, 'jajejijoju');
+	});
+}
 
 
 
@@ -344,6 +411,7 @@ export function mapSuperlativeLatCyr(string){
 	 Public API
 */
 export function translitCyrLat(string) {
+	string = mapJajejijojuBeginningCyrLat(string);
 	string = mapCyrLat(string, "exceptions");
 	string = mapCyrLat(string, "priority-set-1");
 	string = mapCyrLat(string, "priority-set-2");
@@ -359,6 +427,7 @@ export function translitCyrLat(string) {
 export function translitLatCyr(string) {
 	string = streamlineApostrophes(string);
 	string = mapSuperlativeLatCyr(string);
+	string = mapJajejijojuBeginningLatCyr(string);
 	string = mapLatCyr(string, 'exceptions');
 	string = mapLatCyr(string, 'priority-set-1');
 	string = mapLatCyr(string, 'priority-set-2');

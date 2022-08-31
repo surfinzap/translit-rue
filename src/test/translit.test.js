@@ -1,5 +1,7 @@
 import {
 				mapSuperlativeLatCyr,
+				mapJajejijojuBeginningLatCyr,
+				mapJajejijojuBeginningCyrLat,
 				translitCyrLat,
 				translitLatCyr} from '../translit.js';
 import assert from 'assert';
@@ -43,19 +45,13 @@ describe('Basic transliteration:\n', () => {
 		"taxi" : "таксі",
 		"Chlopci":"Хлопці",
 		"chyža":"хижа",
-		"Joj": "Ёй",
-		"Ji": "Ї",
-		"joho" : "ёго",
-		"Joho" : "Ёго",
-		"jomu" : "ёму",
-		"Jomu" : "Ёму",
+
 		"ser’jozno" : "серьёзно",
 		"zjazvene" : "зъязвене",
 		"Zjavyla" : "Зъявила",
 		"Myž’ko" : "Мижько",
 		"ňoj" : "нёй",
 		"Bardejov" : "Бардеёв",
-		"naďijov" : "надїёв",
 		"treťoj" : "третёй",
 		"plaksyvo" : "плаксиво",
 		"Čornyjova":"Чорниёва",
@@ -71,10 +67,6 @@ describe('Basic transliteration:\n', () => {
 		"Myž’o" : "Мижё",
 		"Myž’a" : "Мижя",
 		"Myž’u" : "Мижю",
-		"o-jo-joj" : "о-ё-ёй",
-		"o-joj-joj" : "о-ёй-ёй",
-		"oj-joj-joj" : "ой-ёй-ёй",
-		"najobľubleňišŷj" : "найоблюбленїшый"
 	};
 
 	Object.keys(testCase).forEach((key) => {
@@ -143,6 +135,97 @@ describe(' (module) Superlative transliteration:\n', () => {
 		"Najinteligentňišŷj" : "Найінтеліґентнїшый",
 		"Najobľubleňišŷj" : "Найоблюбленїшый",
 		"Najužasňišŷj" : "Найужаснїшый",
+
+		// // upper case
+		// "NAJATRAKTIVŇIŠŶJ" :  "НАЙАТРАКТІВНЇШЫЙ", 
+		// "NAJELEGANTŇIŠŶJ" :   "НАЙЕЛЕҐАНТНЇШЫЙ",
+		// "NAJINTELIGENTŇIŠŶJ" : "НАЙІНТЕЛІҐЕНТНЇШЫЙ",
+		// "NAJOBĽUBLEŇIŠŶJ" : "НАЙОБЛЮБЛЕНЇШЫЙ",
+		// "NAJUŽASŇIŠŶJ" : "НАЙУЖАСНЇШЫЙ",
+	};
+
+	Object.keys(testCase).forEach((key) => {
+		it("Latin → Cyrillic:\n", () => {
+			assert.equal(translitLatCyr(key), testCase[key]);
+		});
+		it("Cyrillic → Latin:\n", () => {
+			assert.equal(translitCyrLat(testCase[key]), key);
+		});
+	});
+});
+
+
+
+
+describe(' (unit) Ja, je, ji, jo, ju at the beginning of the word:\n', () => {
+	let testCase = {
+
+	"jabčanka" : "яbčanka",
+	"jedenastka" : "єdenastka",
+	"jidnaňa" : "їdnaňa",
+	"joho" : "ёho",
+	"jubilant" : "юbilant",
+	"o-jo-joj" : "o-ё-ёj",
+	"ji": "ї",
+
+	"Jabčanka" : "Яbčanka",
+	"Jedenastka" : "Єdenastka",
+	"Jidnaňa" : "Їdnaňa",
+	"Joho" : "Ёho",
+	"Jokohama":	"Ёkohama",
+	"Jubilant" : "Юbilant",
+	"O-Jo-Joj" : "O-Ё-Ёj",
+	"Ji": "Ї",
+
+	// false positives
+	"jedenadc’atŷj" : "єdenadc’atŷj",
+	"každopadňi" : "každopadňi",
+	"zrivňovaty" : "zrivňovaty",
+	"čeľustnŷj" : "čeľustnŷj",
+
+	};
+
+	Object.keys(testCase).forEach((key) => {
+		it("Latin → Cyrillic:\n", () => {
+			assert.equal(mapJajejijojuBeginningLatCyr(key), testCase[key]);
+		});
+		it("Cyrillic → Latin:\n", () => {
+			assert.equal(mapJajejijojuBeginningCyrLat(testCase[key]), key);
+		});
+	});
+});
+
+
+
+
+describe('(module) Ja, je, ji, jo, ju at the beginning of the word:\n', () => {
+	let testCase = {
+
+	"jabčanka" : "ябчанка",
+	"jedenastka" : "єденастка",
+	"jidnaňa" : "їднаня",
+	"joho" : "ёгo",
+	"jubilant" : "юбілант",
+	"o-jo-joj" : "о-ё-ёй",
+
+	"Jabčanka" : "Ябчанка",
+	"Jedenastka" : "Єденастка",
+	"Jidnaňa" : "Їднаня",
+	"Joho" : "Ёгo",
+	"Jubilant" : "Юбілант",
+	"O-Jo-Joj" : "О-Ё-Ёй",
+	
+	"Joj": "Ёй",
+	"Ji": "Ї",
+	"joho" : "ёго",
+	"Joho" : "Ёго",
+	"jomu" : "ёму",
+	"Jomu" : "Ёму",
+
+	"jedenadc’atŷj" : "єденадцятый",
+	"každopadňi" : "каждопаднї",
+	"zrivňovaty" : "зрівнёвати",
+	"čeľustnŷj" : "челюстный",
 
 	};
 
