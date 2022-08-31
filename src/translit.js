@@ -318,17 +318,21 @@ function mapLatCyr(string, mappingOption) {
 	@returns {string} where all words that begin with "naj|Naj|NAJ" followed by a vowel will be transliterated to "най|Най|НАЙ"
 */
 export function mapSuperlativeLatCyr(string){
-		let pattern =
-			'(\\b)'
-		+ '(naj)'
-		+ '([aeiou])'
-		+ '([' + lowercaseChars + ']+?)'
-		+ '(šŷj|šoho|šomu|šom|šŷm|šŷ|šŷch|šŷmi|šŷmy|ša|šoj|šu|šov|šŷch|še)';
-		let re = new RegExp(pattern, 'gi');
+	let pattern =
+		'(\\b)'
+	+ '(naj)'
+	+ '([' + latinVowelsUnaccentedLowerCase + '])'
+	+ '([' + lowercaseChars + ']+?)'
+	+ '(šŷj|šoho|šomu|šom|šŷm|šŷ|šŷch|šŷmi|šŷmy|ša|šoj|šu|šov|šŷch|še)';
+	let re = new RegExp(pattern, 'gi');
 
-		return string.replace(re, function($0, $1, $2, $3, $4, $5){
-			return $1 + mapLatCyr($2, 'chars') + $3 + $4 + $5;
-		});
+	return string.replace(re, function($0, $1, $2, $3, $4, $5){
+		return $1 + mapLatCyr($2, 'chars') + $3 + $4 + $5;
+	});
+
+}
+
+
 
 /*
 	Transliaterate ja, je, ji, jo, ju at the beginning of the word
