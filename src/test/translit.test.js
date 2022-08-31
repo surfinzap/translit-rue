@@ -2,6 +2,8 @@ import {
 				mapSuperlativeLatCyr,
 				mapJajeBeginningLatCyr,
 				mapJajeBeginningCyrLat,
+				mapJajeBeforeVowelLatCyr,
+				mapJajeBeforeVowelCyrLat,
 				translitCyrLat,
 				translitLatCyr} from '../translit.js';
 import assert from 'assert';
@@ -35,7 +37,6 @@ describe('Basic transliteration:\n', () => {
 		"merenďu" : "мерендю",
 		"ňej" : "нєй",
 		"Ňanu" : "Няну",
-		"tvojoj" : "твоёй",
 		"Braňo" : "Бранё",
 		"Vlaďo" : "Владё",
 		"Oťo" : "Отё",
@@ -45,18 +46,16 @@ describe('Basic transliteration:\n', () => {
 		"taxi" : "таксі",
 		"Chlopci":"Хлопці",
 		"chyža":"хижа",
-
+		
 		"ser’jozno" : "серьёзно",
 		"zjazvene" : "зъязвене",
 		"Zjavyla" : "Зъявила",
 		"Myž’ko" : "Мижько",
 		"ňoj" : "нёй",
-		"Bardejov" : "Бардеёв",
+
 		"treťoj" : "третёй",
 		"plaksyvo" : "плаксиво",
-		"Čornyjova":"Чорниёва",
 		"Obľľav" : "Облляв",
-		"plaksyvo" : "плаксиво",
 		"taksamo": "таксамо",
 		"zjemňovaly":"зъємнёвали",
 		"ňoho":"нёго",
@@ -240,6 +239,185 @@ describe('(module) Ja, je, ji, jo, ju at the beginning of the word:\n', () => {
 		});
 	});
 });
+
+
+
+describe('(unit, lat) Ja, je, ji, jo, ju before a vowel:\n', () => {
+	let testCase = {
+
+		"bajusatŷj" : "baюsatŷj",
+		"Bajerivc’i" : "Baєrivc’i",
+		"hajik" : "haїk",
+		"zajačaty" : "zaяčaty",
+		"lyšajovŷj" : "lyšaёvŷj",
+
+		"akceleracija" : "akceleraciя",
+		"akciji" : "akciї",
+		"funkcijov" : "funkciёv",
+		"archijerej" : "archiєrej",
+		"policiju" : "policiю",
+
+		"pryjata" : "pryяta",
+		"pryjimaňa" : "pryїmaňa",
+		"spryjemnenŷj" : "spryєmnenŷj",
+		"čornyjova" : "čornyёva",
+		"vyjuť" : "vyюť",
+
+		"glejovŷj" : "gleёvŷj",
+		"naklejity" : "nakleїty",
+		"nejeden" : "neєden",
+		"nejadrovŷj" : "neяdrovŷj",
+		"oklejuju" : "okleюju",
+
+		"ojalovity" : "oяlovity",
+		"pereprojektovaty" : "pereproєktovaty",
+		"pidhojity" : "pidhoїty",
+		"svoju" : "svoю",
+		"svojoj" : "svoёj",
+
+		"šŷje" : "šŷє",
+		"vŷjasnyť" : "vŷяsnyť",
+		"šŷju" : "šŷю",
+		"šŷji" : "šŷї",
+		"Kŷjovčan" : "Kŷёvčan",
+
+		"kuju" : "kuю",
+		"kulminuje" : "kulminuє",
+		"tuja" : "tuя",
+		"ujidaty" : "uїdaty",
+
+		"tvojoj" : "tvoёj",
+		"Bardejov" : "Bardeёv",
+
+	};
+
+	Object.keys(testCase).forEach((key) => {
+		it("Latin → Cyrillic:\n", () => {
+			assert.equal(mapJajeBeforeVowelLatCyr(key), testCase[key]);
+		});
+	});
+});
+
+
+
+describe('(unit, cyr) Ja, je, ji, jo, ju before a vowel:\n', () => {
+	let testCase = {
+		// there are cyrillic vowels before ja, je,...
+
+		"bаjusatŷj" : "bаюsatŷj",
+		"Bаjerivc’i" : "Bаєrivc’i",
+		"hаjik" : "hаїk",
+		"zаjačaty" : "zаяčaty",
+		"lyšаjovŷj" : "lyšаёvŷj",
+
+		"akceleracіja" : "akceleracія",
+		"akcіji" : "akcії",
+		"funkcіjov" : "funkcіёv",
+		"archіjerej" : "archієrej",
+		"policіju" : "policію",
+
+		"prиjata" : "prияta",
+		"prиjimaňa" : "prиїmaňa",
+		"sprиjemnenŷj" : "sprиєmnenŷj",
+		"čornиjova" : "čornиёva",
+		"vиjuť" : "vиюť",
+
+		"glеjovŷj" : "glеёvŷj",
+		"naklеjity" : "naklеїty",
+		"nеjedеn" : "nеєdеn",
+		"nеjadrovŷj" : "nеяdrovŷj",
+		"oklеjuju" : "oklеюju",
+
+		"оjalоvity" : "ояlоvity",
+		"pereprоjektоvaty" : "pereprоєktоvaty",
+		"pidhоjity" : "pidhоїty",
+		"svоju" : "svою",
+		"svоjoj" : "svоёj",
+
+		"šыje" : "šыє",
+		"vыjasnyť" : "vыяsnyť",
+		"šыju" : "šыю",
+		"šыji" : "šыї",
+		"Kыjovčan" : "Kыёvčan",
+
+		"kуju" : "kую",
+		"kulminуje" : "kulminує",
+		"tуja" : "tуя",
+		"уjidaty" : "уїdaty",
+
+		"tvоjoj" : "tvоёj",
+		"Bardеjov" : "Bardеёv",
+
+	};
+
+	Object.keys(testCase).forEach((key) => {
+		it("Cyrillic → Latin:\n", () => {
+			assert.equal(mapJajeBeforeVowelCyrLat(testCase[key]), key);
+		});
+	});
+});
+
+
+describe('(module) Ja, je, ji, jo, ju before a vowel:\n', () => {
+	let testCase = {
+
+		"bajusatŷj" :	"баюсатый",
+		"Bajerivc’i" :	"Баєрівцї",
+		"hajik" :	"гаїк",
+		"zajačaty" :	"заячати",
+		"lyšajovŷj" :	"лишаёвый",
+
+		"akceleracija" :	"акцелерація",
+		"akciji" :	"акції",
+		"funkcijov" :	"функціёв",
+		"archijerej" :	"архієрей",
+		"policiju" :	"поліцію",
+
+		"pryjata" :	"прията",
+		"pryjimaňa" :	"приїманя",
+		"spryjemnenŷj" :	"сприємненый",
+		"čornyjova" :	"чорниёва",
+		"vyjuť" :	"виють",
+
+		"glejovŷj" :	"ґлеёвый",
+		"naklejity" :	"наклеїти",
+		"nejeden" :	"неєден",
+		"nejadrovŷj" :	"неядровый",
+		"oklejuju" :	"оклеюю",
+
+		"ojalovity" :	"ояловіти",
+		"pereprojektovaty" :	"перепроєктовати",
+		"pidhojity" :	"підгоїти",
+		"svoju" :	"свою",
+		"svojoj" :	"своёй",
+
+		"šŷje" :	"шыє",
+		"vŷjasnyť" :	"выяснить",
+		"šŷju" :	"шыю",
+		"šŷji" :	"шыї",
+		"Kŷjovčan" :	"Кыёвчан",
+
+		"kuju" :	"кую",
+		"kulminuje" :	"кулмінує",
+		"tuja" :	"туя",
+		"ujidaty" :	"уїдати",
+
+		"tvojoj" : "твоёй",
+		"Bardejov" : "Бардеёв",
+
+
+	};
+
+	Object.keys(testCase).forEach((key) => {
+		it("Latin → Cyrillic:\n", () => {
+			assert.equal(translitLatCyr(key), testCase[key]);
+		});
+		it("Cyrillic → Latin:\n", () => {
+			assert.equal(translitCyrLat(testCase[key]), key);
+		});
+	});
+});
+
 
 
 
