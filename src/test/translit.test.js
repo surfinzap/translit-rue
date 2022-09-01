@@ -548,10 +548,6 @@ describe('Module tests:\n', () => {
 		"Tallin" : "Таллін",
 		"odťikaty" : "одтїкати",
 
-
-
-
-
 	};
 
 	Object.keys(testCase).forEach((key) => {
@@ -563,9 +559,3 @@ describe('Module tests:\n', () => {
 		});
 	});
 });
-
-
-
-
-
-
