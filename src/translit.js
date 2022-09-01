@@ -132,9 +132,6 @@ const mapping = {
 		"ž’u" : "жю",
 		"Ž’u" : "Жю",
 
-	},
-
-	"priority-set-3" : {
 		"zja" : "зъя",
 		"Zja" : "Зъя",
 		"zje" : "зъє",
@@ -159,6 +156,7 @@ const mapping = {
 		"Dji" : "Дъї",
 		"Djo" : "Дъё",
 		"Dju" : "Дъю",
+
 	},
 
 
@@ -187,7 +185,7 @@ const mapping = {
 		"Ľ": "Ль",
 	},
 
-	"basic" : {
+	"doubleChars" : {
 		"ja": "я",
 		"Ja": "Я",
 		"ju": "ю",
@@ -215,7 +213,7 @@ const mapping = {
 		"ž’" : "жь",
 		"Ž’" : "Жь",
 	},
-	"chars" : {
+	"singleChars" : {
 		"a" : "а",
 		"b" : "б",
 		"v" : "в",
@@ -338,7 +336,7 @@ export function mapSuperlativeLatCyr(string){
 	let re = new RegExp(pattern, 'gi');
 
 	return string.replace(re, function($0, $1, $2, $3, $4, $5){
-		return $1 + mapLatCyr($2, 'chars') + $3 + $4 + $5;
+		return $1 + mapLatCyr($2, 'singleChars') + $3 + $4 + $5;
 	});
 
 }
@@ -497,10 +495,9 @@ export function translitCyrLat(string) {
 	string = mapCyrLat(string, 'priority-set-1');
 	string = mapCyrLat(string, 'detenele');
 	string = mapCyrLat(string, 'priority-set-2');
-	string = mapCyrLat(string, 'priority-set-3');
 	string = mapCyrLat(string, 'dtnl');
-	string = mapCyrLat(string, 'basic');
-	string = mapCyrLat(string, 'chars');
+	string = mapCyrLat(string, 'doubleChars');
+	string = mapCyrLat(string, 'singleChars');
 	return string;
 }
 
@@ -515,9 +512,8 @@ export function translitLatCyr(string) {
 	string = mapLatCyr(string, 'priority-set-1');
 	string = mapLatCyr(string, 'detenele');
 	string = mapLatCyr(string, 'priority-set-2');
-	string = mapLatCyr(string, 'priority-set-3');
 	string = mapLatCyr(string, 'dtnl');
-	string = mapLatCyr(string, 'basic');
-	string = mapLatCyr(string, 'chars');
+	string = mapLatCyr(string, 'doubleChars');
+	string = mapLatCyr(string, 'singleChars');
 	return string;
 }
