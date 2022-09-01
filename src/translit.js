@@ -23,15 +23,12 @@ const lowerCaseChars = "a-z" + nonLatinLowercase;
 const upperCaseChars = "A-Z" + nonLatinUppercase;
 const allChars = lowerCaseChars + upperCaseChars;
 
-
-
-const mapping = {
-	"exceptions" : {
+const exceptions = {
 		"text" : "текст",
 		"taxi" : "таксі",
-	},
+	};
 
-	"doubledDtnl" : {
+const doubledDtnl = {
 		"ď": "д",
 		"Ď": "Д",
 		"ť": "т",
@@ -40,9 +37,9 @@ const mapping = {
 		"Ň": "Н",
 		"ľ": "л",
 		"Ľ": "Л",		
-	},
+	};
 
-	"detenele" : {
+const detenele = {
 		// da ta na la
 		"ďa": "дя",
 		"Ďa": "Дя",
@@ -93,9 +90,9 @@ const mapping = {
 		"Ňu": "Hю",
 		"ľu": "лю",
 		"Ľu": "Лю",
-	},
+	};
 
-	"hardConsonants" : {
+const hardConsonants = {
 		// cja, cji, cjo, cju, sja, sji, sjo, sju, rja, rji, rjo, rju, zja, zji, zjo, zju
 		// keep these characters together, do not optimalize by removing first letters
 		"c’a": "ця",
@@ -182,10 +179,10 @@ const mapping = {
 		// l + ja, je, ji, jo, ju
 
 
-	},
+	};
 
 
-	"jajejijoju" : {
+const jajejijoju = {
 		"ja" : "я",
 		"je" : "є",
 		"ji" : "ї",
@@ -196,10 +193,10 @@ const mapping = {
 		"Ji" : "Ї",
 		"Jo" : "Ё",
 		"Ju" : "Ю",		
-	},
+	};
 
 
-	"dtnl" : {
+const dtnl = {
 		"ď": "дь",
 		"Ď": "Дь",
 		"ť": "ть",
@@ -208,9 +205,9 @@ const mapping = {
 		"Ň": "Нь",
 		"ľ": "ль",
 		"Ľ": "Ль",
-	},
+	};
 
-	"doubleChars" : {
+const doubleChars = {
 		"ja": "я",
 		"Ja": "Я",
 		"ju": "ю",
@@ -237,8 +234,9 @@ const mapping = {
 		"Z’" : "Зь",
 		"ž’" : "жь",
 		"Ž’" : "Жь",
-	},
-	"singleChars" : {
+	};
+
+const singleChars = {
 		"a" : "а",
 		"b" : "б",
 		"v" : "в",
@@ -294,7 +292,9 @@ const mapping = {
 		"Ž" : "Ж",
 		"Š" : "Ш",
 	}
-}
+
+
+
 
 /*
 	 (39) dumb single quote,
@@ -309,8 +309,8 @@ function streamlineApostrophes(string) {
 
 
 function mapCyrLat(string, mappingOption) {
-	for (var rule in mapping[mappingOption]){
-		var re = new RegExp(mapping[mappingOption][rule],"g");
+	for (var rule in mappingOption){
+		var re = new RegExp(mappingOption[rule],"g");
 		string =  string.replace(re, rule);
 	}
 	return string;
@@ -319,9 +319,9 @@ function mapCyrLat(string, mappingOption) {
 
 
 function mapLatCyr(string, mappingOption) {
-	for (var rule in mapping[mappingOption]){
+	for (var rule in mappingOption){
 		var re = new RegExp(rule,"g");
-		string =  string.replace(re, mapping[mappingOption][rule]);
+		string =  string.replace(re, mappingOption[rule]);
 	}
 	return string;
 }
@@ -364,7 +364,7 @@ export function mapDoubledDtnlLatCyr(string){
 	let re = new RegExp(pattern, 'gi');
 
 	return string.replace(re, function($0, $1, $2, $3){
-		return mapLatCyr($1, 'doubledDtnl') + $2 + $3;
+		return mapLatCyr($1, doubledDtnl) + $2 + $3;
 	});
 }
 
@@ -406,7 +406,7 @@ export function mapDoubledDtnlCyrLat(string){
 	let re = new RegExp(pattern, 'gi');
 
 	return string.replace(re, function($0, $1, $2, $3){
-		return mapCyrLat($1, 'doubledDtnl') + $2 + $3;
+		return mapCyrLat($1, doubledDtnl) + $2 + $3;
 	});
 }
 
@@ -448,7 +448,7 @@ export function mapSuperlativeLatCyr(string){
 	let re = new RegExp(pattern, 'gi');
 
 	return string.replace(re, function($0, $1, $2, $3, $4, $5){
-		return $1 + mapLatCyr($2, 'singleChars') + $3 + $4 + $5;
+		return $1 + mapLatCyr($2, singleChars) + $3 + $4 + $5;
 	});
 
 }
@@ -490,7 +490,7 @@ export function mapJajeBeginningLatCyr(string) {
 	let re = new RegExp(pattern, 'gi');
 
 	return string.replace(re, function($0, $1, $2, $3){
-		return $1 + mapLatCyr($2 + $3, 'jajejijoju');
+		return $1 + mapLatCyr($2 + $3, jajejijoju);
 	});
 }
 
@@ -531,7 +531,7 @@ export function mapJajeBeginningCyrLat(string) {
 	let re = new RegExp(pattern, 'gi');
 
 	return string.replace(re, function($0, $1, $2){
-		return $1 + mapCyrLat($2, 'jajejijoju');
+		return $1 + mapCyrLat($2, jajejijoju);
 	});
 }
 
@@ -560,7 +560,7 @@ export function mapJajeBeforeVowelLatCyr(string) {
 	let re = new RegExp(pattern, 'gi');
 
 	return string.replace(re, function($0, $1, $2){
-		return $1 + mapLatCyr($2, 'jajejijoju');
+		return $1 + mapLatCyr($2, jajejijoju);
 	});
 }
 
@@ -591,7 +591,7 @@ export function mapJajeBeforeVowelCyrLat(string) {
 	let re = new RegExp(pattern, 'gi');
 
 	return string.replace(re, function($0, $1, $2){
-		return $1 + mapCyrLat($2, 'jajejijoju');
+		return $1 + mapCyrLat($2, jajejijoju);
 	});
 }
 
@@ -604,12 +604,12 @@ export function translitCyrLat(string) {
 	string = mapJajeBeginningCyrLat(string);
 	string = mapJajeBeforeVowelCyrLat(string);
 	string = mapDoubledDtnlCyrLat(string);
-	string = mapCyrLat(string, 'exceptions');
-	string = mapCyrLat(string, 'detenele');
-	string = mapCyrLat(string, 'hardConsonants');
-	string = mapCyrLat(string, 'dtnl');
-	string = mapCyrLat(string, 'doubleChars');
-	string = mapCyrLat(string, 'singleChars');
+	string = mapCyrLat(string, exceptions);
+	string = mapCyrLat(string, detenele);
+	string = mapCyrLat(string, hardConsonants);
+	string = mapCyrLat(string, dtnl);
+	string = mapCyrLat(string, doubleChars);
+	string = mapCyrLat(string, singleChars);
 	return string;
 }
 
@@ -621,11 +621,11 @@ export function translitLatCyr(string) {
 	string = mapJajeBeginningLatCyr(string);
 	string = mapJajeBeforeVowelLatCyr(string);
 	string = mapDoubledDtnlLatCyr(string);
-	string = mapLatCyr(string, 'exceptions');
-	string = mapLatCyr(string, 'detenele');
-	string = mapLatCyr(string, 'hardConsonants');
-	string = mapLatCyr(string, 'dtnl');
-	string = mapLatCyr(string, 'doubleChars');
-	string = mapLatCyr(string, 'singleChars');
+	string = mapLatCyr(string, exceptions);
+	string = mapLatCyr(string, detenele);
+	string = mapLatCyr(string, hardConsonants);
+	string = mapLatCyr(string, dtnl);
+	string = mapLatCyr(string, doubleChars);
+	string = mapLatCyr(string, singleChars);
 	return string;
 }
