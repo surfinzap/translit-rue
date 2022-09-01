@@ -1,5 +1,7 @@
 import {
 				mapSuperlativeLatCyr,
+				mapDoubledDtnlLatCyr,
+				mapDoubledDtnlCyrLat,
 				mapJajeBeginningLatCyr,
 				mapJajeBeginningCyrLat,
 				mapJajeBeforeVowelLatCyr,
@@ -82,6 +84,104 @@ describe(' (unit) Ja, je, ji, jo, ju at the beginning of the word:\n', () => {
 		});
 		it("Cyrillic → Latin:\n", () => {
 			assert.equal(mapJajeBeginningCyrLat(testCase[key]), key);
+		});
+	});
+});
+
+
+
+describe('(unit, lat) Consolidate letter group (ďď | ťť | ňň | ľľ) followed by aeiou:\n', () => {
+	let testCase = {
+		
+		// matches
+		"oďďilena" : "oдďilena",
+		"žyťťa" : "žyтťa",
+		"raňňij" : "raнňij",
+		"Os’iňňe" : "Os’iнňe",
+		"ľľuť" : "лľuť",
+		"ľľaty" : "лľaty",
+
+		"Ďďilena" : "Дďilena",
+		"Ťťa" : "Тťa",
+		"Ňňij" : "Нňij",
+		"Ňňe" : "Нňe",
+		"Ľľuť" : "Лľuť",
+		"Ľľaty" : "Лľaty",
+
+		// false positives, no accents on dtnl
+		"oddŷchly" : "oddŷchly",
+		"piddaty" : "piddaty",
+		"nadderaty" : "nadderaty",
+		"naddobaty" : "naddobaty",
+		"naddunajskŷj" : "naddunajskŷj",
+		"Latta" : "Latta",
+		"alegretto" : "alegretto",
+		"motto" : "motto",
+		"Rotterdam" : "Rotterdam",
+		"neperestanno" : "neperestanno",
+		"každodennŷj" : "každodennŷj",
+		"Humenne" : "Humenne",
+		"bulla" : "bulla",
+		"Tallin" : "Tallin",
+
+		//false positive, mix of d-t-n-l
+		"odťikaty" : "odťikaty",
+
+
+	};
+
+	Object.keys(testCase).forEach((key) => {
+		it("Latin → Cyrillic:\n", () => {
+			assert.equal(mapDoubledDtnlLatCyr(key), testCase[key]);
+		});
+	});
+});
+
+
+
+describe('(unit, cyr) Consolidate letter group (дд | тт | нн | лл) followed by яєїёю:\n', () => {
+	let testCase = {
+		
+		// matches
+		"оďдїлена" : "оддїлена",
+		"жиťтя" : "життя",
+		"рaňнїй" : "рaннїй",
+		"Осїňнє" : "Осїннє",
+		"Ľлють" : "Ллють",
+		"Ľляти" : "Лляти",
+		
+		"Ďдїлена" : "Ддїлена",
+		"Ťтя" : "Ття",
+		"Ňнїй" : "Ннїй",
+		"Ňнє" : "Ннє",
+		"Ľлють" : "Ллють",
+		"Ľляти" : "Лляти",
+		
+		// false positives, no accents on dtnl
+		"оддыхли" : "оддыхли",
+		"піддати" : "піддати",
+		"наддерaти" : "наддерaти",
+		"наддoбати" : "наддoбати",
+		"наддунaйскый" : "наддунaйскый",
+		"Латта" : "Латта",
+		"алеґрeтто" : "алеґрeтто",
+		"мотто" : "мотто",
+		"Роттердaм" : "Роттердaм",
+		"неперестанно" : "неперестанно",
+		"каждоденный" : "каждоденный",
+		"Гумeнне" : "Гумeнне",
+		"булла" : "булла",
+		"Тaллін" : "Тaллін",
+		
+		//false positive, mix of d-t-n-l
+		"одтїкaти" : "одтїкaти",
+
+
+	};
+
+	Object.keys(testCase).forEach((key) => {
+		it("Latin → Cyrillic:\n", () => {
+			assert.equal(mapDoubledDtnlCyrLat(testCase[key]), key);
 		});
 	});
 });
@@ -274,7 +374,6 @@ describe('Module tests:\n', () => {
 
 		"treťoj" : "третёй",
 		"plaksyvo" : "плаксиво",
-		"Obľľav" : "Облляв",
 		"taksamo": "таксамо",
 		"zjemňovaly":"зъємнёвали",
 		"ňoho":"нёго",
@@ -284,8 +383,6 @@ describe('Module tests:\n', () => {
 		"Myž’o" : "Мижё",
 		"Myž’a" : "Мижя",
 		"Myž’u" : "Мижю",
-
-
 
 		// Ja, je, ji, jo, ju at the beginning of the word:
 		
@@ -399,19 +496,50 @@ describe('Module tests:\n', () => {
 		"peredjunovŷj" : "передъюновый",
 
 		// superlative
-		// lower case
 		"najatraktivňišŷj" :  "найатрактівнїшый", 
 		"najelegantňišŷj" :   "найелеґантнїшый",
 		"najinteligentňišŷj" : "найінтеліґентнїшый",
 		"najobľubleňišŷj" : "найоблюбленїшый",
 		"najužasňišŷj" : "найужаснїшый",
 
-		// title case
 		"Najatraktivňišŷj" :  "Найатрактівнїшый", 
 		"Najelegantňišŷj" :   "Найелеґантнїшый",
 		"Najinteligentňišŷj" : "Найінтеліґентнїшый",
 		"Najobľubleňišŷj" : "Найоблюбленїшый",
 		"Najužasňišŷj" : "Найужаснїшый",
+
+
+		// doubled dtnl
+		"oďďilena" : "оддїлена",
+		"žyťťa" : "життя",
+		"raňňij" : "раннїй",
+		"Os’iňňe" : "Осїннє",
+		"ľľuť" : "ллють",
+		"ľľaty" : "лляти",
+		"Ďďilena" : "Ддїлена",
+		"Ťťa" : "Ття",
+		"Ňňij" : "Ннїй",
+		"Ňňe" : "Ннє",
+		"Ľľuť" : "Ллють",
+		"Ľľaty" : "Лляти",
+		// doubled dtnl false positives
+		"oddŷchly" : "оддыхли",
+		"piddaty" : "піддати",
+		"nadderaty" : "наддерати",
+		"naddobaty" : "наддобати",
+		"naddunajskŷj" : "наддунайскый",
+		"Latta" : "Латта",
+		"alegretto" : "алеґретто",
+		"motto" : "мотто",
+		"Rotterdam" : "Роттердам",
+		"neperestanno" : "неперестанно",
+		"každodennŷj" : "каждоденный",
+		"Humenne" : "Гуменне",
+		"bulla" : "булла",
+		"Tallin" : "Таллін",
+		"odťikaty" : "одтїкати",
+
+
 
 
 

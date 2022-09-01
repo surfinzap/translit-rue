@@ -30,9 +30,15 @@ const mapping = {
 		"taxi" : "таксі",
 	},
 
-	"priority-set-1" : {
-		"ľľa" : "лля",
-		"Ľľa" : "Лля",
+	"doubledDtnl" : {
+		"ď": "д",
+		"Ď": "Д",
+		"ť": "т",
+		"Ť": "Т",
+		"ň": "н",
+		"Ň": "Н",
+		"ľ": "л",
+		"Ľ": "Л",		
 	},
 
 	"detenele" : {
@@ -292,6 +298,7 @@ function mapCyrLat(string, mappingOption) {
 }
 
 
+
 function mapLatCyr(string, mappingOption) {
 	for (var rule in mapping[mappingOption]){
 		var re = new RegExp(rule,"g");
@@ -299,6 +306,92 @@ function mapLatCyr(string, mappingOption) {
 	}
 	return string;
 }
+
+
+
+/*  
+	Consolidate letter group (ďď | ťť | ňň | ľľ) followed by aeiou
+
+	Naive transliteration would be to transliterate:
+	first “ď” → дь
+	and the rest “ďa” → дя 
+
+	However, the correct transliteration is to omit the soft character:
+	ďďa → ддя
+
+	Examples
+	oďďilena → оддїлена
+	žyťťa → життя
+	raňňij → рaннїй
+	ľľaty → лляти
+
+	Counterexamples (unaccented dd, tt, nn, ll)
+	naddunajskŷj → наддунaйскый
+	motto → мотто
+	Humenne → Гумeнне
+	Tallin → Тaллін
+
+	Counterexamples (combination of letters, e.g d–t)
+	odťikaty → одтїкaти
+
+	@param {string} string: input text for mapping
+	@returns {string} where the first (ď|ť|ň|ľ) of the group is transliterated to its cyrillic equivalent, omitting the soft character “ь”
+*/
+export function mapDoubledDtnlLatCyr(string){
+	let pattern =
+		'(?<dtnl>[ďťňľ])'
+	+ '(\\k<dtnl>)'
+	+ '([aeiou])';
+	let re = new RegExp(pattern, 'gi');
+
+	return string.replace(re, function($0, $1, $2, $3){
+		return mapLatCyr($1, 'doubledDtnl') + $2 + $3;
+	});
+}
+
+
+
+/*  
+	Consolidate letter group (дд | тт | нн | лл) followed by яєїёю
+
+	Naive transliteration would be to translate:
+	first “д” → d
+	and the rest “дя” → ďa
+
+	However, the correct transliteration is double the accents on consonants:
+	ддя → ďďa
+
+	Examples
+	oďďilena → оддїлена
+	žyťťa → життя
+	raňňij → рaннїй
+	ľľaty → лляти
+
+	Counterexamples (unaccented dd, tt, nn, ll)
+	naddunajskŷj → наддунaйскый
+	motto → мотто
+	Humenne → Гумeнне
+	Tallin → Тaллін
+
+	Counterexamples (combination of letters, e.g d–t)
+	odťikaty → одтїкaти
+
+	@param {string} string: input text for mapping
+	@returns {string} where the first (д| т | н | л) of the group is transliterated to its latin accented equivalent
+*/
+export function mapDoubledDtnlCyrLat(string){
+	let pattern =
+		'(?<dtnl>[дтнл])'
+	+ '(\\k<dtnl>)'
+	+ '([яєїёю])';
+	let re = new RegExp(pattern, 'gi');
+
+	return string.replace(re, function($0, $1, $2, $3){
+		return mapCyrLat($1, 'doubledDtnl') + $2 + $3;
+	});
+}
+
+
 
 
 /*
@@ -491,8 +584,8 @@ export function mapJajeBeforeVowelCyrLat(string) {
 export function translitCyrLat(string) {
 	string = mapJajeBeginningCyrLat(string);
 	string = mapJajeBeforeVowelCyrLat(string);
+	string = mapDoubledDtnlCyrLat(string);
 	string = mapCyrLat(string, 'exceptions');
-	string = mapCyrLat(string, 'priority-set-1');
 	string = mapCyrLat(string, 'detenele');
 	string = mapCyrLat(string, 'hardConsonants');
 	string = mapCyrLat(string, 'dtnl');
@@ -508,8 +601,8 @@ export function translitLatCyr(string) {
 	string = mapSuperlativeLatCyr(string);
 	string = mapJajeBeginningLatCyr(string);
 	string = mapJajeBeforeVowelLatCyr(string);
+	string = mapDoubledDtnlLatCyr(string);
 	string = mapLatCyr(string, 'exceptions');
-	string = mapLatCyr(string, 'priority-set-1');
 	string = mapLatCyr(string, 'detenele');
 	string = mapLatCyr(string, 'hardConsonants');
 	string = mapLatCyr(string, 'dtnl');

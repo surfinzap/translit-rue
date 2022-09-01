@@ -4,17 +4,25 @@
 
 ### 🐛 Fixes
 - superlative adjectives where a prefix “naj” follows a vowel are now transliterated properly:
-	- ⛔ before: najatraktivňišŷj → наятрактівнїшый
-	- ✅ now: najatraktivňišŷj → найатрактівнїшый
+  - ⛔ before: najatraktivňišŷj → наятрактівнїшый
+  - ✅ now: najatraktivňišŷj → найатрактівнїшый
 - improve identification of “ja”, “je”, “ji”, “jo”, “ju” at the beginning of the word
-	- ⛔ before: O-Jo-Joj → О-Йо-Ёй
-	- ✅ now: O-Jo-Joj → O-Ё-Ёj
+  - ⛔ before: O-Jo-Joj → О-Йо-Ёй
+  - ✅ now: O-Jo-Joj → O-Ё-Ёj
 - improve identification of “ja”, “je”, “ji”, “jo”, “ju” before a vowel:
-	- ⛔ before: функціёв → funkci’ov
-	- ✅ now: функціёв → funkcijov
+  - ⛔ before: функціёв → funkci’ov
+  - ✅ now: функціёв → funkcijov
 - improve identification of “Дъ” + “я, є, ї, ё, ю”:
   - ⛔ before: передъюновый → peredъjunovŷj
-	- ✅ now: передъюновый → peredjunovŷj
+  - ✅ now: передъюновый → peredjunovŷj
+- improve transliteration for doubled “ďď, ťť, ňň, ľľ”, followed by vowels “a, e, i, o, u”
+  - ⛔ before: oďďilena → одьдїлена
+  - ✅ now: oďďilena → оддїлена
+  - ⛔ before: життя → žytťa
+  - ✅ now: життя → žyťťa
+
+### 🔨 Maintenance
+- Add more unit and module tests to test edge cases
 
 
 
@@ -86,10 +94,10 @@ There are no changes in functionality in this release
  * closure to set the scope of javascript functions
  * tests rewritten for javascript
  * added support in javascript for:
-		*	"c'u" —> "цю",
-		*	"s'u" —> "сю",
-		* "r'u" —> "рю",
-		* "z'u" —> "зю",
+    *	"c'u" —> "цю",
+    *	"s'u" —> "сю",
+    * "r'u" —> "рю",
+    * "z'u" —> "зю",
 
 ## 2015-09-17
  * 0.25 released
@@ -99,10 +107,10 @@ There are no changes in functionality in this release
 ## 2015-09-13
  * 0.24 released
  * added support for
-		*	"c'u" —> "цю",
-		*	"s'u" —> "сю",
-		* "r'u" —> "рю",
-		* "z'u" —> "зю",
+    *	"c'u" —> "цю",
+    *	"s'u" —> "сю",
+    * "r'u" —> "рю",
+    * "z'u" —> "зю",
 
 ## 2015-08-04
  * 0.23 released
