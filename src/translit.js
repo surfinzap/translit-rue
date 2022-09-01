@@ -1,11 +1,12 @@
 /*!
  * Translit (Rusyn transliteration) 2.0.7
- * https://tota.sk/translit
+ * code: https://github.com/surfinzap/translit
+ * app: https://tota.sk/translit
  *
- * Copyright 2014-20 Braňo Šandala
+ * Copyright 2014-22 Braňo Šandala
  * Released under the MIT license
  *
- * Date: 2020-07-27
+ * Date: 2022-09-01
  */
 
 
