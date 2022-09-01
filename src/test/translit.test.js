@@ -85,7 +85,6 @@ describe(' (module) Superlative transliteration:\n', () => {
 
 
 
-
 describe(' (unit) Ja, je, ji, jo, ju at the beginning of the word:\n', () => {
 	let testCase = {
 
@@ -428,6 +427,15 @@ describe('Module tests:\n', () => {
 		"leoparďij" : "леопардїй",
 		"beznaďijno" : "безнадїйно",
 		"voľiju" : "волїю",
+
+
+		//d + ja, je, ji, jo, ju
+		"predjidlo":"предъїдло",
+		"adjektiviv" : "адъєктівів",
+		"nadjazd" : "надъязд",
+		"peredjunovŷj" : "передъюновый",
+
+
 
 	};
 
