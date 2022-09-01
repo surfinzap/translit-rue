@@ -48,43 +48,6 @@ describe(' (unit) Superlative transliteration:\n', () => {
 
 
 
-describe(' (module) Superlative transliteration:\n', () => {
-	let testCase = {
-
-		// lower case
-		"najatraktivňišŷj" :  "найатрактівнїшый", 
-		"najelegantňišŷj" :   "найелеґантнїшый",
-		"najinteligentňišŷj" : "найінтеліґентнїшый",
-		"najobľubleňišŷj" : "найоблюбленїшый",
-		"najužasňišŷj" : "найужаснїшый",
-
-		// title case
-		"Najatraktivňišŷj" :  "Найатрактівнїшый", 
-		"Najelegantňišŷj" :   "Найелеґантнїшый",
-		"Najinteligentňišŷj" : "Найінтеліґентнїшый",
-		"Najobľubleňišŷj" : "Найоблюбленїшый",
-		"Najužasňišŷj" : "Найужаснїшый",
-
-		// // upper case
-		// "NAJATRAKTIVŇIŠŶJ" :  "НАЙАТРАКТІВНЇШЫЙ", 
-		// "NAJELEGANTŇIŠŶJ" :   "НАЙЕЛЕҐАНТНЇШЫЙ",
-		// "NAJINTELIGENTŇIŠŶJ" : "НАЙІНТЕЛІҐЕНТНЇШЫЙ",
-		// "NAJOBĽUBLEŇIŠŶJ" : "НАЙОБЛЮБЛЕНЇШЫЙ",
-		// "NAJUŽASŇIŠŶJ" : "НАЙУЖАСНЇШЫЙ",
-	};
-
-	Object.keys(testCase).forEach((key) => {
-		it("Latin → Cyrillic:\n", () => {
-			assert.equal(translitLatCyr(key), testCase[key]);
-		});
-		it("Cyrillic → Latin:\n", () => {
-			assert.equal(translitCyrLat(testCase[key]), key);
-		});
-	});
-});
-
-
-
 describe(' (unit) Ja, je, ji, jo, ju at the beginning of the word:\n', () => {
 	let testCase = {
 
@@ -434,6 +397,21 @@ describe('Module tests:\n', () => {
 		"adjektiviv" : "адъєктівів",
 		"nadjazd" : "надъязд",
 		"peredjunovŷj" : "передъюновый",
+
+		// superlative
+		// lower case
+		"najatraktivňišŷj" :  "найатрактівнїшый", 
+		"najelegantňišŷj" :   "найелеґантнїшый",
+		"najinteligentňišŷj" : "найінтеліґентнїшый",
+		"najobľubleňišŷj" : "найоблюбленїшый",
+		"najužasňišŷj" : "найужаснїшый",
+
+		// title case
+		"Najatraktivňišŷj" :  "Найатрактівнїшый", 
+		"Najelegantňišŷj" :   "Найелеґантнїшый",
+		"Najinteligentňišŷj" : "Найінтеліґентнїшый",
+		"Najobľubleňišŷj" : "Найоблюбленїшый",
+		"Najužasňišŷj" : "Найужаснїшый",
 
 
 
