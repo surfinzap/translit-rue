@@ -8,76 +8,6 @@ import {
 				translitLatCyr} from '../translit.js';
 import assert from 'assert';
 
-describe('Basic transliteration:\n', () => {
-	let testCase = {
-		"c’ile" : "цїле",
-		"kur’atko" : "курятко",
-		"klynec’" : "клинець",
-		"s’a" : "ся",
-		"mis’ac’" : "місяць",
-		"znajuť" : "знають",
-		"ŷ": "ы",
-		"štos’ka": "штоська",
-		"jes’" : "єсь",
-		"virnŷj" : "вірный",
-		"Tr’om" : "Трём",
-		"muľar’iv" : "мулярїв",
-		"džmur’klo" : "джмурькло",
-		"Teper’" : "Теперь",
-		"vz’ala" : "взяла",
-		"Voz’" : "Возь",
-		"gazdŷňa" : "ґаздыня",
-		"ľis’i" : "лїсї",
-		"C’ilŷj" : "Цїлый",
-		"ďity" : "дїти",
-		"jich" : "їх",
-		"str’is’i" : "стрїсї",
-		"noz’i" : "нозї",
-		"stojiť" : "стоїть",
-		"merenďu" : "мерендю",
-		"ňej" : "нєй",
-		"Ňanu" : "Няну",
-		"Braňo" : "Бранё",
-		"Vlaďo" : "Владё",
-		"Oťo" : "Отё",
-		"veľo" : "велё",
-		"car’u" : "царю",
-		"text" : "текст",
-		"taxi" : "таксі",
-		"Chlopci":"Хлопці",
-		"chyža":"хижа",
-		
-		"ser’jozno" : "серьёзно",
-		"zjazvene" : "зъязвене",
-		"Zjavyla" : "Зъявила",
-		"Myž’ko" : "Мижько",
-		"ňoj" : "нёй",
-
-		"treťoj" : "третёй",
-		"plaksyvo" : "плаксиво",
-		"Obľľav" : "Облляв",
-		"taksamo": "таксамо",
-		"zjemňovaly":"зъємнёвали",
-		"ňoho":"нёго",
-		"blyžňoho":"ближнёго",
-		"Nyžňoho":"Нижнёго",
-		"zjojkla":"зъёйкла",
-		"predjidlo":"предъїдло",
-		"Myž’o" : "Мижё",
-		"Myž’a" : "Мижя",
-		"Myž’u" : "Мижю",
-	};
-
-	Object.keys(testCase).forEach((key) => {
-		it("Latin → Cyrillic:\n", () => {
-			assert.equal(translitLatCyr(key), testCase[key]);
-		});
-		it("Cyrillic → Latin:\n", () => {
-			assert.equal(translitCyrLat(testCase[key]), key);
-		});
-	});
-});
-
 
 describe(' (unit) Superlative transliteration:\n', () => {
 	let testCase = {
@@ -196,52 +126,6 @@ describe(' (unit) Ja, je, ji, jo, ju at the beginning of the word:\n', () => {
 
 
 
-
-describe('(module) Ja, je, ji, jo, ju at the beginning of the word:\n', () => {
-	let testCase = {
-
-	"jabčanka jabčanka" : "ябчанка ябчанка",
-
-	"jabčanka" : "ябчанка",
-	"jedenastka" : "єденастка",
-	"jidnaňa" : "їднаня",
-	"joho" : "ёгo",
-	"jubilant" : "юбілант",
-	"o-jo-joj" : "о-ё-ёй",
-
-	"Jabčanka" : "Ябчанка",
-	"Jedenastka" : "Єденастка",
-	"Jidnaňa" : "Їднаня",
-	"Joho" : "Ёгo",
-	"Jubilant" : "Юбілант",
-	"O-Jo-Joj" : "О-Ё-Ёй",
-	
-	"Joj": "Ёй",
-	"Ji": "Ї",
-	"joho" : "ёго",
-	"Joho" : "Ёго",
-	"jomu" : "ёму",
-	"Jomu" : "Ёму",
-
-	"jedenadc’atŷj" : "єденадцятый",
-	"každopadňi" : "каждопаднї",
-	"zrivňovaty" : "зрівнёвати",
-	"čeľustnŷj" : "челюстный",
-
-	};
-
-	Object.keys(testCase).forEach((key) => {
-		it("Latin → Cyrillic:\n", () => {
-			assert.equal(translitLatCyr(key), testCase[key]);
-		});
-		it("Cyrillic → Latin:\n", () => {
-			assert.equal(translitCyrLat(testCase[key]), key);
-		});
-	});
-});
-
-
-
 describe('(unit, lat) Ja, je, ji, jo, ju before a vowel:\n', () => {
 	let testCase = {
 
@@ -347,6 +231,8 @@ describe('(unit, cyr) Ja, je, ji, jo, ju before a vowel:\n', () => {
 
 		"tvоjoj" : "tvоёj",
 		"Bardеjov" : "Bardеёv",
+		
+		"naďїjov" : "naďїёv",
 
 	};
 
@@ -358,9 +244,120 @@ describe('(unit, cyr) Ja, je, ji, jo, ju before a vowel:\n', () => {
 });
 
 
-describe('(module) Ja, je, ji, jo, ju before a vowel:\n', () => {
-	let testCase = {
 
+
+
+
+describe('Apostrophes:\n', () => {
+	let testCase = {
+		"str‘is‘i" : "стрїсї",
+		"car‘u" : "царю",
+		"Otec’" : "Отець",
+		"Otec'" : "Отець",
+	};
+
+	Object.keys(testCase).forEach((key) => {
+		it("Latin → Cyrillic:\n", () => {
+			assert.equal(translitLatCyr(key), testCase[key]);
+		});
+	});
+});
+
+
+
+describe('Module tests:\n', () => {
+	let testCase = {
+		"c’ile" : "цїле",
+		"kur’atko" : "курятко",
+		"klynec’" : "клинець",
+		"s’a" : "ся",
+		"mis’ac’" : "місяць",
+		"znajuť" : "знають",
+		"ŷ": "ы",
+		"štos’ka": "штоська",
+		"jes’" : "єсь",
+		"virnŷj" : "вірный",
+		"Tr’om" : "Трём",
+		"muľar’iv" : "мулярїв",
+		"džmur’klo" : "джмурькло",
+		"Teper’" : "Теперь",
+		"vz’ala" : "взяла",
+		"Voz’" : "Возь",
+		"gazdŷňa" : "ґаздыня",
+		"ľis’i" : "лїсї",
+		"C’ilŷj" : "Цїлый",
+		"ďity" : "дїти",
+		"jich" : "їх",
+		"str’is’i" : "стрїсї",
+		"noz’i" : "нозї",
+		"stojiť" : "стоїть",
+		"merenďu" : "мерендю",
+		"ňej" : "нєй",
+		"Ňanu" : "Няну",
+		"Braňo" : "Бранё",
+		"Vlaďo" : "Владё",
+		"Oťo" : "Отё",
+		"veľo" : "велё",
+		"car’u" : "царю",
+		"text" : "текст",
+		"taxi" : "таксі",
+		"Chlopci":"Хлопці",
+		"chyža":"хижа",
+		
+		"ser’jozno" : "серьёзно",
+		"zjazvene" : "зъязвене",
+		"Zjavyla" : "Зъявила",
+		"Myž’ko" : "Мижько",
+		"ňoj" : "нёй",
+
+		"treťoj" : "третёй",
+		"plaksyvo" : "плаксиво",
+		"Obľľav" : "Облляв",
+		"taksamo": "таксамо",
+		"zjemňovaly":"зъємнёвали",
+		"ňoho":"нёго",
+		"blyžňoho":"ближнёго",
+		"Nyžňoho":"Нижнёго",
+		"zjojkla":"зъёйкла",
+		"Myž’o" : "Мижё",
+		"Myž’a" : "Мижя",
+		"Myž’u" : "Мижю",
+
+
+
+		// Ja, je, ji, jo, ju at the beginning of the word:
+		
+		"jabčanka jabčanka" : "ябчанка ябчанка",
+
+		"jabčanka" : "ябчанка",
+		"jedenastka" : "єденастка",
+		"jidnaňa" : "їднаня",
+		"joho" : "ёгo",
+		"jubilant" : "юбілант",
+		"o-jo-joj" : "о-ё-ёй",
+
+		"Jabčanka" : "Ябчанка",
+		"Jedenastka" : "Єденастка",
+		"Jidnaňa" : "Їднаня",
+		"Joho" : "Ёгo",
+		"Jubilant" : "Юбілант",
+		"O-Jo-Joj" : "О-Ё-Ёй",
+		
+		"Joj": "Ёй",
+		"Ji": "Ї",
+		"joho" : "ёго",
+		"Joho" : "Ёго",
+		"jomu" : "ёму",
+		"Jomu" : "Ёму",
+
+		"jedenadc’atŷj" : "єденадцятый",
+		"každopadňi" : "каждопаднї",
+		"zrivňovaty" : "зрівнёвати",
+		"čeľustnŷj" : "челюстный",
+
+
+
+		// Ja, je, ji, jo, ju before a vowel:
 		"bajusatŷj" :	"баюсатый",
 		"Bajerivc’i" :	"Баєрівцї",
 		"hajik" :	"гаїк",
@@ -405,6 +402,32 @@ describe('(module) Ja, je, ji, jo, ju before a vowel:\n', () => {
 		"tvojoj" : "твоёй",
 		"Bardejov" : "Бардеёв",
 
+		"naďijov" : "надїёв",
+		"naďiju" : "надїю",
+		"beznaďiji" : "безнадїї",
+		"naďija" : "надїя",
+		"zabzďiju" : "забздїю",
+		"osprosťijuť" : "оспростїють",
+		"Jakuťija" : "Якутїя",
+		"zeleňijuť" : "зеленїють",
+		"chudobňije" : "худобнїє",
+		"vŷtľije" : "вытлїє",
+		"voľiju" : "волїю",
+		"Mefoďija" : "Мефодїя",
+		"ďije" : "дїє",
+		"poďiju" : "подїю",
+		"naďiji" : "надїї",
+		"naďij" : "надїй",
+		"beznaďiji" : "безнадїї",
+		"naďija" : "надїя",
+
+		"zloďijska" : "злодїйска",
+		"blahoroďije" : "благородїє",
+		"haďij" : "гадїй",
+		"zabzďiju" : "забздїю",
+		"leoparďij" : "леопардїй",
+		"beznaďijno" : "безнадїйно",
+		"voľiju" : "волїю",
 
 	};
 
@@ -422,17 +445,4 @@ describe('(module) Ja, je, ji, jo, ju before a vowel:\n', () => {
 
 
 
-describe('Apostrophes:\n', () => {
-	let testCase = {
-		"str‘is‘i" : "стрїсї",
-		"car‘u" : "царю",
-		"Otec’" : "Отець",
-		"Otec'" : "Отець",
-	};
 
-	Object.keys(testCase).forEach((key) => {
-		it("Latin → Cyrillic:\n", () => {
-			assert.equal(translitLatCyr(key), testCase[key]);
-		});
-	});
-});
