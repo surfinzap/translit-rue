@@ -20,6 +20,15 @@
   - ✅ now: oďďilena → оддїлена
   - ⛔ before: життя → žytťa
   - ✅ now: життя → žyťťa
+- improve mapping when “d” or “n” acts as a hard consonant before “ja”, “je”, “ji”, “jo”, “ju”:
+  - ⛔ before: injekcia → інєкція
+  - ✅ now: injekcia → інъєкція
+  - ⛔ before: інъєкція → inъjekcija
+  - ✅ now: інъєкція → injekcia
+  - ⛔ before: nadjazd → надязд
+  - ✅ now: nadjazd → надъязд
+  - ⛔ before: надъязд → nadъjazd
+  - ✅ now: надъязд → nadjazd
 
 ### 🔨 Maintenance
 - Add more unit and module tests to test edge cases

@@ -495,6 +495,15 @@ describe('Module tests:\n', () => {
 		"nadjazd" : "надъязд",
 		"peredjunovŷj" : "передъюновый",
 
+		// n + ju, je (no examples for ja, ji, jo)
+		"konjunktura" : "конъюнктура",
+		"injekcija" : "інъєкція",
+
+		// missing examples for:
+		// t + ja, je, ji, jo, ju
+		// l + ja, je, ji, jo, ju
+
+
 		// superlative
 		"najatraktivňišŷj" :  "найатрактівнїшый", 
 		"najelegantňišŷj" :   "найелеґантнїшый",
