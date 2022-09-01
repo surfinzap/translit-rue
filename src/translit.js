@@ -9,14 +9,6 @@
  */
 
 
-/*
-Notes for improvement
-
-Move "ďijo" as "ijo" from priority-set-3 to priority-set-1
-- thought begind that vowel + (ja|jo|je...) is part where the word could be split, so that's case where no apostrophe should be
-*/
-
-
 /* Constants */
 
 const latinVowelsLowerCase = "aeiouyŷ";
@@ -155,7 +147,18 @@ const mapping = {
 		"Zju" : "Зъю",
 		"r’jo" : "рьё",
 		"R’jo" : "Рьё",
+
+		// d + ja, je, ji, jo, ju
+		"dja" : "дъя",
+		"dje" : "дъє",
 		"dji" : "дъї",
+		"djo" : "дъё",
+		"dju" : "дъю",
+		"Dja" : "Дъя",
+		"Dje" : "Дъє",
+		"Dji" : "Дъї",
+		"Djo" : "Дъё",
+		"Dju" : "Дъю",
 	},
 
 
@@ -490,14 +493,14 @@ export function mapJajeBeforeVowelCyrLat(string) {
 export function translitCyrLat(string) {
 	string = mapJajeBeginningCyrLat(string);
 	string = mapJajeBeforeVowelCyrLat(string);
-	string = mapCyrLat(string, "exceptions");
-	string = mapCyrLat(string, "priority-set-1");
-	string = mapCyrLat(string, "detenele");
-	string = mapCyrLat(string, "priority-set-2");
-	string = mapCyrLat(string, "priority-set-3");
-	string = mapCyrLat(string, "dtnl");
-	string = mapCyrLat(string, "basic");
-	string = mapCyrLat(string, "chars");
+	string = mapCyrLat(string, 'exceptions');
+	string = mapCyrLat(string, 'priority-set-1');
+	string = mapCyrLat(string, 'detenele');
+	string = mapCyrLat(string, 'priority-set-2');
+	string = mapCyrLat(string, 'priority-set-3');
+	string = mapCyrLat(string, 'dtnl');
+	string = mapCyrLat(string, 'basic');
+	string = mapCyrLat(string, 'chars');
 	return string;
 }
 
@@ -510,7 +513,7 @@ export function translitLatCyr(string) {
 	string = mapJajeBeforeVowelLatCyr(string);
 	string = mapLatCyr(string, 'exceptions');
 	string = mapLatCyr(string, 'priority-set-1');
-	string = mapLatCyr(string, "detenele");
+	string = mapLatCyr(string, 'detenele');
 	string = mapLatCyr(string, 'priority-set-2');
 	string = mapLatCyr(string, 'priority-set-3');
 	string = mapLatCyr(string, 'dtnl');

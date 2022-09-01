@@ -12,7 +12,9 @@
 - improve identification of “ja”, “je”, “ji”, “jo”, “ju” before a vowel:
 	- ⛔ before: функціёв → funkci’ov
 	- ✅ now: функціёв → funkcijov
-
+- improve identification of “Дъ” + “я, є, ї, ё, ю”:
+  - ⛔ before: передъюновый → peredъjunovŷj
+	- ✅ now: передъюновый → peredjunovŷj
 
 
 
