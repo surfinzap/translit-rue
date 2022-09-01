@@ -20,7 +20,7 @@ Move "ďijo" as "ijo" from priority-set-3 to priority-set-1
 /* Constants */
 
 const latinVowelsLowerCase = "aeiouyŷ";
-const cyrillicVowelsLowerCase = "аеіоуиы"
+const cyrillicVowelsLowerCase = "аеіоуиыї"
 const cyrillicJaje = "яєїёю";
 
 const nonLatinLowercase = "áäčďéěíĺľňóôöőŕřšťúüűůýŷžабвгґдезіийклмнопрстуфъыьцчжшїщёєюях";
@@ -41,12 +41,9 @@ const mapping = {
 	"priority-set-1" : {
 		"ľľa" : "лля",
 		"Ľľa" : "Лля",
-	// 	"ďijo" : "дїё",
-	// 	"Ďijo" : "Дїё",
-	// 	"dji" : "дъї",
 	},
 
-	"priority-set-2" : {
+	"detenele" : {
 		// da ta na la
 		"ďa": "дя",
 		"Ďa": "Дя",
@@ -97,8 +94,9 @@ const mapping = {
 		"Ňu": "Hю",
 		"ľu": "лю",
 		"Ľu": "Лю",
+	},
 
-
+	"priority-set-2" : {
 		// cja, cji, cjo, cju, sja, sji, sjo, sju, rja, rji, rjo, rju, zja, zji, zjo, zju
 		// keep these characters together, do not optimalize by removing first letters
 		"c’a": "ця",
@@ -157,6 +155,7 @@ const mapping = {
 		"Zju" : "Зъю",
 		"r’jo" : "рьё",
 		"R’jo" : "Рьё",
+		"dji" : "дъї",
 	},
 
 
@@ -493,6 +492,7 @@ export function translitCyrLat(string) {
 	string = mapJajeBeforeVowelCyrLat(string);
 	string = mapCyrLat(string, "exceptions");
 	string = mapCyrLat(string, "priority-set-1");
+	string = mapCyrLat(string, "detenele");
 	string = mapCyrLat(string, "priority-set-2");
 	string = mapCyrLat(string, "priority-set-3");
 	string = mapCyrLat(string, "dtnl");
@@ -510,6 +510,7 @@ export function translitLatCyr(string) {
 	string = mapJajeBeforeVowelLatCyr(string);
 	string = mapLatCyr(string, 'exceptions');
 	string = mapLatCyr(string, 'priority-set-1');
+	string = mapLatCyr(string, "detenele");
 	string = mapLatCyr(string, 'priority-set-2');
 	string = mapLatCyr(string, 'priority-set-3');
 	string = mapLatCyr(string, 'dtnl');
