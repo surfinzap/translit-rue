@@ -88,7 +88,7 @@ const mapping = {
 		"Ľu": "Лю",
 	},
 
-	"priority-set-2" : {
+	"hardConsonants" : {
 		// cja, cji, cjo, cju, sja, sji, sjo, sju, rja, rji, rjo, rju, zja, zji, zjo, zju
 		// keep these characters together, do not optimalize by removing first letters
 		"c’a": "ця",
@@ -494,7 +494,7 @@ export function translitCyrLat(string) {
 	string = mapCyrLat(string, 'exceptions');
 	string = mapCyrLat(string, 'priority-set-1');
 	string = mapCyrLat(string, 'detenele');
-	string = mapCyrLat(string, 'priority-set-2');
+	string = mapCyrLat(string, 'hardConsonants');
 	string = mapCyrLat(string, 'dtnl');
 	string = mapCyrLat(string, 'doubleChars');
 	string = mapCyrLat(string, 'singleChars');
@@ -511,7 +511,7 @@ export function translitLatCyr(string) {
 	string = mapLatCyr(string, 'exceptions');
 	string = mapLatCyr(string, 'priority-set-1');
 	string = mapLatCyr(string, 'detenele');
-	string = mapLatCyr(string, 'priority-set-2');
+	string = mapLatCyr(string, 'hardConsonants');
 	string = mapLatCyr(string, 'dtnl');
 	string = mapLatCyr(string, 'doubleChars');
 	string = mapLatCyr(string, 'singleChars');
