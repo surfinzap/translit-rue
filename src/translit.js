@@ -150,6 +150,7 @@ const mapping = {
 		"zju" : "зъю",
 		"Zju" : "Зъю",
 		"r’jo" : "рьё",
+
 		"R’jo" : "Рьё",
 
 		// d + ja, je, ji, jo, ju
@@ -163,6 +164,23 @@ const mapping = {
 		"Dji" : "Дъї",
 		"Djo" : "Дъё",
 		"Dju" : "Дъю",
+
+		// n + ja, je, ji, jo, ju
+		"nja" : "нъя",
+		"nje" : "нъє",
+		"nji" : "нъї",
+		"njo" : "нъё",
+		"nju" : "нъю",
+		"Nja" : "Нъя",
+		"Nje" : "Нъє",
+		"Nji" : "Нъї",
+		"Njo" : "Нъё",
+		"Nju" : "Нъю",
+
+		// missing examples for:
+		// t + ja, je, ji, jo, ju
+		// l + ja, je, ji, jo, ju
+
 
 	},
 
