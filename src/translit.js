@@ -30,6 +30,13 @@ const exceptions = {
 		"text" : "текст",
 		"taxi" : "таксі",
 	};
+	
+const johojomu = {
+		"joho" : "ёго",
+		"jomu" : "ёму",
+		"Joho" : "Ёго",
+		"Jomu" : "Ёму",
+	};
 
 const doubledDtnl = {
 		"ď": "д",
@@ -534,14 +541,22 @@ export function mapConsecutiveSoftWovelsCyrLat(string) {
 
 
 /*
-	Transliterate ja, je, ji, jo, ju at the beginning of the word
+	Transliterate ja, je, ji, ju at the beginning of the word
 
 	Transliteration rules:
 	ja ↔ я
 	je ↔ є
 	ji ↔ ї
-	jo ↔ ё
 	ju ↔ ю
+	
+	Exception
+	jo ↔ ё
+	We don’t map “jo” here as it a special case handled in separate functions:
+	- mapConsecutiveSoftWovelsLatCyr
+	- mapConsecutiveSoftWovelsCyrLat
+	- mapLatCyr(string, exceptions);
+	- mapCyrLat(string, exceptions);
+
 
 	Examples
 	jabčanka ↔ ябчaнка
@@ -564,7 +579,7 @@ export function mapSoftVowelBeginningWordLatCyr(string) {
 	let pattern =
 			'(\\b)'
 		+ '(j)'
-		+ '([' + latinVowelsLowerCase + '])';
+		+ '([aeiuyŷ])';
 	let re = new RegExp(pattern, 'gi');
 
 	return string.replace(re, function($0, $1, $2, $3){
@@ -703,6 +718,7 @@ export function translitLatCyr(string) {
 	string = mapDoubledDtnlLatCyr(string);
 	string = mapLatCyr(string, exceptions);
 	string = mapLatCyr(string, detenele);
+	string = mapLatCyr(string, johojomu);
 	string = mapLatCyr(string, hardConsonants);
 	string = mapLatCyr(string, dtnl);
 	string = mapLatCyr(string, doubleChars);
