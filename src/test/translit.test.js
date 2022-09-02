@@ -421,6 +421,7 @@ describe('Module tests:\n', () => {
 		"chyža":"хижа",
 		
 		"ser’jozno" : "серьёзно",
+		"objisty" : "объїсти",
 		"zjazvene" : "зъязвене",
 		"Zjavyla" : "Зъявила",
 		"Myž’ko" : "Мижько",

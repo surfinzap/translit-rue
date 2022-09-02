@@ -152,6 +152,10 @@ const hardConsonants = {
 		"r’jo" : "рьё",
 
 		"R’jo" : "Рьё",
+		"r’jo" : "рьё",
+
+		"bji" : "бъї",
+
 
 		// d + ja, je, ji, jo, ju
 		"dja" : "дъя",
