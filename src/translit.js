@@ -27,16 +27,24 @@ const upperCaseChars = "A-Z" + nonLatinUppercase;
 const allChars = lowerCaseChars + upperCaseChars;
 
 const exceptions = {
-		"text" : "текст",
-		"taxi" : "таксі",
-	};
+	"text" : "текст",
+	"taxi" : "таксі",
+};
 	
 const johojomu = {
-		"joho" : "ёго",
-		"jomu" : "ёму",
-		"Joho" : "Ёго",
-		"Jomu" : "Ёму",
-	};
+	"joho" : "ёго",
+	"jomu" : "ёму",
+	"Joho" : "Ёго",
+	"Jomu" : "Ёму",
+};
+
+const jojJov = {
+	"joj" : "ёй",	
+	"Joj" : "Ёй",
+	"jov" : "ёв",
+	"Jov" : "Ёв",
+}
+
 
 const doubledDtnl = {
 		"ď": "д",
@@ -228,8 +236,6 @@ const doubleChars = {
 		"Ju": "Ю",
 		"je": "є",
 		"Je": "Є",
-		// "jo": "ё",
-		// "Jo": "Ё",
 		"’o": "ё",
 		"’O": "Ë",
 		"ji": "ї",
@@ -537,6 +543,26 @@ export function mapConsecutiveSoftWovelsCyrLat(string) {
 }
 
 
+/*
+	Transliterate words that begin with joj-, jov- from latin to cyrillic
+
+	Transliteration rules:
+	jojkaňa → ёйканя
+	Jovha → Ёвга 
+
+	@param {string} string: latin text for mapping
+	@returns {string} cyrillic text with mapped joj-, jov- 
+*/
+export function mapJojJovBeginningWordLatCyr(string) {
+	let pattern =
+			'(\\b)'
+		+ '(joj|jov)';
+	let re = new RegExp(pattern, 'gi');
+
+	return string.replace(re, function($0, $1, $2){
+		return $1 + mapLatCyr($2, jojJov);
+	});
+}
 
 
 
@@ -554,8 +580,10 @@ export function mapConsecutiveSoftWovelsCyrLat(string) {
 	We don’t map “jo” here as it a special case handled in separate functions:
 	- mapConsecutiveSoftWovelsLatCyr
 	- mapConsecutiveSoftWovelsCyrLat
-	- mapLatCyr(string, exceptions);
-	- mapCyrLat(string, exceptions);
+	- mapLatCyr(string, exceptions)
+	- mapCyrLat(string, exceptions)
+	- mapJojJovBeginningWordLatCyr
+	- mapJojJovBeginningWordCyrLat
 
 
 	Examples
@@ -713,6 +741,7 @@ export function translitLatCyr(string) {
 	string = streamlineApostrophes(string);
 	string = mapSuperlativeLatCyr(string);
 	string = mapConsecutiveSoftWovelsLatCyr(string);
+	string = mapJojJovBeginningWordLatCyr(string);
 	string = mapSoftVowelBeginningWordLatCyr(string);
 	string = mapSoftVowelAfterHardVowelLatCyr(string);
 	string = mapDoubledDtnlLatCyr(string);
