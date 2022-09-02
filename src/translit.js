@@ -10,15 +10,18 @@
  */
 
 
-/* Constants */
+/* Constants 
+
+hard vowels = нейотованы гласны
+soft vowels = йотованы гласны
+*/
 
 const latinVowelsLowerCase = "aeiouyŷ";
-const cyrillicVowelsLowerCase = "аеіоуиыї"
-const cyrillicJaje = "яєїёю";
+const cyrillicHardVowelsLowerCase = "аеіоуиыї"
+const cyrillicSoftVowelsLowerCase = "яєїёю";
 
 const nonLatinLowercase = "áäčďéěíĺľňóôöőŕřšťúüűůýŷžабвгґдезіийклмнопрстуфъыьцчжшїщёєюях";
 const nonLatinUppercase = nonLatinLowercase.toUpperCase();
-const nonLatinChars = nonLatinLowercase + nonLatinUppercase;
 const lowerCaseChars = "a-z" + nonLatinLowercase;
 const upperCaseChars = "A-Z" + nonLatinUppercase;
 const allChars = lowerCaseChars + upperCaseChars;
@@ -182,7 +185,7 @@ const hardConsonants = {
 	};
 
 
-const jajejijoju = {
+const softVowels = {
 		"ja" : "я",
 		"je" : "є",
 		"ji" : "ї",
@@ -306,6 +309,15 @@ function streamlineApostrophes(string) {
 	return string.replace(/\'|’|ʼ|‘/g , '’');
 }
 
+
+function mappingToUppercase(mappingOption) {
+	let upperCaseMapping = {};
+
+	for (const [key, value] of Object.entries(mappingOption)) {
+		upperCaseMapping[key.toUpperCase()] = value.toUpperCase();
+	}
+	return upperCaseMapping
+}
 
 
 function mapCyrLat(string, mappingOption) {
@@ -482,7 +494,7 @@ export function mapSuperlativeLatCyr(string){
 	@param {string} string: latin text for mapping
 	@returns {string} cyrillic text with mapped ja, je, ji, jo, ju
 */
-export function mapJajeBeginningLatCyr(string) {
+export function mapSoftVowelBeginningWordLatCyr(string) {
 	let pattern =
 			'(\\b)'
 		+ '(j)'
@@ -490,7 +502,7 @@ export function mapJajeBeginningLatCyr(string) {
 	let re = new RegExp(pattern, 'gi');
 
 	return string.replace(re, function($0, $1, $2, $3){
-		return $1 + mapLatCyr($2 + $3, jajejijoju);
+		return $1 + mapLatCyr($2 + $3, softVowels);
 	});
 }
 
@@ -524,14 +536,14 @@ export function mapJajeBeginningLatCyr(string) {
 	@returns {string} latin text with mapped я, є, ї, ё, ю
 
 */
-export function mapJajeBeginningCyrLat(string) {
+export function mapSoftVowelBeginningWordCyrLat(string) {
 	let pattern =
 			'([^' + allChars + ']|^)'
-		+ '([' + cyrillicJaje + '])';
+		+ '([' + cyrillicSoftVowelsLowerCase + '])';
 	let re = new RegExp(pattern, 'gi');
 
 	return string.replace(re, function($0, $1, $2){
-		return $1 + mapCyrLat($2, jajejijoju);
+		return $1 + mapCyrLat($2, softVowels);
 	});
 }
 
@@ -552,7 +564,7 @@ export function mapJajeBeginningCyrLat(string) {
 	@param {string} string: latin text for mapping
 	@returns {string} cyrillic text with mapped ja, je, ji, jo, ju
 */
-export function mapJajeBeforeVowelLatCyr(string) {
+export function mapSoftVowelAfterHardVowelLatCyr(string) {
 
 	let pattern =
 			'([' + latinVowelsLowerCase + '])'
@@ -560,7 +572,7 @@ export function mapJajeBeforeVowelLatCyr(string) {
 	let re = new RegExp(pattern, 'gi');
 
 	return string.replace(re, function($0, $1, $2){
-		return $1 + mapLatCyr($2, jajejijoju);
+		return $1 + mapLatCyr($2, softVowels);
 	});
 }
 
@@ -583,15 +595,15 @@ export function mapJajeBeforeVowelLatCyr(string) {
 	@param {string} string: latin text for mapping
 	@returns {string} cyrillic text with mapped я, є, ї, ё, ю
 */
-export function mapJajeBeforeVowelCyrLat(string) {
+export function mapSoftVowelAfterHardVowelCyrLat(string) {
 
 	let pattern =
-			'([' + cyrillicVowelsLowerCase + '])'
-		+ '([' + cyrillicJaje + '])';
+			'([' + cyrillicHardVowelsLowerCase + '])'
+		+ '([' + cyrillicSoftVowelsLowerCase + '])';
 	let re = new RegExp(pattern, 'gi');
 
 	return string.replace(re, function($0, $1, $2){
-		return $1 + mapCyrLat($2, jajejijoju);
+		return $1 + mapCyrLat($2, softVowels);
 	});
 }
 
@@ -601,8 +613,8 @@ export function mapJajeBeforeVowelCyrLat(string) {
 	 Public API
 */
 export function translitCyrLat(string) {
-	string = mapJajeBeginningCyrLat(string);
-	string = mapJajeBeforeVowelCyrLat(string);
+	string = mapSoftVowelBeginningWordCyrLat(string);
+	string = mapSoftVowelAfterHardVowelCyrLat(string);
 	string = mapDoubledDtnlCyrLat(string);
 	string = mapCyrLat(string, exceptions);
 	string = mapCyrLat(string, detenele);
@@ -618,8 +630,8 @@ export function translitCyrLat(string) {
 export function translitLatCyr(string) {
 	string = streamlineApostrophes(string);
 	string = mapSuperlativeLatCyr(string);
-	string = mapJajeBeginningLatCyr(string);
-	string = mapJajeBeforeVowelLatCyr(string);
+	string = mapSoftVowelBeginningWordLatCyr(string);
+	string = mapSoftVowelAfterHardVowelLatCyr(string);
 	string = mapDoubledDtnlLatCyr(string);
 	string = mapLatCyr(string, exceptions);
 	string = mapLatCyr(string, detenele);
