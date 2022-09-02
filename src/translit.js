@@ -31,7 +31,7 @@ const exceptions = {
 	"taxi" : "таксі",
 };
 	
-const johojomu = {
+const johoJomu = {
 	"joho" : "ёго",
 	"jomu" : "ёму",
 	"Joho" : "Ёго",
@@ -747,7 +747,7 @@ export function translitLatCyr(string) {
 	string = mapDoubledDtnlLatCyr(string);
 	string = mapLatCyr(string, exceptions);
 	string = mapLatCyr(string, detenele);
-	string = mapLatCyr(string, johojomu);
+	string = mapLatCyr(string, johoJomu);
 	string = mapLatCyr(string, hardConsonants);
 	string = mapLatCyr(string, dtnl);
 	string = mapLatCyr(string, doubleChars);
