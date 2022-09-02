@@ -462,6 +462,13 @@ describe('Module tests:\n', () => {
 		
 		
 		// jo is a special case		
+		// majority of words starts with "йо"
+		"jotovanŷma" : "йотованыма",
+		"Joakim" : "Йоакім",
+		"jobovskŷj" : "йобовскый",
+		"Johanesburg" : "Йоганесбурґ",
+		"Johanesburčan" : "Йоганесбурчан",
+		"jogurt" : "йоґурт",
 
 
 		// consecutive soft vowels
@@ -488,6 +495,12 @@ describe('Module tests:\n', () => {
 		"Jojojoj" : "Ёёёй",
 		"Jujuj" : "Ююй",
 		"Jujujuj" : "Юююй",
+
+		// exceptions
+		"joho" : "ёго",
+		"jomu" : "ёму",
+		"Joho" : "Ёго",
+		"Jomu" : "Ёму",
 
 
 
