@@ -567,6 +567,30 @@ export function mapJojJovBeginningWordLatCyr(string) {
 
 
 /*
+	Transliterate single word “jo”
+
+	Transliteration rules:
+	jo → ё
+	Jo → Ё 
+
+	@param {string} string: latin text for mapping
+	@returns {string} cyrillic text with mapped jo 
+*/
+export function mapSingleJoLatCyr(string) {
+	let pattern =
+			'(\\b)'
+		+ '(jo)'
+		+ '(\\b)';
+	let re = new RegExp(pattern, 'gi');
+
+	return string.replace(re, function($0, $1, $2, $3){
+		return $1 + mapLatCyr($2, softVowels) + $3;
+	});
+}
+
+
+
+/*
 	Transliterate ja, je, ji, ju at the beginning of the word
 
 	Transliteration rules:
@@ -742,6 +766,7 @@ export function translitLatCyr(string) {
 	string = mapSuperlativeLatCyr(string);
 	string = mapConsecutiveSoftWovelsLatCyr(string);
 	string = mapJojJovBeginningWordLatCyr(string);
+	string = mapSingleJoLatCyr(string);
 	string = mapSoftVowelBeginningWordLatCyr(string);
 	string = mapSoftVowelAfterHardVowelLatCyr(string);
 	string = mapDoubledDtnlLatCyr(string);
