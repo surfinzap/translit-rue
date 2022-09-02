@@ -7,8 +7,8 @@
   - ⛔ before: najatraktivňišŷj → наятрактівнїшый
   - ✅ now: najatraktivňišŷj → найатрактівнїшый
 - improve identification of soft vowels (ja, je, ji, jo, ju) at the beginning of the word
-  - ⛔ before: O-Jo-Joj → О-Йо-Ёй
-  - ✅ now: O-Jo-Joj → O-Ё-Ёj
+  - ⛔ before: jojkaňa → йойканя
+  - ✅ now: jojkaňa → ёйканя
 - improve identification of soft vowels (ja, je, ji, jo, ju) before a vowel:
   - ⛔ before: функціёв → funkci’ov
   - ✅ now: функціёв → funkcijov
@@ -35,6 +35,7 @@
 - improve mapping of consecutive soft vowels (ja, je, ji, jo, ju):
   - ⛔ before: Ёёёй → Jo’o’oj
   - ✅ now: Ёёёй → Jojojoj
+
 
 
 

@@ -111,18 +111,14 @@ describe(' (unit) Ja, je, ji, jo, ju at the beginning of the word:\n', () => {
 	"jabčanka" : "яbčanka",
 	"jedenastka" : "єdenastka",
 	"jidnaňa" : "їdnaňa",
-	"joho" : "ёho",
 	"jubilant" : "юbilant",
-	"o-jo-joj" : "o-ё-ёj",
 	"ji": "ї",
 
 	"Jabčanka" : "Яbčanka",
 	"Jedenastka" : "Єdenastka",
 	"Jidnaňa" : "Їdnaňa",
-	"Joho" : "Ёho",
 	"Jubilant" : "Юbilant",
-	"O-Jo-Joj" : "O-Ё-Ёj",
-	"Ji": "Ї",
+ 	"Ji": "Ї",
 
 	// false positives
 	"jedenadc’atŷj" : "єdenadc’atŷj",
@@ -496,6 +492,23 @@ describe('Module tests:\n', () => {
 		"Jujuj" : "Ююй",
 		"Jujujuj" : "Юююй",
 
+		// joj, jov variations
+		"joj": "ёй",
+		"joj" : "ёй",
+		"jojk" : "ёйк",
+		"jojkaňa" : "ёйканя",
+		"jojčaty" : "ёйчати",
+		"jov" : "ёв",
+		"jovha" : "ёвга",
+		"jovsag" : "ёвсаґ",
+		"Joj": "Ёй",
+		"Joj" : "Ёй",
+		"Jojk" : "Ёйк",
+		"Jojkaňa" : "Ёйканя",
+		"Jojčaty" : "Ёйчати",
+		"Jov" : "Ёв",
+		"Jovha" : "Ёвга",
+		"Jovsag" : "Ёвсаґ",
 		// exceptions
 		"joho" : "ёго",
 		"jomu" : "ёму",
