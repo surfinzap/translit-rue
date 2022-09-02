@@ -509,6 +509,11 @@ describe('Module tests:\n', () => {
 		"Jov" : "Ёв",
 		"Jovha" : "Ёвга",
 		"Jovsag" : "Ёвсаґ",
+		
+		// only jo
+		"O-Jo-Joj" : "О-Ё-Ёй",
+		"o-jo-joj" : "о-ё-ёй",
+
 		// exceptions
 		"joho" : "ёго",
 		"jomu" : "ёму",
