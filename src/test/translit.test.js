@@ -2,6 +2,8 @@ import {
 				mapSuperlativeLatCyr,
 				mapDoubledDtnlLatCyr,
 				mapDoubledDtnlCyrLat,
+				mapConsecutiveSoftWovelsLatCyr,
+				mapConsecutiveSoftWovelsCyrLat,
 				mapSoftVowelBeginningWordLatCyr,
 				mapSoftVowelBeginningWordCyrLat,
 				mapSoftVowelAfterHardVowelLatCyr,
@@ -45,6 +47,59 @@ describe(' (unit) Superlative transliteration:\n', () => {
 			assert.equal(mapSuperlativeLatCyr(key), testCase[key]);
 		});
 
+	});
+});
+
+
+
+describe(' (unit) consecutive soft vowels (ja, je, ji, jo, ju):\n', () => {
+	let testCase = {
+	"jajaj" : "яяj",
+	"jajajaj" : "яяяj",
+	"jajejaj" : "яєяj",
+	"jejej" : "єєj",
+	"jejejej" : "єєєj",
+	"jijij" : "їїj",
+	"jijijij" : "їїїj",
+	"jojoj" : "ёёj",
+	"jojojoj" : "ёёёj",
+	"jujuj" : "ююj",
+	"jujujuj" : "юююj",
+
+	"Jajaj" : "Яяj",
+	"Jajajaj" : "Яяяj",
+	"Jajejaj" : "Яєяj",
+	"Jejej" : "Єєj",
+	"Jejejej" : "Єєєj",
+	"Jijij" : "Їїj",
+	"Jijijij" : "Їїїj",
+	"Jojoj" : "Ёёj",
+	"Jojojoj" : "Ёёёj",
+	"Jujuj" : "Ююj",
+	"Jujujuj" : "Юююj",
+
+	//false positives for unit test
+	"jaj" : "jaj",
+	"jej" : "jej",
+	"jij" : "jij",
+	"joj" : "joj",
+	"juj" : "juj",
+	"яй" : "яй",
+	"єй" : "єй",
+	"їй" : "їй",
+	"ёй" : "ёй",
+	"юй" : "юй",
+
+
+	};
+
+	Object.keys(testCase).forEach((key) => {
+		it("Latin → Cyrillic:\n", () => {
+			assert.equal(mapConsecutiveSoftWovelsLatCyr(key), testCase[key]);
+		});
+		it("Cyrillic → Latin:\n", () => {
+			assert.equal(mapConsecutiveSoftWovelsCyrLat(testCase[key]), key);
+		});
 	});
 });
 
@@ -383,35 +438,55 @@ describe('Module tests:\n', () => {
 		"Myž’a" : "Мижя",
 		"Myž’u" : "Мижю",
 
-		// Ja, je, ji, jo, ju at the beginning of the word:
+		// Ja, je, ji, ju at the beginning of the word:
 		
 		"jabčanka jabčanka" : "ябчанка ябчанка",
 
 		"jabčanka" : "ябчанка",
 		"jedenastka" : "єденастка",
 		"jidnaňa" : "їднаня",
-		"joho" : "ёгo",
 		"jubilant" : "юбілант",
-		"o-jo-joj" : "о-ё-ёй",
-
+		"ji": "ї",
+		
 		"Jabčanka" : "Ябчанка",
 		"Jedenastka" : "Єденастка",
 		"Jidnaňa" : "Їднаня",
-		"Joho" : "Ёгo",
-		"Jubilant" : "Юбілант",
-		"O-Jo-Joj" : "О-Ё-Ёй",
-		
-		"Joj": "Ёй",
 		"Ji": "Ї",
-		"joho" : "ёго",
-		"Joho" : "Ёго",
-		"jomu" : "ёму",
-		"Jomu" : "Ёму",
-
+		"Jubilant" : "Юбілант",
+		
 		"jedenadc’atŷj" : "єденадцятый",
 		"každopadňi" : "каждопаднї",
 		"zrivňovaty" : "зрівнёвати",
 		"čeľustnŷj" : "челюстный",
+		
+		
+		// jo is a special case		
+
+
+		// consecutive soft vowels
+		"jajaj" : "яяй",
+		"jajajaj" : "яяяй",
+		"jajejaj" : "яєяй",
+		"jejej" : "єєй",
+		"jejejej" : "єєєй",
+		"jijij" : "їїй",
+		"jijijij" : "їїїй",
+		"jojoj" : "ёёй",
+		"jojojoj" : "ёёёй",
+		"jujuj" : "ююй",
+		"jujujuj" : "юююй",
+
+		"Jajaj" : "Яяй",
+		"Jajajaj" : "Яяяй",
+		"Jajejaj" : "Яєяй",
+		"Jejej" : "Єєй",
+		"Jejejej" : "Єєєй",
+		"Jijij" : "Їїй",
+		"Jijijij" : "Їїїй",
+		"Jojoj" : "Ёёй",
+		"Jojojoj" : "Ёёёй",
+		"Jujuj" : "Ююй",
+		"Jujujuj" : "Юююй",
 
 
 

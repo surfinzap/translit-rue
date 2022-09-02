@@ -6,10 +6,10 @@
 - superlative adjectives where a prefix “naj” follows a vowel are now transliterated properly:
   - ⛔ before: najatraktivňišŷj → наятрактівнїшый
   - ✅ now: najatraktivňišŷj → найатрактівнїшый
-- improve identification of “ja”, “je”, “ji”, “jo”, “ju” at the beginning of the word
+- improve identification of soft vowels (ja, je, ji, jo, ju) at the beginning of the word
   - ⛔ before: O-Jo-Joj → О-Йо-Ёй
   - ✅ now: O-Jo-Joj → O-Ё-Ёj
-- improve identification of “ja”, “je”, “ji”, “jo”, “ju” before a vowel:
+- improve identification of soft vowels (ja, je, ji, jo, ju) before a vowel:
   - ⛔ before: функціёв → funkci’ov
   - ✅ now: функціёв → funkcijov
 - improve identification of “Дъ” + “я, є, ї, ё, ю”:
@@ -20,7 +20,7 @@
   - ✅ now: oďďilena → оддїлена
   - ⛔ before: життя → žytťa
   - ✅ now: життя → žyťťa
-- improve mapping when “d” or “n” acts as a hard consonant before “ja”, “je”, “ji”, “jo”, “ju”:
+- improve mapping when “d” or “n” acts as a hard consonant before soft vowels (ja, je, ji, jo, ju):
   - ⛔ before: injekcia → інєкція
   - ✅ now: injekcia → інъєкція
   - ⛔ before: інъєкція → inъjekcija
@@ -29,6 +29,14 @@
   - ✅ now: nadjazd → надъязд
   - ⛔ before: надъязд → nadъjazd
   - ✅ now: надъязд → nadjazd
+- improve signalization of hard sign after “b”:
+  - ⛔ before: объїсти → obъjisty
+  - ✅ now: объїсти → objisty
+- improve mapping of consecutive soft vowels (ja, je, ji, jo, ju):
+  - ⛔ before: Ёёёй → Jo’o’oj
+  - ✅ now: Ёёёй → Jojojoj
+
+
 
 ### 🔨 Maintenance
 - Add more unit and module tests to test edge cases

@@ -12,8 +12,8 @@
 
 /* Constants 
 
-hard vowels = нейотованы гласны
-soft vowels = йотованы гласны
+   hard vowels = нейотованы гласны
+   soft vowels = йотованы гласны
 */
 
 const latinVowelsLowerCase = "aeiouyŷ";
@@ -468,6 +468,68 @@ export function mapSuperlativeLatCyr(string){
 
 
 /*
+	Transliterate consecutive soft vowels (ja, je, ji, jo, ju) from latin to cyrillic
+
+	Transliteration rules:
+	jajaj ↔ яяй
+	jejej ↔ єєй
+	jijij ↔ їїй
+	jojoj ↔ ёёй
+	jojojoj ↔ ёёёй
+	jujuj ↔ ююй
+
+	Counterexamples
+	singles, e.g. joj
+
+	@param {string} string: latin text for mapping
+	@returns {string} cyrillic text with mapped ja, je, ji, jo, ju
+*/
+export function mapConsecutiveSoftWovelsLatCyr(string) {
+	let pattern =
+			'(\\b)'
+		+ '((jo|ja|je|ji|ju){2,})';
+	let re = new RegExp(pattern, 'gi');
+
+	return string.replace(re, function($0, $1, $2){
+		return $1 + mapLatCyr($2, softVowels);
+	});
+}
+
+
+
+/*
+	Transliterate consecutive soft vowels (ja, je, ji, jo, ju) from cyrillic to latin
+
+	Transliteration rules:
+	jajaj ↔ яяй
+	jejej ↔ єєй
+	jijij ↔ їїй
+	jojoj ↔ ёёй
+	jojojoj ↔ ёёёй
+	jujuj ↔ ююй
+
+	Counterexamples
+	singles, e.g. joj
+
+	@param {string} string: latin text for mapping
+	@returns {string} cyrillic text with mapped ja, je, ji, jo, ju
+*/
+export function mapConsecutiveSoftWovelsCyrLat(string) {
+	let pattern =
+			'([^' + allChars + ']|^)'
+		+ '(([' + cyrillicSoftVowelsLowerCase + ']){2,})';
+	let re = new RegExp(pattern, 'gi');
+
+	return string.replace(re, function($0, $1, $2){
+		return $1 + mapCyrLat($2, softVowels);
+	});
+}
+
+
+
+
+
+/*
 	Transliterate ja, je, ji, jo, ju at the beginning of the word
 
 	Transliteration rules:
@@ -613,6 +675,7 @@ export function mapSoftVowelAfterHardVowelCyrLat(string) {
 	 Public API
 */
 export function translitCyrLat(string) {
+	string = mapConsecutiveSoftWovelsCyrLat(string);
 	string = mapSoftVowelBeginningWordCyrLat(string);
 	string = mapSoftVowelAfterHardVowelCyrLat(string);
 	string = mapDoubledDtnlCyrLat(string);
@@ -630,6 +693,7 @@ export function translitCyrLat(string) {
 export function translitLatCyr(string) {
 	string = streamlineApostrophes(string);
 	string = mapSuperlativeLatCyr(string);
+	string = mapConsecutiveSoftWovelsLatCyr(string);
 	string = mapSoftVowelBeginningWordLatCyr(string);
 	string = mapSoftVowelAfterHardVowelLatCyr(string);
 	string = mapDoubledDtnlLatCyr(string);
