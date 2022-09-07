@@ -28,10 +28,10 @@
 		"node": ">=6.9.4"
 	},
 	"devDependencies": {
-		"@babel/cli": "^7.17.10",
-		"@babel/core": "^7.18.5",
-		"@babel/preset-env": "^7.18.2",
-		"@babel/register": "^7.17.7",
+		"@babel/cli": "^7.18.10",
+		"@babel/core": "^7.19.0",
+		"@babel/preset-env": "^7.19.0",
+		"@babel/register": "^7.18.9",
 		"babelify": "^10.0.0",
 		"browserify": "^17.0.0",
 		"gulp": "^4.0.2",
