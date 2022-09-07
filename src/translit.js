@@ -196,7 +196,7 @@ const hardConsonants = {
 		"Njo" : "Нъё",
 		"Nju" : "Нъю",
 
-		// missing examples for:
+		// haven’t found examples for:
 		// t + ja, je, ji, jo, ju
 		// l + ja, je, ji, jo, ju
 
@@ -326,15 +326,6 @@ function streamlineApostrophes(string) {
 	return string.replace(/\'|’|ʼ|‘/g , '’');
 }
 
-
-function mappingToUppercase(mappingOption) {
-	let upperCaseMapping = {};
-
-	for (const [key, value] of Object.entries(mappingOption)) {
-		upperCaseMapping[key.toUpperCase()] = value.toUpperCase();
-	}
-	return upperCaseMapping
-}
 
 
 function mapCyrLat(string, mappingOption) {
@@ -742,26 +733,7 @@ export function mapSoftVowelAfterHardVowelCyrLat(string) {
 
 
 
-/*
-	 Public API
-*/
-export function translitCyrLat(string) {
-	string = mapConsecutiveSoftWovelsCyrLat(string);
-	string = mapSoftVowelBeginningWordCyrLat(string);
-	string = mapSoftVowelAfterHardVowelCyrLat(string);
-	string = mapDoubledDtnlCyrLat(string);
-	string = mapCyrLat(string, exceptions);
-	string = mapCyrLat(string, detenele);
-	string = mapCyrLat(string, hardConsonants);
-	string = mapCyrLat(string, dtnl);
-	string = mapCyrLat(string, doubleChars);
-	string = mapCyrLat(string, singleChars);
-	return string;
-}
-
-
-
-export function translitLatCyr(string) {
+export function processLatCyr(string) {
 	string = streamlineApostrophes(string);
 	string = mapSuperlativeLatCyr(string);
 	string = mapConsecutiveSoftWovelsLatCyr(string);
@@ -777,5 +749,104 @@ export function translitLatCyr(string) {
 	string = mapLatCyr(string, dtnl);
 	string = mapLatCyr(string, doubleChars);
 	string = mapLatCyr(string, singleChars);
+	return string;
+}
+
+export function processCyrLat(string) {
+	string = mapConsecutiveSoftWovelsCyrLat(string);
+	string = mapSoftVowelBeginningWordCyrLat(string);
+	string = mapSoftVowelAfterHardVowelCyrLat(string);
+	string = mapDoubledDtnlCyrLat(string);
+	string = mapCyrLat(string, exceptions);
+	string = mapCyrLat(string, detenele);
+	string = mapCyrLat(string, hardConsonants);
+	string = mapCyrLat(string, dtnl);
+	string = mapCyrLat(string, doubleChars);
+	string = mapCyrLat(string, singleChars);
+	return string;
+}
+
+/*
+	Identify UPPERCASE letters and transliterate them according to a mapping option
+
+	- process upper case words with 2 or more letter
+	- process single-letter uppercase word in case it is around uppercase words
+
+	@param {string} string: text for mapping
+	@param {string} mappingOption: latCyr | cyrLat
+	@returns {string} transliterated upper case text
+*/
+export function processUpperCase(string, mappingOption){
+
+	let spacingChars = '-–—\\s';
+	
+	let multiCharUpperCaseWord =
+		 '([' + upperCaseChars + '’]{2,})'
+	 + '([^' + lowerCaseChars + ']|$)';
+	let multiCharRegex = new RegExp(multiCharUpperCaseWord, 'g');
+
+	string = string.replace(multiCharRegex, function($0, $1, $2){
+		switch (mappingOption) {
+			case "latCyr":
+				return processLatCyr($1.toLowerCase()).toUpperCase() + $2;
+			case "cyrLat":
+				return processCyrLat($1.toLowerCase()).toUpperCase() + $2;
+		}
+	});
+
+
+	
+
+	let singleCharBeforeUpperCase =
+			'([^' + upperCaseChars + '’]|^)'
+		+ '([' + upperCaseChars + '’])'
+		+ '(?=[' + spacingChars + '][' + upperCaseChars + '][^' + lowerCaseChars + '’])';
+	
+	let singleCharBeforeRegex = new RegExp(singleCharBeforeUpperCase, 'g');
+
+	string = string.replace(singleCharBeforeRegex, function($0, $1, $2, $3){
+		switch (mappingOption) {
+			case "latCyr":
+				return $1 + processLatCyr($2.toLowerCase()).toUpperCase();
+			case "cyrLat":
+				return $1 + processCyrLat($2.toLowerCase()).toUpperCase();
+		}
+	});
+
+
+
+	let singleCharAfterUpperCase =
+			'([' + upperCaseChars + '’][\\s])'
+		+ '([' + upperCaseChars + '])'
+		+ '([^' + upperCaseChars + ']|$)';
+	let singleCharAfterRegex = new RegExp(singleCharAfterUpperCase, 'g');
+	
+	string = string.replace(singleCharAfterRegex, function($0, $1, $2, $3){
+		switch (mappingOption) {
+			case "latCyr":
+				return $1 + processLatCyr($2.toLowerCase()).toUpperCase() + $3;
+			case "cyrLat":
+				return $1 + processCyrLat($2.toLowerCase()).toUpperCase() + $3;
+		}
+	});
+
+	return string;
+}
+
+
+/*
+	 Public API
+*/
+export function translitCyrLat(string) {
+	string = processUpperCase(string, 'cyrLat');
+	string = processCyrLat(string);
+	return string;
+}
+
+
+
+export function translitLatCyr(string) {
+	string = processUpperCase(string, 'latCyr');
+	string = processLatCyr(string);
 	return string;
 }
