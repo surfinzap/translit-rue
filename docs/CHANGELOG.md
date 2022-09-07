@@ -3,24 +3,27 @@
 ## 2.1.0 // 2022-09-
 
 ### 🐛 Fixes
-- superlative adjectives where a prefix “naj” follows a vowel are now transliterated properly:
+- fix mapping of superlative adjectives where a prefix “naj” follows a hard vowel (а, е, і, о, у, и, ы, ї):
   - ⛔ before: najatraktivňišŷj → наятрактівнїшый
   - ✅ now: najatraktivňišŷj → найатрактівнїшый
-- improve identification of soft vowels (ja, je, ji, jo, ju) at the beginning of the word
+- fix mapping of soft vowels (я, є, ї, ё, ю) at the beginning of the word:
   - ⛔ before: jojkaňa → йойканя
   - ✅ now: jojkaňa → ёйканя
-- improve identification of soft vowels (ja, je, ji, jo, ju) before a vowel:
+- fix mapping of soft vowels (ja, je, ji, jo, ju) before a hard vowel:
   - ⛔ before: функціёв → funkci’ov
   - ✅ now: функціёв → funkcijov
-- improve identification of “Дъ” + “я, є, ї, ё, ю”:
+- fix mapping of consecutive soft vowels (ja, je, ji, jo, ju):
+  - ⛔ before: Ёёёй → Jo’o’oj
+  - ✅ now: Ёёёй → Jojojoj
+- fix mapping of “Дъ” + “я, є, ї, ё, ю”:
   - ⛔ before: передъюновый → peredъjunovŷj
   - ✅ now: передъюновый → peredjunovŷj
-- improve transliteration for doubled “ďď, ťť, ňň, ľľ”, followed by vowels “a, e, i, o, u”
+- fix mapping of doubled “ďď, ťť, ňň, ľľ”, followed by vowels “a, e, i, o, u”:
   - ⛔ before: oďďilena → одьдїлена
   - ✅ now: oďďilena → оддїлена
   - ⛔ before: життя → žytťa
   - ✅ now: життя → žyťťa
-- improve mapping when “d” or “n” acts as a hard consonant before soft vowels (ja, je, ji, jo, ju):
+- fix mapping when “d” or “n” acts as a hard consonant before soft vowels:
   - ⛔ before: injekcia → інєкція
   - ✅ now: injekcia → інъєкція
   - ⛔ before: інъєкція → inъjekcija
@@ -32,15 +35,10 @@
 - improve signalization of hard sign after “b”:
   - ⛔ before: объїсти → obъjisty
   - ✅ now: объїсти → objisty
-- improve mapping of consecutive soft vowels (ja, je, ji, jo, ju):
-  - ⛔ before: Ёёёй → Jo’o’oj
-  - ✅ now: Ёёёй → Jojojoj
-
-
 
 
 ### 🔨 Maintenance
-- Add more unit and module tests to test edge cases
+- Bug fixes and improvements required more unit and module tests, so the number of *translit* tests increased 10-fold with this release. (132 → 1448 tests).
 
 
 
