@@ -464,7 +464,7 @@ export function mapSuperlativeLatCyr(string){
 	+ '(naj)'
 	+ '([' + latinVowelsLowerCase + '])'
 	+ '([' + lowerCaseChars + ']+?)'
-	+ '(šŷj|šoho|šomu|šom|šŷm|šŷ|šŷch|šŷmi|šŷmy|ša|šoj|šu|šov|šŷch|še)';
+	+ '(šŷj|šoho|šomu|šim|šŷm|šŷ|šŷch|šŷma|ša|šoj|šij|šu|šov|še)';
 	let re = new RegExp(pattern, 'gi');
 
 	return string.replace(re, function($0, $1, $2, $3, $4, $5){
