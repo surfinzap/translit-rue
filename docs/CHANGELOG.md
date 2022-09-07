@@ -1,6 +1,16 @@
 # Changelog for Rusyn transliterate
 
 ## 2.1.0 // 2022-09-
+This version is a bigger improvement since 2020. Translit now works well for UPPER CASE texts and works better for numerous combinations of soft (я, є, ї, ё, ю) and hard (а, е, і, о, у, и, ы, ї) vowels.
+
+
+### 💪 Improvements
+- **UPPER CASE SUPPORT**. Until now, translit worked well for “lower case” or “Title Case” texts. Since this release, translit also works properly and automatically for “UPPER CASE” texts.
+  - ⛔ before: ХЛОПЦІ → ChLOPCІ
+  - ✅ now: ХЛОПЦІ → CHLOPCІ
+  - ⛔ before: КУРЯТКО → KURJaTKO
+  - ✅ now: КУРЯТКО → KUR’ATKO
+
 
 ### 🐛 Fixes
 - fix mapping of superlative adjectives where a prefix “naj” follows a hard vowel (а, е, і, о, у, и, ы, ї):
