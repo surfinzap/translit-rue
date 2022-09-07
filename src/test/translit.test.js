@@ -47,6 +47,38 @@ describe(' (unit) Superlative transliteration:\n', () => {
 		"NAJOBĽUBLEŇIŠŶJ" : "НАЙOBĽUBLEŇIŠŶJ",
 		"NAJUŽASŇIŠŶJ" : "НАЙUŽASŇIŠŶJ",
 
+		// inflection 
+		"najobľubleňišŷj" : "найobľubleňišŷj",
+		"najobľubleňišoho" : "найobľubleňišoho",
+		"najobľubleňišomu" : "найobľubleňišomu",
+		"najobľubleňišim" : "найobľubleňišim",
+		"najobľubleňišŷm" : "найobľubleňišŷm",
+		"najobľubleňišŷ" : "найobľubleňišŷ",
+		"najobľubleňišŷch" : "найobľubleňišŷch",
+		"najobľubleňišŷma" : "найobľubleňišŷma",
+		"najobľubleňiša" : "найobľubleňiša",
+		"najobľubleňišoj" : "найobľubleňišoj",
+		"najobľubleňišij" : "найobľubleňišij",
+		"najobľubleňišu" : "найobľubleňišu",
+		"najobľubleňišov" : "найobľubleňišov",
+		"najobľubleňiše" : "найobľubleňiše",
+
+		"Najobľubleňišŷj" : "Найobľubleňišŷj",
+		"Najobľubleňišoho" : "Найobľubleňišoho",
+		"Najobľubleňišomu" : "Найobľubleňišomu",
+		"Najobľubleňišim" : "Найobľubleňišim",
+		"Najobľubleňišŷm" : "Найobľubleňišŷm",
+		"Najobľubleňišŷ" : "Найobľubleňišŷ",
+		"Najobľubleňišŷch" : "Найobľubleňišŷch",
+		"Najobľubleňišŷma" : "Найobľubleňišŷma",
+		"Najobľubleňiša" : "Найobľubleňiša",
+		"Najobľubleňišoj" : "Найobľubleňišoj",
+		"Najobľubleňišij" : "Найobľubleňišij",
+		"Najobľubleňišu" : "Найobľubleňišu",
+		"Najobľubleňišov" : "Найobľubleňišov",
+		"Najobľubleňiše" : "Найobľubleňiše",
+		
+
 		// false positive
 		"najidž" : "najidž",
 		"najveksyj" : "najveksyj" //naj following a consonant
@@ -628,6 +660,37 @@ let testLowerCaseWords = {
 	"Najinteligentňišŷj" : "Найінтеліґентнїшый",
 	"Najobľubleňišŷj" : "Найоблюбленїшый",
 	"Najužasňišŷj" : "Найужаснїшый",
+
+	// superlative inflection 
+	"najobľubleňišŷj" : "найоблюбленїшый",
+	"najobľubleňišoho" : "найоблюбленїшого",
+	"najobľubleňišomu" : "найоблюбленїшому",
+	"najobľubleňišim" : "найоблюбленїшім",
+	"najobľubleňišŷm" : "найоблюбленїшым",
+	"najobľubleňišŷ" : "найоблюбленїшы",
+	"najobľubleňišŷch" : "найоблюбленїшых",
+	"najobľubleňišŷma" : "найоблюбленїшыма",
+	"najobľubleňiša" : "найоблюбленїша",
+	"najobľubleňišoj" : "найоблюбленїшой",
+	"najobľubleňišij" : "найоблюбленїшій",
+	"najobľubleňišu" : "найоблюбленїшу",
+	"najobľubleňišov" : "найоблюбленїшов",
+	"najobľubleňiše" : "найоблюбленїше",
+
+	"Najobľubleňišŷj" : "Найоблюбленїшый",
+	"Najobľubleňišoho" : "Найоблюбленїшого",
+	"Najobľubleňišomu" : "Найоблюбленїшому",
+	"Najobľubleňišim" : "Найоблюбленїшім",
+	"Najobľubleňišŷm" : "Найоблюбленїшым",
+	"Najobľubleňišŷ" : "Найоблюбленїшы",
+	"Najobľubleňišŷch" : "Найоблюбленїшых",
+	"Najobľubleňišŷma" : "Найоблюбленїшыма",
+	"Najobľubleňiša" : "Найоблюбленїша",
+	"Najobľubleňišoj" : "Найоблюбленїшой",
+	"Najobľubleňišij" : "Найоблюбленїшій",
+	"Najobľubleňišu" : "Найоблюбленїшу",
+	"Najobľubleňišov" : "Найоблюбленїшов",
+	"Najobľubleňiše" : "Найоблюбленїше",
 
 
 	// doubled dtnl

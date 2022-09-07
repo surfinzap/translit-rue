@@ -48,7 +48,7 @@ This version is a bigger improvement since 2020. Translit now works well for UPP
 
 
 ### 🔨 Maintenance
-- Bug fixes and improvements required more unit and module tests, so the number of *translit* tests increased 10-fold with this release. (132 → 1448 tests).
+- Bug fixes and improvements required more unit and module tests, so the number of *translit* tests increased 10-fold with this release. (132 → 1578 tests).
 
 
 
