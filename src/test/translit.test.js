@@ -77,6 +77,22 @@ describe(' (unit) Superlative transliteration:\n', () => {
 		"Najobľubleňišu" : "Найobľubleňišu",
 		"Najobľubleňišov" : "Найobľubleňišov",
 		"Najobľubleňiše" : "Найobľubleňiše",
+
+		"NAJOBĽUBLEŇIŠŶJ" : "НАЙOBĽUBLEŇIŠŶJ",
+		"NAJOBĽUBLEŇIŠOHO" : "НАЙOBĽUBLEŇIŠOHO",
+		"NAJOBĽUBLEŇIŠOMU" : "НАЙOBĽUBLEŇIŠOMU",
+		"NAJOBĽUBLEŇIŠIM" : "НАЙOBĽUBLEŇIŠIM",
+		"NAJOBĽUBLEŇIŠŶM" : "НАЙOBĽUBLEŇIŠŶM",
+		"NAJOBĽUBLEŇIŠŶ" : "НАЙOBĽUBLEŇIŠŶ",
+		"NAJOBĽUBLEŇIŠŶCH" : "НАЙOBĽUBLEŇIŠŶCH",
+		"NAJOBĽUBLEŇIŠŶMA" : "НАЙOBĽUBLEŇIŠŶMA",
+		"NAJOBĽUBLEŇIŠA" : "НАЙOBĽUBLEŇIŠA",
+		"NAJOBĽUBLEŇIŠOJ" : "НАЙOBĽUBLEŇIŠOJ",
+		"NAJOBĽUBLEŇIŠIJ" : "НАЙOBĽUBLEŇIŠIJ",
+		"NAJOBĽUBLEŇIŠU" : "НАЙOBĽUBLEŇIŠU",
+		"NAJOBĽUBLEŇIŠOV" : "НАЙOBĽUBLEŇIŠOV",
+		"NAJOBĽUBLEŇIŠE" : "НАЙOBĽUBLEŇIŠE",
+		
 		
 
 		// false positive
