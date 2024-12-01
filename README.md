@@ -1,5 +1,8 @@
 # translit — Rusyn transliteration
 
+![GitHub package.json version](https://img.shields.io/github/package-json/v/surfinzap/translit?color=7b00cb&style=flat)
+![GitHub](https://img.shields.io/github/license/surfinzap/translit?color=7b00cb&style=flat)
+
 The Rusyn language is written in the Cyrillic script, which can be challenging to type if you don’t have the right keyboard or software.
 
 That’s where Translit comes in—a JavaScript library designed to easily transliterate Rusyn text between the Latin alphabet and Cyrillic script. Simply type in Latin letters, and Translit will convert your text to Cyrillic (or the other way around) instantly.
