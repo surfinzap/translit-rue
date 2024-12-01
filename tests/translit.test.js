@@ -820,9 +820,6 @@ describe('(unit) Uppercase tests:\n', () => {
     "Цїлый" : "Цїлый", //false positive
 
     ...testUpperCaseWords,
-
-
-
   };
 
   Object.keys(testCase).forEach((key) => {

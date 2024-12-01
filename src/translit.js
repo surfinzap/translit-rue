@@ -332,25 +332,20 @@ function streamlineApostrophes(string) {
 }
 
 
-
-function mapCyrLat(string, mappingOption) {
-  for (var rule in mappingOption){
-    var re = new RegExp(mappingOption[rule],"g");
-    string =  string.replace(re, rule);
+function mapOption (string, mappingOption, direction) {
+  if (direction === Directions.CYR_LAT) {
+    for (var rule in mappingOption) {
+      var re = new RegExp(mappingOption[rule], "g");
+      string = string.replace(re, rule);
+    }
+  } else if (direction === Directions.LAT_CYR) {
+    for (var rule in mappingOption) {
+      var re = new RegExp(rule, "g");
+      string = string.replace(re, mappingOption[rule]);
+    }
   }
-  return string;
+  return string;  
 }
-
-
-
-function mapLatCyr(string, mappingOption) {
-  for (var rule in mappingOption){
-    var re = new RegExp(rule,"g");
-    string =  string.replace(re, mappingOption[rule]);
-  }
-  return string;
-}
-
 
 
 /*  
@@ -389,7 +384,7 @@ export function mapDoubledDtnlLatCyr(string){
   let re = new RegExp(pattern, 'gi');
 
   return string.replace(re, function($0, $1, $2, $3){
-    return mapLatCyr($1, doubledDtnl) + $2 + $3;
+    return mapOption($1, doubledDtnl, Directions.LAT_CYR) + $2 + $3;
   });
 }
 
@@ -431,7 +426,7 @@ export function mapDoubledDtnlCyrLat(string){
   let re = new RegExp(pattern, 'gi');
 
   return string.replace(re, function($0, $1, $2, $3){
-    return mapCyrLat($1, doubledDtnl) + $2 + $3;
+    return mapOption($1, doubledDtnl, Directions.CYR_LAT) + $2 + $3;
   });
 }
 
@@ -473,7 +468,7 @@ export function mapSuperlativeLatCyr(string){
   let re = new RegExp(pattern, 'gi');
 
   return string.replace(re, function($0, $1, $2, $3, $4, $5){
-    return $1 + mapLatCyr($2, singleChars) + $3 + $4 + $5;
+    return $1 + mapOption($2, singleChars, Directions.LAT_CYR) + $3 + $4 + $5;
   });
 
 }
@@ -504,7 +499,7 @@ export function mapConsecutiveSoftWovelsLatCyr(string) {
   let re = new RegExp(pattern, 'gi');
 
   return string.replace(re, function($0, $1, $2){
-    return $1 + mapLatCyr($2, softVowels);
+    return $1 + mapOption($2, softVowels, Directions.LAT_CYR);
   });
 }
 
@@ -534,7 +529,7 @@ export function mapConsecutiveSoftWovelsCyrLat(string) {
   let re = new RegExp(pattern, 'gi');
 
   return string.replace(re, function($0, $1, $2){
-    return $1 + mapCyrLat($2, softVowels);
+    return $1 + mapOption($2, softVowels, Directions.CYR_LAT);
   });
 }
 
@@ -556,7 +551,7 @@ export function mapJojJovBeginningWordLatCyr(string) {
   let re = new RegExp(pattern, 'gi');
 
   return string.replace(re, function($0, $1, $2){
-    return $1 + mapLatCyr($2, jojJov);
+    return $1 + mapOption($2, jojJov, Directions.LAT_CYR);
   });
 }
 
@@ -580,7 +575,7 @@ export function mapSingleJoLatCyr(string) {
   let re = new RegExp(pattern, 'gi');
 
   return string.replace(re, function($0, $1, $2, $3){
-    return $1 + mapLatCyr($2, softVowels) + $3;
+    return $1 + mapOption($2, softVowels, Directions.LAT_CYR) + $3;
   });
 }
 
@@ -600,8 +595,7 @@ export function mapSingleJoLatCyr(string) {
   We don’t map “jo” here as it a special case handled in separate functions:
   - mapConsecutiveSoftWovelsLatCyr
   - mapConsecutiveSoftWovelsCyrLat
-  - mapLatCyr(string, exceptions)
-  - mapCyrLat(string, exceptions)
+  - mapOption(string, exceptions, direction)
   - mapJojJovBeginningWordLatCyr
   - mapJojJovBeginningWordCyrLat
 
@@ -631,7 +625,7 @@ export function mapSoftVowelBeginningWordLatCyr(string) {
   let re = new RegExp(pattern, 'gi');
 
   return string.replace(re, function($0, $1, $2, $3){
-    return $1 + mapLatCyr($2 + $3, softVowels);
+    return $1 + mapOption($2 + $3, softVowels, Directions.LAT_CYR);
   });
 }
 
@@ -672,7 +666,7 @@ export function mapSoftVowelBeginningWordCyrLat(string) {
   let re = new RegExp(pattern, 'gi');
 
   return string.replace(re, function($0, $1, $2){
-    return $1 + mapCyrLat($2, softVowels);
+    return $1 + mapOption($2, softVowels, Directions.CYR_LAT);
   });
 }
 
@@ -701,7 +695,7 @@ export function mapSoftVowelAfterHardVowelLatCyr(string) {
   let re = new RegExp(pattern, 'gi');
 
   return string.replace(re, function($0, $1, $2){
-    return $1 + mapLatCyr($2, softVowels);
+    return $1 + mapOption($2, softVowels, Directions.LAT_CYR);
   });
 }
 
@@ -732,7 +726,7 @@ export function mapSoftVowelAfterHardVowelCyrLat(string) {
   let re = new RegExp(pattern, 'gi');
 
   return string.replace(re, function($0, $1, $2){
-    return $1 + mapCyrLat($2, softVowels);
+    return $1 + mapOption($2, softVowels, Directions.CYR_LAT);
   });
 }
 
@@ -747,13 +741,21 @@ export function processLatCyr(string) {
   string = mapSoftVowelBeginningWordLatCyr(string);
   string = mapSoftVowelAfterHardVowelLatCyr(string);
   string = mapDoubledDtnlLatCyr(string);
-  string = mapLatCyr(string, exceptions);
-  string = mapLatCyr(string, detenele);
-  string = mapLatCyr(string, johoJomu);
-  string = mapLatCyr(string, hardConsonants);
-  string = mapLatCyr(string, dtnl);
-  string = mapLatCyr(string, doubleChars);
-  string = mapLatCyr(string, singleChars);
+
+  const mappings = [
+    exceptions,
+    detenele,
+    johoJomu,
+    hardConsonants,
+    dtnl,
+    doubleChars,
+    singleChars,
+  ];
+
+  for (const mapping of mappings) {
+    string = mapOption(string, mapping, Directions.LAT_CYR);
+  }
+
   return string;
 }
 
@@ -762,12 +764,20 @@ export function processCyrLat(string) {
   string = mapSoftVowelBeginningWordCyrLat(string);
   string = mapSoftVowelAfterHardVowelCyrLat(string);
   string = mapDoubledDtnlCyrLat(string);
-  string = mapCyrLat(string, exceptions);
-  string = mapCyrLat(string, detenele);
-  string = mapCyrLat(string, hardConsonants);
-  string = mapCyrLat(string, dtnl);
-  string = mapCyrLat(string, doubleChars);
-  string = mapCyrLat(string, singleChars);
+
+  const mappings = [
+    exceptions,
+    detenele,
+    hardConsonants,
+    dtnl,
+    doubleChars,
+    singleChars,
+  ];
+
+  for (const mapping of mappings) {
+    string = mapOption(string, mapping, Directions.CYR_LAT);
+  }
+
   return string;
 }
 
