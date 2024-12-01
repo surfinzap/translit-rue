@@ -1,5 +1,8 @@
 # Changelog for Rusyn transliterate
 
+## vNext //
+
+
 ## 2.1.1 // 2024-12-01
 
 ### 🔨 Maintenance
