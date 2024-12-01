@@ -1,6 +1,19 @@
 # Changelog for Rusyn transliterate
 
-## vNext //
+## 3.0.0 //
+
+
+### 💥 Breaking changes
+In previous versions, there were two functions for transliteration:
+- `translitCyrLat(string)` - Transliterate text from the Cyrillic script to the Latin alphabet.
+- `translitLatCyr(string)` - Transliterate text from the Latin alphabet to the Cyrillic script.
+
+As of version 3.0.0, these have been replaced with a single function that accepts a transliteration direction parameter:
+- `translit(string, direction)`
+- Example:
+  - `translit("Коровкы", "cyrLat")` → `Korovkŷ`
+  - `translit("Korovkŷ", "latCyr")` → `Коровкы`
+
 
 
 ## 2.1.1 // 2024-12-01

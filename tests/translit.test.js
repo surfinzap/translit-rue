@@ -9,8 +9,7 @@ import {
 				mapSoftVowelAfterHardVowelLatCyr,
 				mapSoftVowelAfterHardVowelCyrLat,
 				processUpperCase,
-				translitCyrLat,
-				translitLatCyr,} from '../src/translit.js';
+				translit,} from '../src/translit.js';
 import assert from 'assert';
 
 function mapToUppercase(testCase) {
@@ -428,7 +427,7 @@ describe('Apostrophes:\n', () => {
 
 	Object.keys(testCase).forEach((key) => {
 		it("Latin → Cyrillic:\n", () => {
-			assert.equal(translitLatCyr(key), testCase[key]);
+			assert.equal(translit(key, "latCyr"), testCase[key]);
 		});
 	});
 });
@@ -763,10 +762,10 @@ describe('Module tests:\n', () => {
 
 	Object.keys(testCase).forEach((key) => {
 		it("Latin → Cyrillic:\n", () => {
-			assert.equal(translitLatCyr(key), testCase[key]);
+			assert.equal(translit(key, "latCyr"), testCase[key]);
 		});
 		it("Cyrillic → Latin:\n", () => {
-			assert.equal(translitCyrLat(testCase[key]), key);
+			assert.equal(translit(testCase[key], "cyrLat"), key);
 		});
 	});
 });

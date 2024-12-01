@@ -1,12 +1,12 @@
 /*!
- * Translit (Rusyn transliteration) 2.1.0
+ * Translit (Rusyn transliteration) 2.1.1
  * code: https://github.com/surfinzap/translit
  * app: https://tota.sk/translit
  *
- * Copyright 2014-22 Braňo Šandala
+ * Copyright 2014-24 Braňo Šandala
  * Released under the MIT license
  *
- * Date: 2022-09-07
+ * Date: 2024-12-01
  */
 
 
@@ -15,6 +15,11 @@
    hard vowels = нейотованы гласны
    soft vowels = йотованы гласны
 */
+
+const Directions = {
+  CYR_LAT: "cyrLat",
+  LAT_CYR: "latCyr",
+};
 
 const latinVowelsLowerCase = "aeiouyŷ";
 const cyrillicHardVowelsLowerCase = "аеіоуиыї"
@@ -837,16 +842,17 @@ export function processUpperCase(string, mappingOption){
 /*
 	 Public API
 */
-export function translitCyrLat(string) {
-	string = processUpperCase(string, 'cyrLat');
-	string = processCyrLat(string);
-	return string;
-}
-
-
-
-export function translitLatCyr(string) {
-	string = processUpperCase(string, 'latCyr');
-	string = processLatCyr(string);
-	return string;
+export function translit(string, direction) {
+  if (direction === Directions.CYR_LAT) {
+    string = processUpperCase(string, Directions.CYR_LAT);
+    string = processCyrLat(string);
+  } else if (direction === Directions.LAT_CYR) {
+    string = processUpperCase(string, Directions.LAT_CYR);
+    string = processLatCyr(string);
+  } else {
+    throw new Error(
+      `Invalid direction. Use '${Directions.CYR_LAT}' or '${Directions.LAT_CYR}'.`
+    );
+  }
+  return string;
 }

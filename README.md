@@ -13,25 +13,32 @@ That’s where Translit comes in—a JavaScript library designed to easily tran
 Try at [https://tota.sk/translit](https://tota.sk/translit).
 
 ### NPM package
+
 Include translit as an NPM package in your web project:
 
 ```
 npm install translit-rue
 ```
 
+
 ### JS library
+
 Download `dist/translit.min.js` and include it in your web project.
 
 
+
 ## Documentation
-Transliterate a text from the Cyrillic script to the Latin alphabet:
+
+Transliterate text between the Cyrillic script and the Latin alphabet using the `translit(string, direction)` function. Specify the transliteration direction using the `direction` parameter.
+
+Transliterate from Cyrillic to Latin:
 ```javascript
-translitCyrLat(string)
+translit("Коровкы", "cyrLat"); // Output: Korovkŷ
 ```
 
-Transliterate a text from the Latin alphabet to the Cyrillic script:
+Transliterate from Latin to Cyrillic:
 ```javascript
-translitLatCyr(string)
+translit("Korovkŷ", "latCyr"); // Output: Коровкы
 ```
 
 
