@@ -7,6 +7,7 @@
 - Update packages to their latest versions
 - Tidy up the project structure
 - Update publishing workflow
+- Limit the NPM package to `dist/translit_dist.min.js` only
 
 
 ## 2.1.0 // 2022-09-07
