@@ -9,22 +9,22 @@ importers:
   .:
     devDependencies:
       '@babel/cli':
-        specifier: ^7.18.10
+        specifier: ^7.25.9
         version: 7.25.9(@babel/core@7.26.0)
       '@babel/core':
-        specifier: ^7.19.0
+        specifier: ^7.26.0
         version: 7.26.0
       '@babel/preset-env':
-        specifier: ^7.19.0
+        specifier: ^7.26.0
         version: 7.26.0(@babel/core@7.26.0)
       '@babel/register':
-        specifier: ^7.18.9
+        specifier: ^7.25.9
         version: 7.25.9(@babel/core@7.26.0)
       babelify:
         specifier: ^10.0.0
         version: 10.0.0(@babel/core@7.26.0)
       browserify:
-        specifier: ^17.0.0
+        specifier: ^17.0.1
         version: 17.0.1
       gulp:
         specifier: ^4.0.2
@@ -42,7 +42,7 @@ importers:
         specifier: ^3.0.2
         version: 3.0.2
       mocha:
-        specifier: ^10.0.0
+        specifier: ^10.8.2
         version: 10.8.2
       vinyl-buffer:
         specifier: ^1.0.1
