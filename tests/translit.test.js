@@ -10,7 +10,7 @@ import {
 				mapSoftVowelAfterHardVowelCyrLat,
 				processUpperCase,
 				translitCyrLat,
-				translitLatCyr,} from '../translit.js';
+				translitLatCyr,} from '../src/translit.js';
 import assert from 'assert';
 
 function mapToUppercase(testCase) {

@@ -1,5 +1,15 @@
 # Changelog for Rusyn transliterate
 
+## 2.1.1 // 2024-12-01
+
+### 🔨 Maintenance
+- Change packaging from NPM to PNPM 
+- Update packages to their latest versions
+- Tidy up the project structure
+- Update publishing workflow
+- Limit the NPM package to `dist/translit_dist.min.js` only
+
+
 ## 2.1.0 // 2022-09-07
 This version is a bigger improvement since 2020. Translit now works well for UPPER CASE texts and works better for numerous combinations of soft (я, є, ї, ё, ю) and hard (а, е, і, о, у, и, ы, ї) vowels.
 

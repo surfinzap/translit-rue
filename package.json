@@ -1,46 +1,49 @@
 {
-	"name": "translit-rue",
-	"version": "2.1.0",
-	"description": "Translit is a javascript library to transliterate Rusyn language from Latin alphabet to Cyrillic script and vice versa.",
-	"license": "MIT",
-	"author": {
-		"name": "Braňo Šandala",
-		"email": "surfin.zap@gmail.com"
-	},
-	"scripts": {
-		"build": "gulp build",
-		"test": "mocha --require @babel/register ./src/test/**/*.test.js -R min",
-		"test:dev": "mocha --require @babel/register ./src/test/**/*.test.js -R min -w"
-	},
-	"main": "dist/translit_dist.min.js",
-	"repository": {
-		"type": "git",
-		"url": "https://github.com/surfinzap/translit"
-	},
-	"bugs": {
-		"url": "https://github.com/surfinzap/translit/issues"
-	},
-	"keywords": [
-		"transliteration",
-		"Rusyn"
-	],
-	"engines": {
-		"node": ">=6.9.4"
-	},
-	"devDependencies": {
-		"@babel/cli": "^7.18.10",
-		"@babel/core": "^7.19.0",
-		"@babel/preset-env": "^7.19.0",
-		"@babel/register": "^7.18.9",
-		"babelify": "^10.0.0",
-		"browserify": "^17.0.0",
-		"gulp": "^4.0.2",
-		"gulp-babel": "^8.0.0",
-		"gulp-cli": "^2.3.0",
-		"gulp-concat": "^2.6.1",
-		"gulp-uglify": "^3.0.2",
-		"mocha": "^10.0.0",
-		"vinyl-buffer": "^1.0.1",
-		"vinyl-source-stream": "^2.0.0"
-	}
+  "name": "translit-rue",
+  "version": "2.1.1",
+  "description": "Translit is a JavaScript library that transliterates the Rusyn language between the Latin alphabet and the Cyrillic script.",
+  "license": "MIT",
+  "author": {
+    "name": "Braňo Šandala",
+    "email": "hi@brano.me"
+  },
+  "scripts": {
+    "build": "gulp build",
+    "test": "mocha --require @babel/register ./tests/**/*.test.js -R min",
+    "test:dev": "mocha --require @babel/register ./tests/**/*.test.js -R min -w"
+  },
+  "main": "dist/translit_dist.min.js",
+	"files": [
+    "dist/translit_dist.min.js"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/surfinzap/translit"
+  },
+  "bugs": {
+    "url": "https://github.com/surfinzap/translit/issues"
+  },
+  "keywords": [
+    "transliteration",
+    "Rusyn"
+  ],
+  "engines": {
+    "node": ">=6.9.4"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.25.9",
+    "@babel/core": "^7.26.0",
+    "@babel/preset-env": "^7.26.0",
+    "@babel/register": "^7.25.9",
+    "babelify": "^10.0.0",
+    "browserify": "^17.0.1",
+    "gulp": "^5.0.0",
+    "gulp-babel": "^8.0.0",
+    "gulp-cli": "^3.0.0",
+    "gulp-concat": "^2.6.1",
+    "gulp-uglify": "^3.0.2",
+    "mocha": "^10.8.2",
+    "vinyl-buffer": "^1.0.1",
+    "vinyl-source-stream": "^2.0.0"
+  }
 }
