@@ -1,10 +1,12 @@
 # Changelog for Rusyn transliterate
 
-## vNext
-
+## 2.1.1 // 2024-12-01
 
 ### 🔨 Maintenance
 - Change packaging from NPM to PNPM 
+- Update packages to their latest versions
+- Tidy up the project structure
+- Update publishing workflow
 
 
 ## 2.1.0 // 2022-09-07
