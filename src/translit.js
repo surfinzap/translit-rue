@@ -28,9 +28,19 @@ const upperCaseChars = "A-Z" + nonLatinUppercase;
 const allChars = lowerCaseChars + upperCaseChars;
 
 const exceptions = {
-  "text" : "текст",
-  "taxi" : "таксі",
+  "text": "текст",
+  "taxi": "таксі",
+  "jožk": "йожк",
 };
+
+const exceptionsCapitalized = { }; 
+
+for (const [key, value] of Object.entries(exceptions)) {
+  const capitalizedKey = key.charAt(0).toUpperCase() + key.slice(1);
+  const capitalizedValue = value.charAt(0).toUpperCase() + value.slice(1);
+  exceptionsCapitalized[capitalizedKey] = capitalizedValue;
+}
+ 
   
 const johoJomu = {
   "joho" : "ёго",
@@ -328,16 +338,16 @@ function streamlineApostrophes(string) {
 }
 
 
-function mapOption (string, mappingOption, direction) {
+function mapRule (string, mappingRule, direction) {
   if (direction === "cyrLat") {
-    for (var rule in mappingOption) {
-      var re = new RegExp(mappingOption[rule], "g");
+    for (var rule in mappingRule) {
+      var re = new RegExp(mappingRule[rule], "g");
       string = string.replace(re, rule);
     }
   } else if (direction === "latCyr") {
-    for (var rule in mappingOption) {
+    for (var rule in mappingRule) {
       var re = new RegExp(rule, "g");
-      string = string.replace(re, mappingOption[rule]);
+      string = string.replace(re, mappingRule[rule]);
     }
   }
   return string;  
@@ -380,7 +390,7 @@ export function mapDoubledDtnlLatCyr(string){
   let re = new RegExp(pattern, 'gi');
 
   return string.replace(re, function($0, $1, $2, $3){
-    return mapOption($1, doubledDtnl, "latCyr") + $2 + $3;
+    return mapRule($1, doubledDtnl, "latCyr") + $2 + $3;
   });
 }
 
@@ -422,7 +432,7 @@ export function mapDoubledDtnlCyrLat(string){
   let re = new RegExp(pattern, 'gi');
 
   return string.replace(re, function($0, $1, $2, $3){
-    return mapOption($1, doubledDtnl, "cyrLat") + $2 + $3;
+    return mapRule($1, doubledDtnl, "cyrLat") + $2 + $3;
   });
 }
 
@@ -464,7 +474,7 @@ export function mapSuperlativeLatCyr(string){
   let re = new RegExp(pattern, 'gi');
 
   return string.replace(re, function($0, $1, $2, $3, $4, $5){
-    return $1 + mapOption($2, singleChars, "latCyr") + $3 + $4 + $5;
+    return $1 + mapRule($2, singleChars, "latCyr") + $3 + $4 + $5;
   });
 
 }
@@ -495,7 +505,7 @@ export function mapConsecutiveSoftWovelsLatCyr(string) {
   let re = new RegExp(pattern, 'gi');
 
   return string.replace(re, function($0, $1, $2){
-    return $1 + mapOption($2, softVowels, "latCyr");
+    return $1 + mapRule($2, softVowels, "latCyr");
   });
 }
 
@@ -525,7 +535,7 @@ export function mapConsecutiveSoftWovelsCyrLat(string) {
   let re = new RegExp(pattern, 'gi');
 
   return string.replace(re, function($0, $1, $2){
-    return $1 + mapOption($2, softVowels, "cyrLat");
+    return $1 + mapRule($2, softVowels, "cyrLat");
   });
 }
 
@@ -547,7 +557,7 @@ export function mapJojJovBeginningWordLatCyr(string) {
   let re = new RegExp(pattern, 'gi');
 
   return string.replace(re, function($0, $1, $2){
-    return $1 + mapOption($2, jojJov, "latCyr");
+    return $1 + mapRule($2, jojJov, "latCyr");
   });
 }
 
@@ -565,16 +575,15 @@ export function mapJojJovBeginningWordLatCyr(string) {
 */
 export function mapSingleJoLatCyr(string) {
   let pattern =
-      '(\\b)'
+      '(^|[^' + allChars + '])'
     + '(jo)'
-    + '(\\b)';
+    + '([^' + allChars + ']|$)';
   let re = new RegExp(pattern, 'gi');
 
   return string.replace(re, function($0, $1, $2, $3){
-    return $1 + mapOption($2, softVowels, "latCyr") + $3;
+    return $1 + mapRule($2, softVowels, "latCyr") + $3;
   });
 }
-
 
 
 /*
@@ -591,7 +600,7 @@ export function mapSingleJoLatCyr(string) {
   We don’t map “jo” here as it a special case handled in separate functions:
   - mapConsecutiveSoftWovelsLatCyr
   - mapConsecutiveSoftWovelsCyrLat
-  - mapOption(string, exceptions, direction)
+  - mapRule(string, exceptions, direction)
   - mapJojJovBeginningWordLatCyr
   - mapJojJovBeginningWordCyrLat
 
@@ -621,7 +630,7 @@ export function mapSoftVowelBeginningWordLatCyr(string) {
   let re = new RegExp(pattern, 'gi');
 
   return string.replace(re, function($0, $1, $2, $3){
-    return $1 + mapOption($2 + $3, softVowels, "latCyr");
+    return $1 + mapRule($2 + $3, softVowels, "latCyr");
   });
 }
 
@@ -662,7 +671,7 @@ export function mapSoftVowelBeginningWordCyrLat(string) {
   let re = new RegExp(pattern, 'gi');
 
   return string.replace(re, function($0, $1, $2){
-    return $1 + mapOption($2, softVowels, "cyrLat");
+    return $1 + mapRule($2, softVowels, "cyrLat");
   });
 }
 
@@ -691,7 +700,7 @@ export function mapSoftVowelAfterHardVowelLatCyr(string) {
   let re = new RegExp(pattern, 'gi');
 
   return string.replace(re, function($0, $1, $2){
-    return $1 + mapOption($2, softVowels, "latCyr");
+    return $1 + mapRule($2, softVowels, "latCyr");
   });
 }
 
@@ -722,7 +731,7 @@ export function mapSoftVowelAfterHardVowelCyrLat(string) {
   let re = new RegExp(pattern, 'gi');
 
   return string.replace(re, function($0, $1, $2){
-    return $1 + mapOption($2, softVowels, "cyrLat");
+    return $1 + mapRule($2, softVowels, "cyrLat");
   });
 }
 
@@ -738,7 +747,8 @@ export function processLatCyr(string) {
   string = mapSoftVowelAfterHardVowelLatCyr(string);
   string = mapDoubledDtnlLatCyr(string);
 
-  const mappings = [
+  const mappingRules = [
+    exceptionsCapitalized,
     exceptions,
     detenele,
     johoJomu,
@@ -748,8 +758,8 @@ export function processLatCyr(string) {
     singleChars,
   ];
 
-  for (const mapping of mappings) {
-    string = mapOption(string, mapping, "latCyr");
+  for (const mappingRule of mappingRules) {
+    string = mapRule(string, mappingRule, "latCyr");
   }
 
   return string;
@@ -761,7 +771,8 @@ export function processCyrLat(string) {
   string = mapSoftVowelAfterHardVowelCyrLat(string);
   string = mapDoubledDtnlCyrLat(string);
 
-  const mappings = [
+  const mappingRules = [
+    exceptionsCapitalized,
     exceptions,
     detenele,
     hardConsonants,
@@ -770,25 +781,25 @@ export function processCyrLat(string) {
     singleChars,
   ];
 
-  for (const mapping of mappings) {
-    string = mapOption(string, mapping, "cyrLat");
+  for (const mappingRule of mappingRules) {
+    string = mapRule(string, mappingRule, "cyrLat");
   }
 
   return string;
 }
 
-/*
+/* 
   Identify UPPERCASE letters and transliterate them according to a mapping option
 
   - process upper case words with 2 or more letter
   - process single-letter uppercase word in case it is around uppercase words
 
   @param {string} string: text for mapping
-  @param {string} mappingOption: latCyr | cyrLat
+  @param {string} direction: latCyr | cyrLat
   @returns {string} transliterated upper case text
 */
-export function processUpperCase(string, mappingOption){
-
+export function processUpperCase(string, direction){
+  /* handle uppercase */
   let spacingChars = '-–—\\s';
   
   let multiCharUpperCaseWord =
@@ -797,7 +808,7 @@ export function processUpperCase(string, mappingOption){
   let multiCharRegex = new RegExp(multiCharUpperCaseWord, 'g');
 
   string = string.replace(multiCharRegex, function($0, $1, $2){
-    switch (mappingOption) {
+    switch (direction) {
       case "latCyr":
         return processLatCyr($1.toLowerCase()).toUpperCase() + $2;
       case "cyrLat":
@@ -805,8 +816,6 @@ export function processUpperCase(string, mappingOption){
     }
   });
 
-
-  
 
   let singleCharBeforeUpperCase =
       '([^' + upperCaseChars + '’]|^)'
@@ -816,7 +825,7 @@ export function processUpperCase(string, mappingOption){
   let singleCharBeforeRegex = new RegExp(singleCharBeforeUpperCase, 'g');
 
   string = string.replace(singleCharBeforeRegex, function($0, $1, $2, $3){
-    switch (mappingOption) {
+    switch (direction) {
       case "latCyr":
         return $1 + processLatCyr($2.toLowerCase()).toUpperCase();
       case "cyrLat":
@@ -833,7 +842,7 @@ export function processUpperCase(string, mappingOption){
   let singleCharAfterRegex = new RegExp(singleCharAfterUpperCase, 'g');
   
   string = string.replace(singleCharAfterRegex, function($0, $1, $2, $3){
-    switch (mappingOption) {
+    switch (direction) {
       case "latCyr":
         return $1 + processLatCyr($2.toLowerCase()).toUpperCase() + $3;
       case "cyrLat":
@@ -849,16 +858,14 @@ export function processUpperCase(string, mappingOption){
    Public API
 */
 export function translit(string, direction) {
-  if (direction === "cyrLat") {
-    string = processUpperCase(string, "cyrLat");
-    string = processCyrLat(string);
-  } else if (direction === "latCyr") {
-    string = processUpperCase(string, "latCyr");
-    string = processLatCyr(string);
-  } else {
-    throw new Error(
-      `Invalid direction. Use '${"cyrLat"}' or '${"latCyr"}'.`
-    );
+  switch (direction) {
+    case "latCyr":
+      string = processUpperCase(string, "latCyr");
+      string = processLatCyr(string);
+      return string;
+    case "cyrLat":
+      string = processUpperCase(string, "cyrLat");
+      string = processCyrLat(string);
+      return string;
   }
-  return string;
 }

@@ -14,6 +14,10 @@ As of version 3.0.0, these have been replaced with a single function that accept
   - `translit("Коровкы", "cyrLat")` → `Korovkŷ`
   - `translit("Korovkŷ", "latCyr")` → `Коровкы`
 
+### 🐛 Fixes
+- handling exception for the name “Jožko”
+  - ⛔ before: Jožko → Ёжко
+  - ✅ now: Jožko → Йожко
 
 
 ## 2.1.1 // 2024-12-01
