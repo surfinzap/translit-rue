@@ -210,8 +210,6 @@ const hardConsonants = {
     // haven’t found examples for:
     // t + ja, je, ji, jo, ju
     // l + ja, je, ji, jo, ju
-
-
   };
 
 

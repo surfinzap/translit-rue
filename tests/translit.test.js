@@ -420,7 +420,7 @@ describe("Streamline apostrophes:\n", () => {
 
   let accentChars = ["'", "’", "ʼ", "‘", "‛", "´", "`", "′"];
 
-  function generateVariants(testCase, accentChars) {
+  function generateAccents(testCase, accentChars) {
     let result = {};
 
     for (let [key, value] of Object.entries(testCase)) {
@@ -440,41 +440,62 @@ describe("Streamline apostrophes:\n", () => {
   }
 
 
-  let testCase = {
-    // hard consonants
+  let hardConsonants = {
     "kinc'a": "kinc’a",
     "c'inyla": "c’inyla",
-    // tanc’ovaty 
-    // misc’u
-    // s’a
-    // Bis’iduj
-    // volos’om
-    // pros’u
+    "tanc'ovaty": "tanc’ovaty",
+    "misc'u": "misc’u",
+    "s'a": "s’a",
+    "Bis'iduj": "Bis’iduj",
+    "volos'om": "volos’om",
+    "pros'u": "pros’u",
+    "Pr'ašiv": "Pr’ašiv",
+    "mir'i": "mir’i",
+    "tr'och": "tr’och",
+    "chmur'u": "chmur’u",
+    "vz'aty": "vz’aty",
+    "berez'i": "berez’i",
+    "z'ojkla": "z’ojkla",
+    "rez'ume": "rez’ume",
+    "Myž'a": "Myž’a",
+    "Myž'o": "Myž’o",
+    "Myž'u": "Myž’u",
 
-    // "str‘is‘i": "стрїсї",
-    // "c’ile": "цїле",
-    // "kur’atko": "курятко",
-    // "car‘u": "царю",
-    // "Otec’": "Отець",
-    // "Otec'": "Отець",
-    // "Otec´": "Отець",
-    // "zazr´ila": "зазрїла",
+    "str´is´i": "str’is’i",
+
+  };
+  
+  let accentsEnd = {
+    "Otec'": "Otec’",
+    "jes'": "jes’",
+    "teper'": "teper’",
+    "piňaz'": "piňaz’",
+    "ž'": "ž’",
   };
 
-  // tbd +uppercase
-  // + sentence case 
+  let accentsStart = {
+    "'o": "’o",
+  };
 
-  let extendedTestCase = { ...generateVariants(testCase,accentChars), ...mapToUppercase(generateVariants(testCase,accentChars))};
+  let expectedUseCases = {
+    ...generateAccents(hardConsonants, accentChars),
+    ...mapToUppercase(generateAccents(hardConsonants, accentChars)),
+    ...generateAccents(accentsEnd, accentChars),
+    ...mapToUppercase(generateAccents(accentsEnd, accentChars)),
+    ...generateAccents(accentsStart, accentChars),
+    ...mapToUppercase(generateAccents(accentsStart, accentChars)),
+  };
   
-  Object.keys(extendedTestCase).forEach((key) => {
+  Object.keys(expectedUseCases).forEach((key) => {
     it("should change the apostrophe:\n", () => {
-      assert.equal(streamlineApostrophes(key), extendedTestCase[key]);
+      assert.equal(streamlineApostrophes(key), expectedUseCases[key]);
     });
   });
 
   let falsePositives = {
 
   }
+
   Object.keys(falsePositives).forEach((key) => {
     it("shouldn’t change the apostrophe:\n", () => {
       assert.equal(streamlineApostrophes(key), testCase[key]);
@@ -482,6 +503,9 @@ describe("Streamline apostrophes:\n", () => {
   });
   
 });
+
+
+
 
 
 //make it a module test
