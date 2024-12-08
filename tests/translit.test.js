@@ -8,6 +8,7 @@ import {
         mapSoftVowelBeginningWordCyrLat,
         mapSoftVowelAfterHardVowelLatCyr,
         mapSoftVowelAfterHardVowelCyrLat,
+        streamlineApostrophes,
         processUpperCase,
         translit,} from '../src/translit.js';
 import assert from 'assert';
@@ -415,11 +416,81 @@ describe('(unit, cyr) Ja, je, ji, jo, ju before a vowel:\n', () => {
 
 
 
+describe("Streamline apostrophes:\n", () => {
 
+  let accentChars = ["'", "’", "ʼ", "‘", "‛", "´", "`", "′"];
+
+  function generateVariants(testCase, accentChars) {
+    let result = {};
+
+    for (let [key, value] of Object.entries(testCase)) {
+      let parts = key.split("'");
+
+      if (parts.length === 2) {
+        for (let accent of accentChars) {
+          let variantKey = parts[0] + accent + parts[1];
+          result[variantKey] = value;
+        }
+      } else {
+        result[key] = value;
+      }
+    }
+
+    return result;
+  }
+
+
+  let testCase = {
+    // hard consonants
+    "kinc'a": "kinc’a",
+    "c'inyla": "c’inyla",
+    // tanc’ovaty 
+    // misc’u
+    // s’a
+    // Bis’iduj
+    // volos’om
+    // pros’u
+
+    // "str‘is‘i": "стрїсї",
+    // "c’ile": "цїле",
+    // "kur’atko": "курятко",
+    // "car‘u": "царю",
+    // "Otec’": "Отець",
+    // "Otec'": "Отець",
+    // "Otec´": "Отець",
+    // "zazr´ila": "зазрїла",
+  };
+
+  // tbd +uppercase
+  // + sentence case 
+
+  let extendedTestCase = { ...generateVariants(testCase,accentChars), ...mapToUppercase(generateVariants(testCase,accentChars))};
+  
+  Object.keys(extendedTestCase).forEach((key) => {
+    it("should change the apostrophe:\n", () => {
+      assert.equal(streamlineApostrophes(key), extendedTestCase[key]);
+    });
+  });
+
+  let falsePositives = {
+
+  }
+  Object.keys(falsePositives).forEach((key) => {
+    it("shouldn’t change the apostrophe:\n", () => {
+      assert.equal(streamlineApostrophes(key), testCase[key]);
+    });
+  });
+  
+});
+
+
+//make it a module test
 
 describe('Apostrophes:\n', () => {
   let testCase = {
     "str‘is‘i": "стрїсї",
+    "c’ile": "цїле",
+    "kur’atko": "курятко",
     "car‘u": "царю",
     "Otec’": "Отець",
     "Otec'": "Отець",

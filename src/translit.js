@@ -328,13 +328,24 @@ const singleChars = {
 
 
 /*
-   (39) dumb single quote,
-   (8217) right single quotation mark
-   (700) modifier letter apostrophe; https://en.wikipedia.org/wiki/Modifier_letter_apostrophe
-   (8216) left single quotation mark
+  Identify apostrophe candidates around 'hardConsonants' and 'doubleChars'
+
+  Inputs
+  '  (39)     dumb single quote
+  ‘  (8216)   left single quotation mark
+  ’  (8217)   right single quotation mark
+  ʼ  (700)    modifier letter apostrophe; https://en.wikipedia.org/wiki/Modifier_letter_apostrophe [1]
+  ‛  (8219)   single high-reversed-9 quotation mark
+  ´  (180)    acute accent
+  `  (96)     grave accent
+  ′  (8242)   prime
+
+  Output
+  ’  (8217)		right single quotation mark
+  (In theory, the output should be (700), however this character is often not included in fonts, so the 8217 is a viable alternative)
 */
-function streamlineApostrophes(string) {
-  return string.replace(/\'|’|ʼ|‘/g , '’');
+export function streamlineApostrophes(string) {
+  return string.replace(/\'|’|ʼ|‘|‛|´|`|′/g, "’");
 }
 
 
