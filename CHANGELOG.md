@@ -20,6 +20,7 @@ As of version 3.0.0, these have been replaced with a single function that accept
   - ✅ now: Jožko → Йожко
 
 
+
 ## 2.1.1 // 2024-12-01
 
 ### 🔨 Maintenance

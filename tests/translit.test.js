@@ -418,7 +418,7 @@ describe('(unit, cyr) Ja, je, ji, jo, ju before a vowel:\n', () => {
 
 describe("Streamline apostrophes:\n", () => {
 
-  let accentChars = ["'", "’", "ʼ", "‘", "‛", "´", "`", "′"];
+  const accentChars = ["'", "’", "ʼ", "‘", "‛", "´", "`", "′"];
 
   function generateAccents(testCase, accentChars) {
     let result = {};
@@ -494,8 +494,27 @@ describe("Streamline apostrophes:\n", () => {
 
   let falsePositives = {
     // combinations of letters where apostrophe shouldn’t appear
-
-  }
+    "d'a": "d'a",
+    "t'a": "t'a",
+    "n'a": "n'a",
+    "l'a": "l'a",
+    "d'e": "d'e",
+    "t'e": "t'e",
+    "n'e": "n'e",
+    "l'e": "l'e",
+    "d'i": "d'i",
+    "t'i": "t'i",
+    "n'i": "n'i",
+    "l'i": "l'i",
+    "d'o": "d'o",
+    "t'o": "t'o",
+    "n'o": "n'o",
+    "l'o": "l'o",
+    "d'u": "d'u",
+    "t'u": "t'u",
+    "n'u": "n'u",
+    "l'u": "l'u",
+  };
 
   Object.keys(falsePositives).forEach((key) => {
     it("shouldn’t change the apostrophe:\n", () => {

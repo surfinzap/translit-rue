@@ -343,7 +343,42 @@ const singleChars = {
   (In theory, the output should be (700), however this character is often not included in fonts, so the 8217 is a viable alternative)
 */
 export function streamlineApostrophes(string) {
-  return string.replace(/\'|’|ʼ|‘|‛|´|`|′/g, "’");
+  const accentChars = "\'’ʼ‘‛´`′";
+
+  // match hard consonants
+  string = string.replace(
+    new RegExp(
+      "([csrzž])"
+    + "(["+ accentChars +"])"
+    + "([aeiou])", 
+      "gi"
+    ),
+    "$1’$3"
+  );
+
+  // match ending accents 
+  string = string.replace(
+    new RegExp(
+      "([csrzž])"
+    + "(["+ accentChars +"])"
+    + "(\\B)", 
+      "gi"
+    ),
+    "$1’$3"
+  );
+
+  // match starting accents 
+  string = string.replace(
+    new RegExp(
+      "(\\B)"
+    + "(["+ accentChars +"])"
+    + "([o])", 
+      "gi"
+    ),
+    "$1’$3"
+  );
+
+  return string;
 }
 
 
