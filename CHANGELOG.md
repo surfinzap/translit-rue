@@ -22,6 +22,9 @@ Translit now supports homoglyph characters—characters that look identical acro
   - ⛔ before: Jožko → Ёжко
   - ✅ now: Jožko → Йожко
 
+### 🔨 Maintenance
+- Update packages to their latest versions
+
 
 
 ## 2.1.1 // 2024-12-01
