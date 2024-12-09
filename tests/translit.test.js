@@ -493,12 +493,13 @@ describe("Streamline apostrophes:\n", () => {
   });
 
   let falsePositives = {
+    // combinations of letters where apostrophe shouldn’t appear
 
   }
 
   Object.keys(falsePositives).forEach((key) => {
     it("shouldn’t change the apostrophe:\n", () => {
-      assert.equal(streamlineApostrophes(key), testCase[key]);
+      assert.equal(streamlineApostrophes(key), falsePositives[key]);
     });
   });
   
@@ -507,30 +508,9 @@ describe("Streamline apostrophes:\n", () => {
 
 
 
-
-//make it a module test
-
-describe('Apostrophes:\n', () => {
-  let testCase = {
-    "str‘is‘i": "стрїсї",
-    "c’ile": "цїле",
-    "kur’atko": "курятко",
-    "car‘u": "царю",
-    "Otec’": "Отець",
-    "Otec'": "Отець",
-    "Otec´": "Отець",
-    "zazr´ila": "зазрїла",
-  };
-
-  Object.keys(testCase).forEach((key) => {
-    it("Latin → Cyrillic:\n", () => {
-      assert.equal(translit(key, "latCyr"), testCase[key]);
-    });
-  });
-});
-
-
 let testLowerCaseWords = {
+  "zazr’ila": "зазрїла",
+  "Otec’": "Отець",
   "c’ile": "цїле",
   "kur’atko": "курятко",
   "klynec’": "клинець",
