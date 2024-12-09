@@ -4,18 +4,21 @@
 
 
 ### 💥 Breaking changes
-In previous versions, there were two functions for transliteration:
+In previous versions, there were two functions for the transliteration:
 - `translitCyrLat(string)` - Transliterate text from the Cyrillic script to the Latin alphabet.
 - `translitLatCyr(string)` - Transliterate text from the Latin alphabet to the Cyrillic script.
 
-As of version 3.0.0, these have been replaced with a single function that accepts a transliteration direction parameter:
+As of version 3.0.0, these functions have been replaced with a single function that accepts a transliteration direction parameter:
 - `translit(string, direction)`
 - Example:
   - `translit("Коровкы", "cyrLat")` → `Korovkŷ`
   - `translit("Korovkŷ", "latCyr")` → `Коровкы`
 
+### 💪 Improvements
+Translit now supports homoglyph characters—characters that look identical across different alphabets but have different Unicode code points. For instance, the Latin `C` (`U+0043`) and the Cyrillic `С` (`U+0421`) appear the same but are distinct. Previously, if you used Cyrillic characters accidentally in a Latin word (e.g., `Сejlon`), the transliteration would fail, resulting in `Сейлон`. Now, mixed Latin and Cyrillic input like `Сejlon` is correctly transliterated to `Цейлон`.
+
 ### 🐛 Fixes
-- handling exception for the name “Jožko”
+- adding exception for the name “Jožko”
   - ⛔ before: Jožko → Ёжко
   - ✅ now: Jožko → Йожко
 

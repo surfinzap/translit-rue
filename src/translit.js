@@ -266,62 +266,93 @@ const doubleChars = {
   };
 
 const singleChars = {
-    "a" : "а",
-    "b" : "б",
-    "v" : "в",
-    "h" : "г",
-    "g" : "ґ",
-    "d" : "д",
-    "e" : "е",
-    "z" : "з",
-    "i" : "і",
-    "y" : "и",
-    "j" : "й",
-    "k" : "к",
-    "l" : "л",
-    "m" : "м",
-    "n" : "н",
-    "o" : "о",
-    "p" : "п",
-    "r" : "р",
-    "s" : "с",
-    "t" : "т",
-    "u" : "у",
-    "f" : "ф",
-    "ŷ" : "ы",
-    "c" : "ц",
-    "č" : "ч",
-    "ž" : "ж",
-    "š" : "ш",
-    "A" : "А",
-    "B" : "Б",
-    "V" : "В",
-    "H" : "Г",
-    "G" : "Ґ",
-    "D" : "Д",
-    "E" : "Е",
-    "Z" : "З",
-    "I" : "I",
-    "Y" : "И",
-    "J" : "Й",
-    "K" : "К",
-    "L" : "Л",
-    "M" : "М",
-    "N" : "Н",
-    "O" : "О",
-    "P" : "П",
-    "R" : "Р",
-    "S" : "С",
-    "T" : "Т",
-    "U" : "У",
-    "F" : "Ф",
-    "Ŷ" : "Ы",
-    "C" : "Ц",
-    "Č" : "Ч",
-    "Ž" : "Ж",
-    "Š" : "Ш",
-  }
+  "a": "а",
+  "b": "б",
+  "v": "в",
+  "h": "г",
+  "g": "ґ",
+  "d": "д",
+  "e": "е",
+  "z": "з",
+  "i": "і",
+  "y": "и",
+  "j": "й",
+  "k": "к",
+  "l": "л",
+  "m": "м",
+  "n": "н",
+  "o": "о",
+  "p": "п",
+  "r": "р",
+  "s": "с",
+  "t": "т",
+  "u": "у",
+  "f": "ф",
+  "ŷ": "ы",
+  "c": "ц",
+  "č": "ч",
+  "ž": "ж",
+  "š": "ш",
+  "A": "А",
+  "B": "Б",
+  "V": "В",
+  "H": "Г",
+  "G": "Ґ",
+  "D": "Д",
+  "E": "Е",
+  "Z": "З",
+  "I": "І",
+  "Y": "И",
+  "J": "Й",
+  "K": "К",
+  "L": "Л",
+  "M": "М",
+  "N": "Н",
+  "O": "О",
+  "P": "П",
+  "R": "Р",
+  "S": "С",
+  "T": "Т",
+  "U": "У",
+  "F": "Ф",
+  "Ŷ": "Ы",
+  "C": "Ц",
+  "Č": "Ч",
+  "Ž": "Ж",
+  "Š": "Ш",
+};
 
+
+  /*
+    Homoglyph, a letter with a similar shape, but belonging to a different alphabet and having a different Unicode code point
+
+    Coding
+    key: value
+    latin: cyrillic
+  */
+  const homoglyphs = {
+    "A": "А",
+    "a": "а",
+    "B": "В",
+    "C": "С",
+    "c": "с",
+    "E": "Е",
+    "e": "е",
+    "H": "Н",
+    "I": "І",
+    "i": "і",
+    "K": "К",
+    "M": "М",
+    "O": "О",
+    "o": "о",
+    "P": "Р",
+    "p": "р",
+    "T": "Т",
+    "X": "Х",
+    "x": "х",
+    "Y": "У",
+    "y": "у",
+  };
 
 
 
@@ -382,7 +413,7 @@ export function streamlineApostrophes(string) {
 }
 
 
-function mapRule (string, mappingRule, direction) {
+export function mapRule (string, mappingRule, direction) {
   if (direction === "cyrLat") {
     for (var rule in mappingRule) {
       var re = new RegExp(mappingRule[rule], "g");
@@ -904,10 +935,12 @@ export function processUpperCase(string, direction){
 export function translit(string, direction) {
   switch (direction) {
     case "latCyr":
+      string = mapRule(string, homoglyphs, "cyrLat"); // opposite direction as we need to latinize the cyrillic homoghlyphs
       string = processUpperCase(string, "latCyr");
       string = processLatCyr(string);
       return string;
     case "cyrLat":
+      string = mapRule(string, homoglyphs, "latCyr"); // opposite direction as we need to cyrillize the latin homoghlyphs
       string = processUpperCase(string, "cyrLat");
       string = processCyrLat(string);
       return string;

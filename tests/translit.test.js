@@ -1,16 +1,17 @@
 import {
-        mapSuperlativeLatCyr,
-        mapDoubledDtnlLatCyr,
-        mapDoubledDtnlCyrLat,
-        mapConsecutiveSoftWovelsLatCyr,
-        mapConsecutiveSoftWovelsCyrLat,
-        mapSoftVowelBeginningWordLatCyr,
-        mapSoftVowelBeginningWordCyrLat,
-        mapSoftVowelAfterHardVowelLatCyr,
-        mapSoftVowelAfterHardVowelCyrLat,
-        streamlineApostrophes,
-        processUpperCase,
-        translit,} from '../src/translit.js';
+  mapSuperlativeLatCyr,
+  mapDoubledDtnlLatCyr,
+  mapDoubledDtnlCyrLat,
+  mapConsecutiveSoftWovelsLatCyr,
+  mapConsecutiveSoftWovelsCyrLat,
+  mapSoftVowelBeginningWordLatCyr,
+  mapSoftVowelBeginningWordCyrLat,
+  mapSoftVowelAfterHardVowelLatCyr,
+  mapSoftVowelAfterHardVowelCyrLat,
+  streamlineApostrophes,
+  processUpperCase,
+  translit,
+} from "../src/translit.js";
 import assert from 'assert';
 
 function mapToUppercase(testCase) {
@@ -416,7 +417,7 @@ describe('(unit, cyr) Ja, je, ji, jo, ju before a vowel:\n', () => {
 
 
 
-describe("Streamline apostrophes:\n", () => {
+describe("(unit) Streamline apostrophes:\n", () => {
 
   const accentChars = ["'", "’", "ʼ", "‘", "‛", "´", "`", "′"];
 
@@ -526,6 +527,80 @@ describe("Streamline apostrophes:\n", () => {
 
 
 
+describe("Streamline homoglyphs:\n", () => {
+
+  let homoglyphsCyrLat = {
+    "Aкорд": "Akord", // A
+    "Вера": "Vera", // a
+    "Bеранда": "Veranda", // B
+    "Cтраа": "Straa", // C
+    "cтраа": "straa", // c
+    "Eбола": "Ebola", // E
+    "ебола": "ebola", // e
+    "Hаїдж": "Najidž", // H
+    "Iля": "Iľa", // I
+    "iз": "iz", // i
+    "Kажда": "Každa", // K
+    "Mосква": "Moskva", // M
+    "Oрличaн": "Orlyčan", // O
+    "oчі": "oči", // o
+    "Pозточaн": "Roztočan", // P
+    "pомaнтік": "romantik", // p
+    "Tакый": "Takŷj", // T
+    "Xрістoс": "Christos", // X
+    "xрiн": "chrin", // x
+    "Yж": "Už", // Y
+    "yжытём": "užŷťom", // y
+  };
+
+  homoglyphsCyrLat = {
+    ...homoglyphsCyrLat,
+    ...mapToUppercase(homoglyphsCyrLat)
+  }
+ 
+  Object.keys(homoglyphsCyrLat).forEach((key) => {
+    it("(cyr → lat) should change the homoglyphs:\n", () => {
+      assert.equal(translit(key, "cyrLat"), homoglyphsCyrLat[key]);
+    });
+  });
+
+
+
+  let homoglyphsLatCyr = {
+    "Аkord": "Акорд", // A
+    "аkord": "акорд", // a
+    "Вraňo": "Бранё", // B
+    "Сejlon": "Цейлон", // C
+    "сela": "цела", // c
+    "Еvakuacija": "Евакуація", // E
+    "еvakuacija": "евакуація", // e
+    "Нirkŷ": "Гіркы", // H
+    "Іľa": "Іля", // I
+    "іz": "із", // i
+    "Кoňi": "Конї", // K
+    "Мyž’o": "Мижё", // M
+    "Оtec’": "Отець", // O
+    "оtec’": "отець", // o
+    "Рtašata": "Пташата", // P
+    "рtašata": "пташата", // P
+    "Тeper’": "Теперь", // T
+    "Teхt": "Текст", // x
+    "vŷstupуtу": "выступити", // y
+  };
+
+  homoglyphsLatCyr = {
+    ...homoglyphsLatCyr,
+    ...mapToUppercase(homoglyphsLatCyr),
+  };
+
+  Object.keys(homoglyphsLatCyr).forEach((key) => {
+    it("(lat → cyr) should change the homoglyphs:\n", () => {
+      assert.equal(translit(key, "latCyr"), homoglyphsLatCyr[key]);
+    });
+  });
+
+
+});
 
 let testLowerCaseWords = {
   "zazr’ila": "зазрїла",
