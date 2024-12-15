@@ -10,10 +10,11 @@
   "scripts": {
     "build": "gulp build",
     "test": "mocha --require @babel/register ./tests/**/*.test.js -R min",
-    "test:dev": "mocha --require @babel/register ./tests/**/*.test.js -R min -w"
+    "test:dev": "mocha --require @babel/register ./tests/**/*.test.js -R min -w",
+    "lint": "eslint src/"
   },
   "main": "dist/translit_dist.min.js",
-	"files": [
+  "files": [
     "dist/translit_dist.min.js"
   ],
   "repository": {
@@ -37,6 +38,7 @@
     "@babel/register": "^7.25.9",
     "babelify": "^10.0.0",
     "browserify": "^17.0.1",
+    "eslint": "^9.17.0",
     "gulp": "^5.0.0",
     "gulp-babel": "^8.0.0",
     "gulp-cli": "^3.0.0",
@@ -47,3 +49,5 @@
     "vinyl-source-stream": "^2.0.0"
   }
 }
+
+

@@ -173,7 +173,6 @@ const hardConsonants = {
     "Zjo" : "Зъё",
     "zju" : "зъю",
     "Zju" : "Зъю",
-    "r’jo" : "рьё",
 
     "R’jo" : "Рьё",
     "r’jo" : "рьё",
@@ -376,7 +375,7 @@ const homoglyphs = {
   @returns {string} - The string with normalized apostrophes.
 */
 export function normalizeApostrophes(string) {
-  const accentChars = "\'’ʼ‘‛´`′";
+  const accentChars = "'’ʼ‘‛´`′";
 
   // match hard consonants
   string = string.replace(
@@ -471,10 +470,10 @@ export function applyTranslitRule(string, mappingRule, direction) {
 */
 export function mapDoubledDtnlLatCyr(string){
   let pattern =
-    '(?<dtnl>[ďťňľ])'
-  + '(\\k<dtnl>)'
-  + '([aeiou])';
-  let re = new RegExp(pattern, 'gi');
+    "(?<dtnl>[ďťňľ])"
+  + "(\\k<dtnl>)"
+  + "([aeiou])";
+  let re = new RegExp(pattern, "gi");
 
   return string.replace(re, function($0, $1, $2, $3){
     return applyTranslitRule($1, doubledDtnl, "latCyr") + $2 + $3;
@@ -513,10 +512,10 @@ export function mapDoubledDtnlLatCyr(string){
 */
 export function mapDoubledDtnlCyrLat(string){
   let pattern =
-    '(?<dtnl>[дтнл])'
-  + '(\\k<dtnl>)'
-  + '([яєїёю])';
-  let re = new RegExp(pattern, 'gi');
+    "(?<dtnl>[дтнл])"
+  + "(\\k<dtnl>)"
+  + "([яєїёю])";
+  let re = new RegExp(pattern, "gi");
 
   return string.replace(re, function($0, $1, $2, $3){
     return applyTranslitRule($1, doubledDtnl, "cyrLat") + $2 + $3;
@@ -553,12 +552,12 @@ export function mapDoubledDtnlCyrLat(string){
 */
 export function mapSuperlativeLatCyr(string){
   let pattern =
-    '(\\b)'
-  + '(naj)'
-  + '([' + latinVowelsLowerCase + '])'
-  + '([' + lowerCaseChars + ']+?)'
-  + '(šŷj|šoho|šomu|šim|šŷm|šŷ|šŷch|šŷma|ša|šoj|šij|šu|šov|še)';
-  let re = new RegExp(pattern, 'gi');
+    "(\\b)"
+  + "(naj)"
+  + "([" + latinVowelsLowerCase + "])"
+  + "([" + lowerCaseChars + "]+?)"
+  + "(šŷj|šoho|šomu|šim|šŷm|šŷ|šŷch|šŷma|ša|šoj|šij|šu|šov|še)";
+  let re = new RegExp(pattern, "gi");
 
   return string.replace(re, function($0, $1, $2, $3, $4, $5){
     return $1 + applyTranslitRule($2, singleChars, "latCyr") + $3 + $4 + $5;
@@ -587,9 +586,9 @@ export function mapSuperlativeLatCyr(string){
 */
 export function mapConsecutiveSoftWovelsLatCyr(string) {
   let pattern =
-      '(\\b)'
-    + '((jo|ja|je|ji|ju){2,})';
-  let re = new RegExp(pattern, 'gi');
+      "(\\b)"
+    + "((jo|ja|je|ji|ju){2,})";
+  let re = new RegExp(pattern, "gi");
 
   return string.replace(re, function($0, $1, $2){
     return $1 + applyTranslitRule($2, softVowels, "latCyr");
@@ -617,9 +616,9 @@ export function mapConsecutiveSoftWovelsLatCyr(string) {
 */
 export function mapConsecutiveSoftWovelsCyrLat(string) {
   let pattern =
-      '([^' + allChars + ']|^)'
-    + '(([' + cyrillicSoftVowelsLowerCase + ']){2,})';
-  let re = new RegExp(pattern, 'gi');
+      "([^" + allChars + "]|^)"
+    + "(([" + cyrillicSoftVowelsLowerCase + "]){2,})";
+  let re = new RegExp(pattern, "gi");
 
   return string.replace(re, function($0, $1, $2){
     return $1 + applyTranslitRule($2, softVowels, "cyrLat");
@@ -639,9 +638,9 @@ export function mapConsecutiveSoftWovelsCyrLat(string) {
 */
 export function mapJojJovBeginningWordLatCyr(string) {
   let pattern =
-      '(\\b)'
-    + '(joj|jov)';
-  let re = new RegExp(pattern, 'gi');
+      "(\\b)"
+    + "(joj|jov)";
+  let re = new RegExp(pattern, "gi");
 
   return string.replace(re, function($0, $1, $2){
     return $1 + applyTranslitRule($2, jojJov, "latCyr");
@@ -662,10 +661,10 @@ export function mapJojJovBeginningWordLatCyr(string) {
 */
 export function mapSingleJoLatCyr(string) {
   let pattern =
-      '(^|[^' + allChars + '])'
-    + '(jo)'
-    + '([^' + allChars + ']|$)';
-  let re = new RegExp(pattern, 'gi');
+      "(^|[^" + allChars + "])"
+    + "(jo)"
+    + "([^" + allChars + "]|$)";
+  let re = new RegExp(pattern, "gi");
 
   return string.replace(re, function($0, $1, $2, $3){
     return $1 + applyTranslitRule($2, softVowels, "latCyr") + $3;
@@ -712,10 +711,10 @@ export function mapSingleJoLatCyr(string) {
 */
 export function mapSoftVowelBeginningWordLatCyr(string) {
   let pattern =
-      '(\\b)'
-    + '(j)'
-    + '([aeiuyŷ])';
-  let re = new RegExp(pattern, 'gi');
+      "(\\b)"
+    + "(j)"
+    + "([aeiuyŷ])";
+  let re = new RegExp(pattern, "gi");
 
   return string.replace(re, function($0, $1, $2, $3){
     return $1 + applyTranslitRule($2 + $3, softVowels, "latCyr");
@@ -754,9 +753,9 @@ export function mapSoftVowelBeginningWordLatCyr(string) {
 */
 export function mapSoftVowelBeginningWordCyrLat(string) {
   let pattern =
-      '([^' + allChars + ']|^)'
-    + '([' + cyrillicSoftVowelsLowerCase + '])';
-  let re = new RegExp(pattern, 'gi');
+      "([^" + allChars + "]|^)"
+    + "([" + cyrillicSoftVowelsLowerCase + "])";
+  let re = new RegExp(pattern, "gi");
 
   return string.replace(re, function($0, $1, $2){
     return $1 + applyTranslitRule($2, softVowels, "cyrLat");
@@ -783,9 +782,9 @@ export function mapSoftVowelBeginningWordCyrLat(string) {
 export function mapSoftVowelAfterHardVowelLatCyr(string) {
 
   let pattern =
-      '([' + latinVowelsLowerCase + '])'
-    + '(ja|je|ji|jo|ju)';
-  let re = new RegExp(pattern, 'gi');
+      "([" + latinVowelsLowerCase + "])"
+    + "(ja|je|ji|jo|ju)";
+  let re = new RegExp(pattern, "gi");
 
   return string.replace(re, function($0, $1, $2){
     return $1 + applyTranslitRule($2, softVowels, "latCyr");
@@ -812,9 +811,9 @@ export function mapSoftVowelAfterHardVowelLatCyr(string) {
 export function mapSoftVowelAfterHardVowelCyrLat(string) {
 
   let pattern =
-      '([' + cyrillicHardVowelsLowerCase + '])'
-    + '([' + cyrillicSoftVowelsLowerCase + '])';
-  let re = new RegExp(pattern, 'gi');
+      "([" + cyrillicHardVowelsLowerCase + "])"
+    + "([" + cyrillicSoftVowelsLowerCase + "])";
+  let re = new RegExp(pattern, "gi");
 
   return string.replace(re, function($0, $1, $2){
     return $1 + applyTranslitRule($2, softVowels, "cyrLat");
@@ -900,12 +899,12 @@ export function processCyrLat(string) {
 */
 export function processUpperCase(string, direction){
   /* handle uppercase */
-  let spacingChars = '-–—\\s';
+  let spacingChars = "-–—\\s";
   
   let multiCharUpperCaseWord =
-     '([' + upperCaseChars + '’]{2,})'
-   + '([^' + lowerCaseChars + ']|$)';
-  let multiCharRegex = new RegExp(multiCharUpperCaseWord, 'g');
+     "([" + upperCaseChars + "’]{2,})"
+   + "([^" + lowerCaseChars + "]|$)";
+  let multiCharRegex = new RegExp(multiCharUpperCaseWord, "g");
 
   string = string.replace(multiCharRegex, function($0, $1, $2){
     switch (direction) {
@@ -918,13 +917,13 @@ export function processUpperCase(string, direction){
 
 
   let singleCharBeforeUpperCase =
-      '([^' + upperCaseChars + '’]|^)'
-    + '([' + upperCaseChars + '’])'
-    + '(?=[' + spacingChars + '][' + upperCaseChars + '][^' + lowerCaseChars + '’])';
+      "([^" + upperCaseChars + "’]|^)"
+    + "([" + upperCaseChars + "’])"
+    + "(?=[" + spacingChars + "][" + upperCaseChars + "][^" + lowerCaseChars + "’])";
   
-  let singleCharBeforeRegex = new RegExp(singleCharBeforeUpperCase, 'g');
+  let singleCharBeforeRegex = new RegExp(singleCharBeforeUpperCase, "g");
 
-  string = string.replace(singleCharBeforeRegex, function($0, $1, $2, $3){
+  string = string.replace(singleCharBeforeRegex, function($0, $1, $2){
     switch (direction) {
       case "latCyr":
         return $1 + processLatCyr($2.toLowerCase()).toUpperCase();
@@ -936,10 +935,10 @@ export function processUpperCase(string, direction){
 
 
   let singleCharAfterUpperCase =
-      '([' + upperCaseChars + '’][\\s])'
-    + '([' + upperCaseChars + '])'
-    + '([^' + upperCaseChars + ']|$)';
-  let singleCharAfterRegex = new RegExp(singleCharAfterUpperCase, 'g');
+      "([" + upperCaseChars + "’][\\s])"
+    + "([" + upperCaseChars + "])"
+    + "([^" + upperCaseChars + "]|$)";
+  let singleCharAfterRegex = new RegExp(singleCharAfterUpperCase, "g");
   
   string = string.replace(singleCharAfterRegex, function($0, $1, $2, $3){
     switch (direction) {
