@@ -1,23 +1,23 @@
-var gulp = require('gulp');
-var babel = require('gulp-babel');
-var concat = require('gulp-concat');
-var uglify = require('gulp-uglify');
-const browserify = require('browserify');
-const babelify = require('babelify');
-const source = require('vinyl-source-stream');
-const buffer = require('vinyl-buffer');
+var gulp = require("gulp");
+var babel = require("gulp-babel");
+var concat = require("gulp-concat");
+var uglify = require("gulp-uglify");
+const browserify = require("browserify");
+const babelify = require("babelify");
+const source = require("vinyl-source-stream");
+const buffer = require("vinyl-buffer");
 
 
 var paths = {
 	browser: {
-		src: 'src/browser_translit.js',
-		name: 'translit.min.js',
-		dest: 'dist/'
+		src: "src/browser_translit.js",
+		name: "translit.min.js",
+		dest: "dist/"
 	},
 	npm: {
-		src: 'src/translit.js',
-		name: 'translit_dist.min.js',
-		dest: 'dist/'
+		src: "src/translit.js",
+		name: "translit_dist.min.js",
+		dest: "dist/"
 	}
 };
 
