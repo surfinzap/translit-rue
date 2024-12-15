@@ -10,18 +10,16 @@
  */
 
 
-/* Vowel constants
+/* Constants 
 
    hard vowels = нейотованы гласны
    soft vowels = йотованы гласны
 */
 
-const Vowels = {
-  latinLC: "aeiouyŷ",
-  cyrillicHardLC: "аеіоуиыї",
-  cyrillicSoftLC: "яєїёю",
-};
 
+const latinVowelsLowerCase = "aeiouyŷ";
+const cyrillicHardVowelsLowerCase = "аеіоуиыї"
+const cyrillicSoftVowelsLowerCase = "яєїёю";
 
 const nonLatinLowercase = "áäčďéěíĺľňóôöőŕřšťúüűůýŷžабвгґдезіийклмнопрстуфъыьцчжшїщёєюях";
 const nonLatinUppercase = nonLatinLowercase.toUpperCase();
@@ -545,7 +543,7 @@ export function mapSuperlativeLatCyr(string){
   let pattern =
     '(\\b)'
   + '(naj)'
-  + '([' + Vowels.latinLC + '])'
+  + '([' + latinVowelsLowerCase + '])'
   + '([' + lowerCaseChars + ']+?)'
   + '(šŷj|šoho|šomu|šim|šŷm|šŷ|šŷch|šŷma|ša|šoj|šij|šu|šov|še)';
   let re = new RegExp(pattern, 'gi');
@@ -608,7 +606,7 @@ export function mapConsecutiveSoftWovelsLatCyr(string) {
 export function mapConsecutiveSoftWovelsCyrLat(string) {
   let pattern =
       '([^' + allChars + ']|^)'
-    + '(([' + Vowels.cyrillicSoftLC + ']){2,})';
+    + '(([' + cyrillicSoftVowelsLowerCase + ']){2,})';
   let re = new RegExp(pattern, 'gi');
 
   return string.replace(re, function($0, $1, $2){
@@ -744,7 +742,7 @@ export function mapSoftVowelBeginningWordLatCyr(string) {
 export function mapSoftVowelBeginningWordCyrLat(string) {
   let pattern =
       '([^' + allChars + ']|^)'
-    + '([' + Vowels.cyrillicSoftLC + '])';
+    + '([' + cyrillicSoftVowelsLowerCase + '])';
   let re = new RegExp(pattern, 'gi');
 
   return string.replace(re, function($0, $1, $2){
@@ -772,7 +770,7 @@ export function mapSoftVowelBeginningWordCyrLat(string) {
 export function mapSoftVowelAfterHardVowelLatCyr(string) {
 
   let pattern =
-      '([' + Vowels.latinLC + '])'
+      '([' + latinVowelsLowerCase + '])'
     + '(ja|je|ji|jo|ju)';
   let re = new RegExp(pattern, 'gi');
 
@@ -803,8 +801,8 @@ export function mapSoftVowelAfterHardVowelLatCyr(string) {
 export function mapSoftVowelAfterHardVowelCyrLat(string) {
 
   let pattern =
-      '([' + Vowels.cyrillicHardLC + '])'
-    + '([' + Vowels.cyrillicSoftLC + '])';
+      '([' + cyrillicHardVowelsLowerCase + '])'
+    + '([' + cyrillicSoftVowelsLowerCase + '])';
   let re = new RegExp(pattern, 'gi');
 
   return string.replace(re, function($0, $1, $2){
