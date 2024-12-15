@@ -24,6 +24,7 @@ Translit now supports homoglyph characters—characters that look identical acro
 
 ### 🔨 Maintenance
 - Update packages to their latest versions
+- Improve documentation of the functions
 
 
 

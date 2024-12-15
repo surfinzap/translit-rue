@@ -321,41 +321,41 @@ const singleChars = {
 };
 
 
-  /*
-    Homoglyph, a letter with a similar shape, but belonging to a different alphabet and having a different Unicode code point
-
-    Coding
-    key: value
-    latin: cyrillic
-  */
-  const homoglyphs = {
-    "A": "А",
-    "a": "а",
-    "B": "В",
-    "C": "С",
-    "c": "с",
-    "E": "Е",
-    "e": "е",
-    "H": "Н",
-    "I": "І",
-    "i": "і",
-    "K": "К",
-    "M": "М",
-    "O": "О",
-    "o": "о",
-    "P": "Р",
-    "p": "р",
-    "T": "Т",
-    "X": "Х",
-    "x": "х",
-    "Y": "У",
-    "y": "у",
-  };
-
-
-
 /*
-  Identify apostrophe candidates around 'hardConsonants' and 'doubleChars'
+  Homoglyph, a letter with a similar shape, but belonging to a different alphabet and having a different Unicode code point
+
+  Coding
+  key: value
+  latin: cyrillic
+*/
+const homoglyphs = {
+  "A": "А",
+  "a": "а",
+  "B": "В",
+  "C": "С",
+  "c": "с",
+  "E": "Е",
+  "e": "е",
+  "H": "Н",
+  "I": "І",
+  "i": "і",
+  "K": "К",
+  "M": "М",
+  "O": "О",
+  "o": "о",
+  "P": "Р",
+  "p": "р",
+  "T": "Т",
+  "X": "Х",
+  "x": "х",
+  "Y": "У",
+  "y": "у",
+};
+
+
+
+/** 
+  Identify apostrophe candidates around 'hardConsonants' and 'doubleChars' and normalize them with the (8217)
 
   Inputs
   '  (39)     dumb single quote
@@ -369,7 +369,11 @@ const singleChars = {
 
   Output
   ’  (8217)		right single quotation mark
-  (In theory, the output should be (700), however this character is often not included in fonts, so the 8217 is a viable alternative)
+  (In theory, the output should be (700), however (700) is often not included in fonts, so the 8217 is a viable alternative)
+
+  Normalizes apostrophes to a consistent character in the given string.
+  @param {string} string - The input string containing text with various apostrophe forms.
+  @returns {string} - The string with normalized apostrophes.
 */
 export function normalizeApostrophes(string) {
   const accentChars = "\'’ʼ‘‛´`′";
@@ -410,8 +414,18 @@ export function normalizeApostrophes(string) {
   return string;
 }
 
-
-export function mapRule(string, mappingRule, direction) {
+/**
+ * Applies a transliteration mapping rule to a string, replacing patterns
+ * based on the specified direction (Cyrillic to Latin or Latin to Cyrillic).
+ *
+ * @param {string} string - The input string to be transliterated.
+ * @param {Object} mappingRule - An object containing the transliteration rules.
+ * @param {string} direction - The direction of transliteration. 
+ * Use "cyrLat" for Cyrillic to Latin, and "latCyr" for Latin to Cyrillic.
+ * 
+ * @returns {string} - The transliterated string with applied rules.
+ */
+export function applyTranslitRule(string, mappingRule, direction) {
   if (direction === "cyrLat") {
     for (const rule in mappingRule) {
       let re = new RegExp(mappingRule[rule], "g");
@@ -427,7 +441,7 @@ export function mapRule(string, mappingRule, direction) {
 }
 
 
-/*  
+/**  
   Consolidate letter group (ďď | ťť | ňň | ľľ) followed by aeiou
 
   Naive transliteration would be to transliterate:
@@ -452,8 +466,8 @@ export function mapRule(string, mappingRule, direction) {
   Counterexamples (combination of letters, e.g d–t)
   odťikaty → одтїкaти
 
-  @param {string} string: input text for mapping
-  @returns {string} where the first (ď|ť|ň|ľ) of the group is transliterated to its cyrillic equivalent, omitting the soft character “ь”
+  @param {string} string - input text for mapping
+  @returns {string} - where the first (ď|ť|ň|ľ) of the group is transliterated to its cyrillic equivalent, omitting the soft character “ь”
 */
 export function mapDoubledDtnlLatCyr(string){
   let pattern =
@@ -463,13 +477,13 @@ export function mapDoubledDtnlLatCyr(string){
   let re = new RegExp(pattern, 'gi');
 
   return string.replace(re, function($0, $1, $2, $3){
-    return mapRule($1, doubledDtnl, "latCyr") + $2 + $3;
+    return applyTranslitRule($1, doubledDtnl, "latCyr") + $2 + $3;
   });
 }
 
 
 
-/*  
+/**  
   Consolidate letter group (дд | тт | нн | лл) followed by яєїёю
 
   Naive transliteration would be to translate:
@@ -494,8 +508,8 @@ export function mapDoubledDtnlLatCyr(string){
   Counterexamples (combination of letters, e.g d–t)
   odťikaty → одтїкaти
 
-  @param {string} string: input text for mapping
-  @returns {string} where the first (д| т | н | л) of the group is transliterated to its latin accented equivalent
+  @param {string} string - input text for mapping
+  @returns {string} - where the first (д| т | н | л) of the group is transliterated to its latin accented equivalent
 */
 export function mapDoubledDtnlCyrLat(string){
   let pattern =
@@ -505,14 +519,14 @@ export function mapDoubledDtnlCyrLat(string){
   let re = new RegExp(pattern, 'gi');
 
   return string.replace(re, function($0, $1, $2, $3){
-    return mapRule($1, doubledDtnl, "cyrLat") + $2 + $3;
+    return applyTranslitRule($1, doubledDtnl, "cyrLat") + $2 + $3;
   });
 }
 
 
 
 
-/*
+/**
   Transliterate words that begin with "naj|Naj|NAJ" followed by a vowel to "най|Най|НАЙ"
 
   Standard transliteration for "ja", "je", "ji", "jo", "ju" is:
@@ -534,8 +548,8 @@ export function mapDoubledDtnlCyrLat(string){
   Algorithm
   match all words beginning with naj, following with a vowel and not ending with any of superlative suffixes
 
-  @param {string} string: input text for mapping
-  @returns {string} where all words that begin with "naj|Naj|NAJ" followed by a vowel will be transliterated to "най|Най|НАЙ"
+  @param {string} string - input text for mapping
+  @returns {string} - where all words that begin with "naj|Naj|NAJ" followed by a vowel will be transliterated to "най|Най|НАЙ"
 */
 export function mapSuperlativeLatCyr(string){
   let pattern =
@@ -547,14 +561,14 @@ export function mapSuperlativeLatCyr(string){
   let re = new RegExp(pattern, 'gi');
 
   return string.replace(re, function($0, $1, $2, $3, $4, $5){
-    return $1 + mapRule($2, singleChars, "latCyr") + $3 + $4 + $5;
+    return $1 + applyTranslitRule($2, singleChars, "latCyr") + $3 + $4 + $5;
   });
 
 }
 
 
 
-/*
+/**
   Transliterate consecutive soft vowels (ja, je, ji, jo, ju) from latin to cyrillic
 
   Transliteration rules:
@@ -568,8 +582,8 @@ export function mapSuperlativeLatCyr(string){
   Counterexamples
   singles, e.g. joj
 
-  @param {string} string: latin text for mapping
-  @returns {string} cyrillic text with mapped ja, je, ji, jo, ju
+  @param {string} string - latin text for mapping
+  @returns {string} - cyrillic text with mapped ja, je, ji, jo, ju
 */
 export function mapConsecutiveSoftWovelsLatCyr(string) {
   let pattern =
@@ -578,13 +592,13 @@ export function mapConsecutiveSoftWovelsLatCyr(string) {
   let re = new RegExp(pattern, 'gi');
 
   return string.replace(re, function($0, $1, $2){
-    return $1 + mapRule($2, softVowels, "latCyr");
+    return $1 + applyTranslitRule($2, softVowels, "latCyr");
   });
 }
 
 
 
-/*
+/**
   Transliterate consecutive soft vowels (ja, je, ji, jo, ju) from cyrillic to latin
 
   Transliteration rules:
@@ -598,8 +612,8 @@ export function mapConsecutiveSoftWovelsLatCyr(string) {
   Counterexamples
   singles, e.g. joj
 
-  @param {string} string: latin text for mapping
-  @returns {string} cyrillic text with mapped ja, je, ji, jo, ju
+  @param {string} string - latin text for mapping
+  @returns {string} - cyrillic text with mapped ja, je, ji, jo, ju
 */
 export function mapConsecutiveSoftWovelsCyrLat(string) {
   let pattern =
@@ -608,20 +622,20 @@ export function mapConsecutiveSoftWovelsCyrLat(string) {
   let re = new RegExp(pattern, 'gi');
 
   return string.replace(re, function($0, $1, $2){
-    return $1 + mapRule($2, softVowels, "cyrLat");
+    return $1 + applyTranslitRule($2, softVowels, "cyrLat");
   });
 }
 
 
-/*
+/**
   Transliterate words that begin with joj-, jov- from latin to cyrillic
 
   Transliteration rules:
   jojkaňa → ёйканя
   Jovha → Ёвга 
 
-  @param {string} string: latin text for mapping
-  @returns {string} cyrillic text with mapped joj-, jov- 
+  @param {string} string - latin text for mapping
+  @returns {string} - cyrillic text with mapped joj-, jov- 
 */
 export function mapJojJovBeginningWordLatCyr(string) {
   let pattern =
@@ -630,21 +644,21 @@ export function mapJojJovBeginningWordLatCyr(string) {
   let re = new RegExp(pattern, 'gi');
 
   return string.replace(re, function($0, $1, $2){
-    return $1 + mapRule($2, jojJov, "latCyr");
+    return $1 + applyTranslitRule($2, jojJov, "latCyr");
   });
 }
 
 
 
-/*
+/**
   Transliterate single word “jo”
 
   Transliteration rules:
   jo → ё
   Jo → Ё 
 
-  @param {string} string: latin text for mapping
-  @returns {string} cyrillic text with mapped jo 
+  @param {string} string - latin text for mapping
+  @returns {string} - cyrillic text with mapped jo 
 */
 export function mapSingleJoLatCyr(string) {
   let pattern =
@@ -654,12 +668,13 @@ export function mapSingleJoLatCyr(string) {
   let re = new RegExp(pattern, 'gi');
 
   return string.replace(re, function($0, $1, $2, $3){
-    return $1 + mapRule($2, softVowels, "latCyr") + $3;
+    return $1 + applyTranslitRule($2, softVowels, "latCyr") + $3;
   });
 }
 
 
-/*
+
+/**
   Transliterate ja, je, ji, ju at the beginning of the word
 
   Transliteration rules:
@@ -673,7 +688,7 @@ export function mapSingleJoLatCyr(string) {
   We don’t map “jo” here as it a special case handled in separate functions:
   - mapConsecutiveSoftWovelsLatCyr
   - mapConsecutiveSoftWovelsCyrLat
-  - mapRule(string, exceptions, direction)
+  - applyTranslitRule(string, exceptions, direction)
   - mapJojJovBeginningWordLatCyr
   - mapJojJovBeginningWordCyrLat
 
@@ -692,8 +707,8 @@ export function mapSingleJoLatCyr(string) {
   zrivňovaty ↔ зрiвнёвати
   čeľustnŷj ↔ чeлюстный
 
-  @param {string} string: latin text for mapping
-  @returns {string} cyrillic text with mapped ja, je, ji, jo, ju
+  @param {string} string - latin text for mapping
+  @returns {string} - cyrillic text with mapped ja, je, ji, jo, ju
 */
 export function mapSoftVowelBeginningWordLatCyr(string) {
   let pattern =
@@ -703,7 +718,7 @@ export function mapSoftVowelBeginningWordLatCyr(string) {
   let re = new RegExp(pattern, 'gi');
 
   return string.replace(re, function($0, $1, $2, $3){
-    return $1 + mapRule($2 + $3, softVowels, "latCyr");
+    return $1 + applyTranslitRule($2 + $3, softVowels, "latCyr");
   });
 }
 
@@ -733,8 +748,8 @@ export function mapSoftVowelBeginningWordLatCyr(string) {
   zrivňovaty ↔ зрiвнёвати
   čeľustnŷj ↔ чeлюстный
 
-  @param {string} string: cyrillic text for mapping
-  @returns {string} latin text with mapped я, є, ї, ё, ю
+  @param {string} string - cyrillic text for mapping
+  @returns {string} - latin text with mapped я, є, ї, ё, ю
 
 */
 export function mapSoftVowelBeginningWordCyrLat(string) {
@@ -744,13 +759,13 @@ export function mapSoftVowelBeginningWordCyrLat(string) {
   let re = new RegExp(pattern, 'gi');
 
   return string.replace(re, function($0, $1, $2){
-    return $1 + mapRule($2, softVowels, "cyrLat");
+    return $1 + applyTranslitRule($2, softVowels, "cyrLat");
   });
 }
 
 
 
-/*
+/** 
   Transliterate ja, je, ji, jo, ju before a vowel (a, e, i, o, u, y, ŷ)
 
   Examples
@@ -762,8 +777,8 @@ export function mapSoftVowelBeginningWordCyrLat(string) {
   šŷje ↔ šŷje
   ujidaty ↔ уїдaти
 
-  @param {string} string: latin text for mapping
-  @returns {string} cyrillic text with mapped ja, je, ji, jo, ju
+  @param {string} string - latin text for mapping
+  @returns {string} - cyrillic text with mapped ja, je, ji, jo, ju
 */
 export function mapSoftVowelAfterHardVowelLatCyr(string) {
 
@@ -773,15 +788,13 @@ export function mapSoftVowelAfterHardVowelLatCyr(string) {
   let re = new RegExp(pattern, 'gi');
 
   return string.replace(re, function($0, $1, $2){
-    return $1 + mapRule($2, softVowels, "latCyr");
+    return $1 + applyTranslitRule($2, softVowels, "latCyr");
   });
 }
 
 
 
-
-
-/*
+/**
   Transliterate я, є, ї, ё, ю before a vowel (а, е, і, о, у, и, ы)
 
   Examples
@@ -793,8 +806,8 @@ export function mapSoftVowelAfterHardVowelLatCyr(string) {
   šŷje ↔ šŷje
   ujidaty ↔ уїдaти
 
-  @param {string} string: latin text for mapping
-  @returns {string} cyrillic text with mapped я, є, ї, ё, ю
+  @param {string} string - latin text for mapping
+  @returns {string} - cyrillic text with mapped я, є, ї, ё, ю
 */
 export function mapSoftVowelAfterHardVowelCyrLat(string) {
 
@@ -804,12 +817,18 @@ export function mapSoftVowelAfterHardVowelCyrLat(string) {
   let re = new RegExp(pattern, 'gi');
 
   return string.replace(re, function($0, $1, $2){
-    return $1 + mapRule($2, softVowels, "cyrLat");
+    return $1 + applyTranslitRule($2, softVowels, "cyrLat");
   });
 }
 
 
 
+/**
+ * Processes a string by applying a series of transliteration rules to convert Latin text to Cyrillic. 
+ *
+ * @param {string} string - The input string in Latin script.
+ * @returns {string} - The processed string in Cyrillic script.
+ */
 export function processLatCyr(string) {
   string = normalizeApostrophes(string);
   string = mapSuperlativeLatCyr(string);
@@ -832,12 +851,20 @@ export function processLatCyr(string) {
   ];
 
   for (const mappingRule of mappingRules) {
-    string = mapRule(string, mappingRule, "latCyr");
+    string = applyTranslitRule(string, mappingRule, "latCyr");
   }
 
   return string;
 }
 
+
+
+/**
+ * Processes a string by applying a series of transliteration rules to convert Cyrillic text to Latin.
+ *
+ * @param {string} string - The input string in Cyrillic script.
+ * @returns {string} - The processed string in Latin script.
+ */
 export function processCyrLat(string) {
   string = mapConsecutiveSoftWovelsCyrLat(string);
   string = mapSoftVowelBeginningWordCyrLat(string);
@@ -855,20 +882,20 @@ export function processCyrLat(string) {
   ];
 
   for (const mappingRule of mappingRules) {
-    string = mapRule(string, mappingRule, "cyrLat");
+    string = applyTranslitRule(string, mappingRule, "cyrLat");
   }
 
   return string;
 }
 
-/* 
+/** 
   Identify UPPERCASE letters and transliterate them according to a mapping option
 
   - process upper case words with 2 or more letter
   - process single-letter uppercase word in case it is around uppercase words
 
-  @param {string} string: text for mapping
-  @param {string} direction: latCyr | cyrLat
+  @param {string} string - text for mapping
+  @param {string} direction - latCyr | cyrLat
   @returns {string} transliterated upper case text
 */
 export function processUpperCase(string, direction){
@@ -927,18 +954,25 @@ export function processUpperCase(string, direction){
 }
 
 
-/*
-   Public API
-*/
+/**
+ * PUBLIC API
+ * Transliterates a string between Latin and Cyrillic scripts based on the specified direction. 
+ *
+ * @param {string} string - The input string to be transliterated.
+ * @param {string} direction - The direction of transliteration. 
+ * Use "latCyr" to convert Latin to Cyrillic, and "cyrLat" to convert Cyrillic to Latin.
+ * 
+ * @returns {string} - The transliterated string.
+ */
 export function translit(string, direction) {
   switch (direction) {
     case "latCyr":
-      string = mapRule(string, homoglyphs, "cyrLat"); // opposite direction as we need to latinize the cyrillic homoghlyphs
+      string = applyTranslitRule(string, homoglyphs, "cyrLat"); // opposite direction as we need to latinize the cyrillic homoghlyphs
       string = processUpperCase(string, "latCyr");
       string = processLatCyr(string);
       return string;
     case "cyrLat":
-      string = mapRule(string, homoglyphs, "latCyr"); // opposite direction as we need to cyrillize the latin homoghlyphs
+      string = applyTranslitRule(string, homoglyphs, "latCyr"); // opposite direction as we need to cyrillize the latin homoghlyphs
       string = processUpperCase(string, "cyrLat");
       string = processCyrLat(string);
       return string;
