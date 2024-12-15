@@ -8,7 +8,7 @@ import {
   mapSoftVowelBeginningWordCyrLat,
   mapSoftVowelAfterHardVowelLatCyr,
   mapSoftVowelAfterHardVowelCyrLat,
-  streamlineApostrophes,
+  normalizeApostrophes,
   processUpperCase,
   translit,
 } from "../src/translit.js";
@@ -417,7 +417,7 @@ describe('(unit, cyr) Ja, je, ji, jo, ju before a vowel:\n', () => {
 
 
 
-describe("(unit) Streamline apostrophes:\n", () => {
+describe("(unit) Normalize apostrophes:\n", () => {
 
   const accentChars = ["'", "’", "ʼ", "‘", "‛", "´", "`", "′"];
 
@@ -489,7 +489,7 @@ describe("(unit) Streamline apostrophes:\n", () => {
   
   Object.keys(expectedUseCases).forEach((key) => {
     it("should change the apostrophe:\n", () => {
-      assert.equal(streamlineApostrophes(key), expectedUseCases[key]);
+      assert.equal(normalizeApostrophes(key), expectedUseCases[key]);
     });
   });
 
@@ -519,7 +519,7 @@ describe("(unit) Streamline apostrophes:\n", () => {
 
   Object.keys(falsePositives).forEach((key) => {
     it("shouldn’t change the apostrophe:\n", () => {
-      assert.equal(streamlineApostrophes(key), falsePositives[key]);
+      assert.equal(normalizeApostrophes(key), falsePositives[key]);
     });
   });
   
@@ -527,7 +527,7 @@ describe("(unit) Streamline apostrophes:\n", () => {
 
 
 
-describe("Streamline homoglyphs:\n", () => {
+describe("Normalize homoglyphs:\n", () => {
 
   let homoglyphsCyrLat = {
     "Aкорд": "Akord", // A

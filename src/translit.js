@@ -15,8 +15,6 @@
    hard vowels = нейотованы гласны
    soft vowels = йотованы гласны
 */
-
-
 const latinVowelsLowerCase = "aeiouyŷ";
 const cyrillicHardVowelsLowerCase = "аеіоуиыї"
 const cyrillicSoftVowelsLowerCase = "яєїёю";
@@ -373,7 +371,7 @@ const singleChars = {
   ’  (8217)		right single quotation mark
   (In theory, the output should be (700), however this character is often not included in fonts, so the 8217 is a viable alternative)
 */
-export function streamlineApostrophes(string) {
+export function normalizeApostrophes(string) {
   const accentChars = "\'’ʼ‘‛´`′";
 
   // match hard consonants
@@ -413,7 +411,7 @@ export function streamlineApostrophes(string) {
 }
 
 
-export function mapRule (string, mappingRule, direction) {
+export function mapRule(string, mappingRule, direction) {
   if (direction === "cyrLat") {
     for (var rule in mappingRule) {
       var re = new RegExp(mappingRule[rule], "g");
@@ -813,7 +811,7 @@ export function mapSoftVowelAfterHardVowelCyrLat(string) {
 
 
 export function processLatCyr(string) {
-  string = streamlineApostrophes(string);
+  string = normalizeApostrophes(string);
   string = mapSuperlativeLatCyr(string);
   string = mapConsecutiveSoftWovelsLatCyr(string);
   string = mapJojJovBeginningWordLatCyr(string);
