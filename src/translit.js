@@ -413,13 +413,13 @@ export function normalizeApostrophes(string) {
 
 export function mapRule(string, mappingRule, direction) {
   if (direction === "cyrLat") {
-    for (var rule in mappingRule) {
-      var re = new RegExp(mappingRule[rule], "g");
+    for (const rule in mappingRule) {
+      let re = new RegExp(mappingRule[rule], "g");
       string = string.replace(re, rule);
     }
   } else if (direction === "latCyr") {
-    for (var rule in mappingRule) {
-      var re = new RegExp(rule, "g");
+    for (const rule in mappingRule) {
+      let re = new RegExp(rule, "g");
       string = string.replace(re, mappingRule[rule]);
     }
   }
