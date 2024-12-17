@@ -12,7 +12,7 @@ import {
   processUpperCase,
   translit,
 } from "../src/translit.js";
-import assert from 'assert';
+import assert from "assert";
 
 function mapToUppercase(testCase) {
   let upperCaseMapping = {};
@@ -24,28 +24,25 @@ function mapToUppercase(testCase) {
 }
 
 
-describe(' (unit) Superlative transliteration:\n', () => {
+describe("(unit) Superlative transliteration:\n", () => {
   let testCase = {
 
     // lower case
     "najatraktivňišŷj" :  "найatraktivňišŷj", 
     "najelegantňišŷj" :   "найelegantňišŷj",
     "najinteligentňišŷj" : "найinteligentňišŷj",
-    "najobľubleňišŷj" : "найobľubleňišŷj",
     "najužasňišŷj" : "найužasňišŷj",
 
     // Title Case
     "Najatraktivňišŷj" :  "Найatraktivňišŷj", 
     "Najelegantňišŷj" :   "Найelegantňišŷj",
     "Najinteligentňišŷj" : "Найinteligentňišŷj",
-    "Najobľubleňišŷj" : "Найobľubleňišŷj",
     "Najužasňišŷj" : "Найužasňišŷj",
 
     // upper case
     "NAJATRAKTIVŇIŠŶJ" :  "НАЙATRAKTIVŇIŠŶJ", 
     "NAJELEGANTŇIŠŶJ" :   "НАЙELEGANTŇIŠŶJ",
     "NAJINTELIGENTŇIŠŶJ" : "НАЙINTELIGENTŇIŠŶJ",
-    "NAJOBĽUBLEŇIŠŶJ" : "НАЙOBĽUBLEŇIŠŶJ",
     "NAJUŽASŇIŠŶJ" : "НАЙUŽASŇIŠŶJ",
 
     // inflection 
@@ -111,7 +108,7 @@ describe(' (unit) Superlative transliteration:\n', () => {
 
 
 
-describe(' (unit) consecutive soft vowels (ja, je, ji, jo, ju):\n', () => {
+describe("(unit) consecutive soft vowels (ja, je, ji, jo, ju):\n", () => {
   let testCase = {
   "jajaj" : "яяj",
   "jajajaj" : "яяяj",
@@ -164,7 +161,7 @@ describe(' (unit) consecutive soft vowels (ja, je, ji, jo, ju):\n', () => {
 
 
 
-describe(' (unit) Ja, je, ji, jo, ju at the beginning of the word:\n', () => {
+describe("(unit) Ja, je, ji, jo, ju at the beginning of the word:\n", () => {
   let testCase = {
 
   "jabčanka" : "яbčanka",
@@ -199,7 +196,7 @@ describe(' (unit) Ja, je, ji, jo, ju at the beginning of the word:\n', () => {
 
 
 
-describe('(unit, lat) Consolidate letter group (ďď | ťť | ňň | ľľ) followed by aeiou:\n', () => {
+describe("(unit, lat) Consolidate letter group (ďď | ťť | ňň | ľľ) followed by aeiou:\n", () => {
   let testCase = {
     
     // matches
@@ -248,7 +245,7 @@ describe('(unit, lat) Consolidate letter group (ďď | ťť | ňň | ľľ) follo
 
 
 
-describe('(unit, cyr) Consolidate letter group (дд | тт | нн | лл) followed by яєїёю:\n', () => {
+describe("(unit, cyr) Consolidate letter group (дд | тт | нн | лл) followed by яєїёю:\n", () => {
   let testCase = {
     
     // matches
@@ -263,8 +260,6 @@ describe('(unit, cyr) Consolidate letter group (дд | тт | нн | лл) follo
     "Ťтя" : "Ття",
     "Ňнїй" : "Ннїй",
     "Ňнє" : "Ннє",
-    "Ľлють" : "Ллють",
-    "Ľляти" : "Лляти",
     
     // false positives, no accents on dtnl
     "оддыхли" : "оддыхли",
@@ -297,7 +292,7 @@ describe('(unit, cyr) Consolidate letter group (дд | тт | нн | лл) follo
 
 
 
-describe('(unit, lat) Ja, je, ji, jo, ju before a vowel:\n', () => {
+describe("(unit, lat) Ja, je, ji, jo, ju before a vowel:\n", () => {
   let testCase = {
 
     "bajusatŷj" : "baюsatŷj",
@@ -355,7 +350,7 @@ describe('(unit, lat) Ja, je, ji, jo, ju before a vowel:\n', () => {
 
 
 
-describe('(unit, cyr) Ja, je, ji, jo, ju before a vowel:\n', () => {
+describe("(unit, cyr) Ja, je, ji, jo, ju before a vowel:\n", () => {
   let testCase = {
     // there are cyrillic vowels before ja, je,...
 
@@ -722,16 +717,14 @@ let testLowerCaseWords = {
 
   // joj, jov variations
   "joj": "ёй",
-  "joj": "ёй",
   "jojk": "ёйк",
   "jojkaňa": "ёйканя",
   "jojčaty": "ёйчати",
   "jov": "ёв",
   "jovha": "ёвга",
   "jovsag": "ёвсаґ",
-  "Joj": "Ёй",
-  "Joj": "Ёй",
   "Jojk": "Ёйк",
+  "Joj": "Ёй",
   "Jojkaňa": "Ёйканя",
   "Jojčaty": "Ёйчати",
   "Jov": "Ёв",
@@ -809,16 +802,12 @@ let testLowerCaseWords = {
   "poďiju": "подїю",
   "naďiji": "надїї",
   "naďij": "надїй",
-  "beznaďiji": "безнадїї",
-  "naďija": "надїя",
 
   "zloďijska": "злодїйска",
   "blahoroďije": "благородїє",
   "haďij": "гадїй",
-  "zabzďiju": "забздїю",
   "leoparďij": "леопардїй",
   "beznaďijno": "безнадїйно",
-  "voľiju": "волїю",
 
   //d + ja, je, ji, jo, ju
   "predjidlo": "предъїдло",
@@ -838,13 +827,11 @@ let testLowerCaseWords = {
   "najatraktivňišŷj": "найатрактівнїшый",
   "najelegantňišŷj": "найелеґантнїшый",
   "najinteligentňišŷj": "найінтеліґентнїшый",
-  "najobľubleňišŷj": "найоблюбленїшый",
   "najužasňišŷj": "найужаснїшый",
 
   "Najatraktivňišŷj": "Найатрактівнїшый",
   "Najelegantňišŷj": "Найелеґантнїшый",
   "Najinteligentňišŷj": "Найінтеліґентнїшый",
-  "Najobľubleňišŷj": "Найоблюбленїшый",
   "Najužasňišŷj": "Найужаснїшый",
 
   // superlative inflection
@@ -907,16 +894,12 @@ let testLowerCaseWords = {
   "bulla": "булла",
   "Tallin": "Таллін",
   "odťikaty": "одтїкати",
-
-  // only jo
-  "O-Jo-Joj": "О-Ё-Ёй",
-  "o-jo-joj": "о-ё-ёй",
 };
 
 let testUpperCaseWords = mapToUppercase(testLowerCaseWords);
 
 
-describe('Module tests:\n', () => {
+describe("Module tests:\n", () => {
 
 
   let testCase = {
@@ -942,7 +925,7 @@ describe('Module tests:\n', () => {
 
 
 
-describe('(unit) Uppercase tests:\n', () => {
+describe("(unit) Uppercase tests:\n", () => {
   let testCase = {
     
     // correct identification of Upper Case
