@@ -9,16 +9,16 @@ const buffer = require("vinyl-buffer");
 
 
 var paths = {
-	browser: {
-		src: "src/browser_translit.js",
-		name: "translit.min.js",
-		dest: "dist/"
-	},
-	npm: {
-		src: "src/translit.js",
-		name: "translit_dist.min.js",
-		dest: "dist/"
-	}
+  browser: {
+    src: "src/browser_translit.js",
+    name: "translit.min.js",
+    dest: "dist/"
+  },
+  npm: {
+    src: "src/translit.js",
+    name: "translit_dist.min.js",
+    dest: "dist/"
+  }
 };
 
 
@@ -27,26 +27,32 @@ var paths = {
  */
 
 function browserBuild() {
-	return browserify({ entries: paths.browser.src, debug: false })
-		.transform(babelify)
-		.bundle()
-		.pipe(source(paths.browser.name))
-		.pipe(buffer())
-		.pipe(uglify())
-		.pipe(gulp.dest(paths.browser.dest));
+  return browserify({ entries: paths.browser.src, debug: false })
+    .transform(babelify)
+    .bundle()
+    .pipe(source(paths.browser.name))
+    .pipe(buffer())
+    .pipe(uglify())
+    .pipe(gulp.dest(paths.browser.dest));
 }
 
 function npmBuild() {
-	return gulp.src(paths.npm.src, { sourcemaps: false })
-		.pipe(babel())
-		.pipe(uglify())
-		.pipe(concat(paths.npm.name))
-		.pipe(gulp.dest(paths.npm.dest));
+  return browserify({
+    entries: paths.npm.src,
+    debug: false,
+    standalone: "translit",
+  })
+    .transform(babelify, { presets: ["@babel/preset-env"] })
+    .bundle()
+    .pipe(source(paths.npm.name))
+    .pipe(buffer())
+    .pipe(uglify())
+    .pipe(gulp.dest(paths.npm.dest));
 }
 
 function watch() {
-	gulp.watch(paths.npm.src, npmBuild);
-	gulp.watch(paths.browser.src, browserBuild);
+  gulp.watch(paths.npm.src, npmBuild);
+  gulp.watch(paths.browser.src, browserBuild);
 }
 
 /*
