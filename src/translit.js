@@ -16,24 +16,20 @@ import {
   lowerCaseChars,
   upperCaseChars,
   allChars,
+  mapping,
   exceptions,
   exceptionsCapitalized,
-  johoJomu,
-  jojJov,
   doubledDtnl,
   detenele,
   hardConsonants,
   softVowels,
   dtnl,
-  doubleChars,
-  singleChars,
-  homoglyphs,
  } from "./constants";
 
 
 
 /** 
-  Identify apostrophe candidates around 'hardConsonants' and 'doubleChars' and normalize them with the (8217)
+  Identify apostrophe candidates around 'hardConsonants' and 'digraphs' and normalize them with the (8217)
 
   Inputs
   '  (39)     dumb single quote
@@ -239,7 +235,7 @@ export function mapSuperlativeLatCyr(string){
   let re = new RegExp(pattern, "gi");
 
   return string.replace(re, function($0, $1, $2, $3, $4, $5){
-    return $1 + applyTranslitRule($2, singleChars, "latCyr") + $3 + $4 + $5;
+    return $1 + applyTranslitRule($2, mapping.singleChars, "latCyr") + $3 + $4 + $5;
   });
 
 }
@@ -322,7 +318,7 @@ export function mapJojJovBeginningWordLatCyr(string) {
   let re = new RegExp(pattern, "gi");
 
   return string.replace(re, function($0, $1, $2){
-    return $1 + applyTranslitRule($2, jojJov, "latCyr");
+    return $1 + applyTranslitRule($2, mapping.jojJov, "latCyr");
   });
 }
 
@@ -521,11 +517,11 @@ export function processLatCyr(string) {
     exceptionsCapitalized,
     exceptions,
     detenele,
-    johoJomu,
+    mapping.johoJomu,
     hardConsonants,
     dtnl,
-    doubleChars,
-    singleChars,
+    mapping.digraphs,
+    mapping.singleChars,
   ];
 
   for (const mappingRule of mappingRules) {
@@ -555,8 +551,8 @@ export function processCyrLat(string) {
     detenele,
     hardConsonants,
     dtnl,
-    doubleChars,
-    singleChars,
+    mapping.digraphs,
+    mapping.singleChars,
   ];
 
   for (const mappingRule of mappingRules) {
@@ -645,12 +641,12 @@ export function processUpperCase(string, direction){
 export function translit(string, direction) {
   switch (direction) {
     case "latCyr":
-      string = applyTranslitRule(string, homoglyphs, "cyrLat"); // opposite direction as we need to latinize the cyrillic homoghlyphs
+      string = applyTranslitRule(string, mapping.homoglyphs, "cyrLat"); // opposite direction as we need to latinize the cyrillic homoglyphs
       string = processUpperCase(string, "latCyr");
       string = processLatCyr(string);
       return string;
     case "cyrLat":
-      string = applyTranslitRule(string, homoglyphs, "latCyr"); // opposite direction as we need to cyrillize the latin homoghlyphs
+      string = applyTranslitRule(string, mapping.homoglyphs, "latCyr"); // opposite direction as we need to cyrillize the latin homoglyphs
       string = processUpperCase(string, "cyrLat");
       string = processCyrLat(string);
       return string;
