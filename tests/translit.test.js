@@ -8,10 +8,11 @@ import {
   mapSoftVowelBeginningWordCyrLat,
   mapSoftVowelAfterHardVowelLatCyr,
   mapSoftVowelAfterHardVowelCyrLat,
-  normalizeApostrophes,
   processUpperCase,
   translit,
 } from "../src/translit.js";
+
+import { normalizeApostrophes } from "../src/utils.js";
 import assert from "assert";
 
 function mapToUppercase(testCase) {
