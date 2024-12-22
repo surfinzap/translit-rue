@@ -3,9 +3,12 @@
    hard vowels = нейотованы гласны
    soft vowels = йотованы гласны
 */
-export const latinVowelsLowerCase = "aeiouyŷ";
-export const cyrillicHardVowelsLowerCase = "аеіоуиыї";
-export const cyrillicSoftVowelsLowerCase = "яєїёю";
+
+export const vowelsLowerCase = {
+  latin: "aeiouyŷ",
+  cyrillicHard: "аеіоуиыї",
+  cyrillicSoft: "яєїёю",
+}
 
 const nonLatinLowercase =
   "áäčďéěíĺľňóôöőŕřšťúüűůýŷžабвгґдезіийклмнопрстуфъыьцчжшїщёєюях";

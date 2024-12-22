@@ -10,9 +10,7 @@
  */
 
 import { 
-  latinVowelsLowerCase,
-  cyrillicHardVowelsLowerCase,
-  cyrillicSoftVowelsLowerCase,
+  vowelsLowerCase,
   lowerCaseChars,
   upperCaseChars,
   allChars,
@@ -222,7 +220,7 @@ export function mapSuperlativeLatCyr(string){
   let pattern =
     "(\\b)"
   + "(naj)"
-  + "([" + latinVowelsLowerCase + "])"
+  + "([" + vowelsLowerCase.latin + "])"
   + "([" + lowerCaseChars + "]+?)"
   + "(šŷj|šoho|šomu|šim|šŷm|šŷ|šŷch|šŷma|ša|šoj|šij|šu|šov|še)";
   let re = new RegExp(pattern, "gi");
@@ -285,7 +283,7 @@ export function mapConsecutiveSoftWovelsLatCyr(string) {
 export function mapConsecutiveSoftWovelsCyrLat(string) {
   let pattern =
       "([^" + allChars + "]|^)"
-    + "(([" + cyrillicSoftVowelsLowerCase + "]){2,})";
+    + "(([" + vowelsLowerCase.cyrillicSoft + "]){2,})";
   let re = new RegExp(pattern, "gi");
 
   return string.replace(re, function($0, $1, $2){
@@ -422,7 +420,7 @@ export function mapSoftVowelBeginningWordLatCyr(string) {
 export function mapSoftVowelBeginningWordCyrLat(string) {
   let pattern =
       "([^" + allChars + "]|^)"
-    + "([" + cyrillicSoftVowelsLowerCase + "])";
+    + "([" + vowelsLowerCase.cyrillicSoft + "])";
   let re = new RegExp(pattern, "gi");
 
   return string.replace(re, function($0, $1, $2){
@@ -450,7 +448,7 @@ export function mapSoftVowelBeginningWordCyrLat(string) {
 export function mapSoftVowelAfterHardVowelLatCyr(string) {
 
   let pattern =
-      "([" + latinVowelsLowerCase + "])"
+      "([" + vowelsLowerCase.latin + "])"
     + "(ja|je|ji|jo|ju)";
   let re = new RegExp(pattern, "gi");
 
@@ -479,8 +477,8 @@ export function mapSoftVowelAfterHardVowelLatCyr(string) {
 export function mapSoftVowelAfterHardVowelCyrLat(string) {
 
   let pattern =
-      "([" + cyrillicHardVowelsLowerCase + "])"
-    + "([" + cyrillicSoftVowelsLowerCase + "])";
+      "([" + vowelsLowerCase.cyrillicHard + "])"
+    + "([" + vowelsLowerCase.cyrillicSoft + "])";
   let re = new RegExp(pattern, "gi");
 
   return string.replace(re, function($0, $1, $2){
