@@ -19,11 +19,6 @@ import {
   mapping,
   exceptions,
   exceptionsCapitalized,
-  doubledDtnl,
-  detenele,
-  hardConsonants,
-  softVowels,
-  dtnl,
  } from "./constants";
 
 
@@ -145,13 +140,13 @@ export function applyTranslitRule(string, mappingRule, direction) {
 */
 export function mapDoubledDtnlLatCyr(string){
   let pattern =
-    "(?<dtnl>[ďťňľ])"
-  + "(\\k<dtnl>)"
+    "(?<dtnl>[ďťňľ])" // <dtnl> is capturing group name 
+  + "(\\k<dtnl>)" // match the same char as in previous match
   + "([aeiou])";
   let re = new RegExp(pattern, "gi");
 
   return string.replace(re, function($0, $1, $2, $3){
-    return applyTranslitRule($1, doubledDtnl, "latCyr") + $2 + $3;
+    return applyTranslitRule($1, mapping.dtnlDoubled, "latCyr") + $2 + $3;
   });
 }
 
@@ -187,13 +182,13 @@ export function mapDoubledDtnlLatCyr(string){
 */
 export function mapDoubledDtnlCyrLat(string){
   let pattern =
-    "(?<dtnl>[дтнл])"
-  + "(\\k<dtnl>)"
+    "(?<dtnl>[дтнл])" // <dtnl> is capturing group name
+  + "(\\k<dtnl>)" // match the same char as in previous match
   + "([яєїёю])";
   let re = new RegExp(pattern, "gi");
 
   return string.replace(re, function($0, $1, $2, $3){
-    return applyTranslitRule($1, doubledDtnl, "cyrLat") + $2 + $3;
+    return applyTranslitRule($1, mapping.dtnlDoubled, "cyrLat") + $2 + $3;
   });
 }
 
@@ -266,7 +261,7 @@ export function mapConsecutiveSoftWovelsLatCyr(string) {
   let re = new RegExp(pattern, "gi");
 
   return string.replace(re, function($0, $1, $2){
-    return $1 + applyTranslitRule($2, softVowels, "latCyr");
+    return $1 + applyTranslitRule($2, mapping.softVowels, "latCyr");
   });
 }
 
@@ -296,7 +291,7 @@ export function mapConsecutiveSoftWovelsCyrLat(string) {
   let re = new RegExp(pattern, "gi");
 
   return string.replace(re, function($0, $1, $2){
-    return $1 + applyTranslitRule($2, softVowels, "cyrLat");
+    return $1 + applyTranslitRule($2, mapping.softVowels, "cyrLat");
   });
 }
 
@@ -342,7 +337,7 @@ export function mapSingleJoLatCyr(string) {
   let re = new RegExp(pattern, "gi");
 
   return string.replace(re, function($0, $1, $2, $3){
-    return $1 + applyTranslitRule($2, softVowels, "latCyr") + $3;
+    return $1 + applyTranslitRule($2, mapping.softVowels, "latCyr") + $3;
   });
 }
 
@@ -392,7 +387,7 @@ export function mapSoftVowelBeginningWordLatCyr(string) {
   let re = new RegExp(pattern, "gi");
 
   return string.replace(re, function($0, $1, $2, $3){
-    return $1 + applyTranslitRule($2 + $3, softVowels, "latCyr");
+    return $1 + applyTranslitRule($2 + $3, mapping.softVowels, "latCyr");
   });
 }
 
@@ -433,7 +428,7 @@ export function mapSoftVowelBeginningWordCyrLat(string) {
   let re = new RegExp(pattern, "gi");
 
   return string.replace(re, function($0, $1, $2){
-    return $1 + applyTranslitRule($2, softVowels, "cyrLat");
+    return $1 + applyTranslitRule($2, mapping.softVowels, "cyrLat");
   });
 }
 
@@ -462,7 +457,7 @@ export function mapSoftVowelAfterHardVowelLatCyr(string) {
   let re = new RegExp(pattern, "gi");
 
   return string.replace(re, function($0, $1, $2){
-    return $1 + applyTranslitRule($2, softVowels, "latCyr");
+    return $1 + applyTranslitRule($2, mapping.softVowels, "latCyr");
   });
 }
 
@@ -491,7 +486,7 @@ export function mapSoftVowelAfterHardVowelCyrLat(string) {
   let re = new RegExp(pattern, "gi");
 
   return string.replace(re, function($0, $1, $2){
-    return $1 + applyTranslitRule($2, softVowels, "cyrLat");
+    return $1 + applyTranslitRule($2, mapping.softVowels, "cyrLat");
   });
 }
 
@@ -516,10 +511,10 @@ export function processLatCyr(string) {
   const mappingRules = [
     exceptionsCapitalized,
     exceptions,
-    detenele,
+    mapping.dtnlVowel,
     mapping.johoJomu,
-    hardConsonants,
-    dtnl,
+    mapping.hardConsonants,
+    mapping.dtnlAtWordEnd,
     mapping.digraphs,
     mapping.singleChars,
   ];
@@ -548,9 +543,9 @@ export function processCyrLat(string) {
   const mappingRules = [
     exceptionsCapitalized,
     exceptions,
-    detenele,
-    hardConsonants,
-    dtnl,
+    mapping.dtnlVowel,
+    mapping.hardConsonants,
+    mapping.dtnlAtWordEnd,
     mapping.digraphs,
     mapping.singleChars,
   ];
