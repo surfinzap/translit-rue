@@ -20,92 +20,9 @@ import {
   applyTranslitRule
 } from "./utils";
 
+import * as latCyr from "./lat_to_cyr";
+import * as cyrLat from "./cyr_to_lat";
 
-
-
-
-
-/**  
-  Consolidate letter group (ďď | ťť | ňň | ľľ) followed by aeiou
-
-  Naive transliteration would be to transliterate:
-  first “ď” → дь
-  and the rest “ďa” → дя 
-
-  However, the correct transliteration is to omit the soft character:
-  ďďa → ддя
-
-  Examples
-  oďďilena → оддїлена
-  žyťťa → життя
-  raňňij → рaннїй
-  ľľaty → лляти
-
-  Counterexamples (unaccented dd, tt, nn, ll)
-  naddunajskŷj → наддунaйскый
-  motto → мотто
-  Humenne → Гумeнне
-  Tallin → Тaллін
-
-  Counterexamples (combination of letters, e.g d–t)
-  odťikaty → одтїкaти
-
-  @param {string} string - input text for mapping
-  @returns {string} - where the first (ď|ť|ň|ľ) of the group is transliterated to its cyrillic equivalent, omitting the soft character “ь”
-*/
-export function mapDoubledDtnlLatCyr(string){
-  let pattern =
-    "(?<dtnl>[ďťňľ])" // <dtnl> is capturing group name 
-  + "(\\k<dtnl>)" // match the same char as in previous match
-  + "([aeiou])";
-  let re = new RegExp(pattern, "gi");
-
-  return string.replace(re, function($0, $1, $2, $3){
-    return applyTranslitRule($1, mapping.dtnlDoubled, "latCyr") + $2 + $3;
-  });
-}
-
-
-
-/**  
-  Consolidate letter group (дд | тт | нн | лл) followed by яєїёю
-
-  Naive transliteration would be to translate:
-  first “д” → d
-  and the rest “дя” → ďa
-
-  However, the correct transliteration is double the accents on consonants:
-  ддя → ďďa
-
-  Examples
-  oďďilena → оддїлена
-  žyťťa → життя
-  raňňij → рaннїй
-  ľľaty → лляти
-
-  Counterexamples (unaccented dd, tt, nn, ll)
-  naddunajskŷj → наддунaйскый
-  motto → мотто
-  Humenne → Гумeнне
-  Tallin → Тaллін
-
-  Counterexamples (combination of letters, e.g d–t)
-  odťikaty → одтїкaти
-
-  @param {string} string - input text for mapping
-  @returns {string} - where the first (д| т | н | л) of the group is transliterated to its latin accented equivalent
-*/
-export function mapDoubledDtnlCyrLat(string){
-  let pattern =
-    "(?<dtnl>[дтнл])" // <dtnl> is capturing group name
-  + "(\\k<dtnl>)" // match the same char as in previous match
-  + "([яєїёю])";
-  let re = new RegExp(pattern, "gi");
-
-  return string.replace(re, function($0, $1, $2, $3){
-    return applyTranslitRule($1, mapping.dtnlDoubled, "cyrLat") + $2 + $3;
-  });
-}
 
 
 
@@ -421,7 +338,7 @@ export function processLatCyr(string) {
   string = mapSingleJoLatCyr(string);
   string = mapSoftVowelBeginningWordLatCyr(string);
   string = mapSoftVowelAfterHardVowelLatCyr(string);
-  string = mapDoubledDtnlLatCyr(string);
+  string = latCyr.mapDtnlDoubled(string);
 
   const mappingRules = [
     mapping.exceptionsCapitalized,
@@ -453,7 +370,7 @@ export function processCyrLat(string) {
   string = mapConsecutiveSoftWovelsCyrLat(string);
   string = mapSoftVowelBeginningWordCyrLat(string);
   string = mapSoftVowelAfterHardVowelCyrLat(string);
-  string = mapDoubledDtnlCyrLat(string);
+  string = cyrLat.mapDtnlDoubled(string);
 
   const mappingRules = [
     mapping.exceptionsCapitalized,

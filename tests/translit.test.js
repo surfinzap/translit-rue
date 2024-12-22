@@ -1,7 +1,5 @@
 import {
   mapSuperlativeLatCyr,
-  mapDoubledDtnlLatCyr,
-  mapDoubledDtnlCyrLat,
   mapConsecutiveSoftWovelsLatCyr,
   mapConsecutiveSoftWovelsCyrLat,
   mapSoftVowelBeginningWordLatCyr,
@@ -11,6 +9,11 @@ import {
   processUpperCase,
   translit,
 } from "../src/translit.js";
+
+import * as latCyr from "../src/lat_to_cyr.js";
+import * as cyrLat from "../src/cyr_to_lat.js";
+
+
 
 import { normalizeApostrophes } from "../src/utils.js";
 import assert from "assert";
@@ -239,7 +242,7 @@ describe("(unit, lat) Consolidate letter group (ďď | ťť | ňň | ľľ) follo
 
   Object.keys(testCase).forEach((key) => {
     it("Latin → Cyrillic:\n", () => {
-      assert.equal(mapDoubledDtnlLatCyr(key), testCase[key]);
+      assert.equal(latCyr.mapDtnlDoubled(key), testCase[key]);
     });
   });
 });
@@ -286,7 +289,7 @@ describe("(unit, cyr) Consolidate letter group (дд | тт | нн | лл) follo
 
   Object.keys(testCase).forEach((key) => {
     it("Latin → Cyrillic:\n", () => {
-      assert.equal(mapDoubledDtnlCyrLat(testCase[key]), key);
+      assert.equal(cyrLat.mapDtnlDoubled(testCase[key]), key);
     });
   });
 });
