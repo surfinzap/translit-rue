@@ -10,12 +10,18 @@ export const vowelsLowerCase = {
   cyrillicSoft: "яєїёю",
 }
 
-const nonLatinLowercase =
+const nonLatinLowerCase =
   "áäčďéěíĺľňóôöőŕřšťúüűůýŷžабвгґдезіийклмнопрстуфъыьцчжшїщёєюях";
-const nonLatinUppercase = nonLatinLowercase.toUpperCase();
-export const lowerCaseChars = "a-z" + nonLatinLowercase;
-export const upperCaseChars = "A-Z" + nonLatinUppercase;
-export const allChars = lowerCaseChars + upperCaseChars;
+const nonLatinUpperCase = nonLatinLowerCase.toUpperCase();
+const lowerCaseChars = "a-z" + nonLatinLowerCase;
+const upperCaseChars = "A-Z" + nonLatinUpperCase;
+const allChars = lowerCaseChars + upperCaseChars;
+
+export const chars = {
+  lowerCase: lowerCaseChars,
+  upperCase: upperCaseChars,
+  all: allChars
+}
 
 const exceptions = {
   "text": "текст",

@@ -11,9 +11,7 @@
 
 import { 
   vowelsLowerCase,
-  lowerCaseChars,
-  upperCaseChars,
-  allChars,
+  chars,
   mapping,
  } from "./constants";
 
@@ -221,7 +219,7 @@ export function mapSuperlativeLatCyr(string){
     "(\\b)"
   + "(naj)"
   + "([" + vowelsLowerCase.latin + "])"
-  + "([" + lowerCaseChars + "]+?)"
+  + "([" + chars.lowerCase + "]+?)"
   + "(šŷj|šoho|šomu|šim|šŷm|šŷ|šŷch|šŷma|ša|šoj|šij|šu|šov|še)";
   let re = new RegExp(pattern, "gi");
 
@@ -282,7 +280,7 @@ export function mapConsecutiveSoftWovelsLatCyr(string) {
 */
 export function mapConsecutiveSoftWovelsCyrLat(string) {
   let pattern =
-      "([^" + allChars + "]|^)"
+      "([^" + chars.all + "]|^)"
     + "(([" + vowelsLowerCase.cyrillicSoft + "]){2,})";
   let re = new RegExp(pattern, "gi");
 
@@ -327,9 +325,9 @@ export function mapJojJovBeginningWordLatCyr(string) {
 */
 export function mapSingleJoLatCyr(string) {
   let pattern =
-      "(^|[^" + allChars + "])"
+      "(^|[^" + chars.all + "])"
     + "(jo)"
-    + "([^" + allChars + "]|$)";
+    + "([^" + chars.all + "]|$)";
   let re = new RegExp(pattern, "gi");
 
   return string.replace(re, function($0, $1, $2, $3){
@@ -419,7 +417,7 @@ export function mapSoftVowelBeginningWordLatCyr(string) {
 */
 export function mapSoftVowelBeginningWordCyrLat(string) {
   let pattern =
-      "([^" + allChars + "]|^)"
+      "([^" + chars.all + "]|^)"
     + "([" + vowelsLowerCase.cyrillicSoft + "])";
   let re = new RegExp(pattern, "gi");
 
@@ -568,8 +566,8 @@ export function processUpperCase(string, direction){
   let spacingChars = "-–—\\s";
   
   let multiCharUpperCaseWord =
-     "([" + upperCaseChars + "’]{2,})"
-   + "([^" + lowerCaseChars + "]|$)";
+     "([" + chars.upperCase + "’]{2,})"
+   + "([^" + chars.lowerCase + "]|$)";
   let multiCharRegex = new RegExp(multiCharUpperCaseWord, "g");
 
   string = string.replace(multiCharRegex, function($0, $1, $2){
@@ -583,9 +581,9 @@ export function processUpperCase(string, direction){
 
 
   let singleCharBeforeUpperCase =
-      "([^" + upperCaseChars + "’]|^)"
-    + "([" + upperCaseChars + "’])"
-    + "(?=[" + spacingChars + "][" + upperCaseChars + "][^" + lowerCaseChars + "’])";
+      "([^" + chars.upperCase + "’]|^)"
+    + "([" + chars.upperCase + "’])"
+    + "(?=[" + spacingChars + "][" + chars.upperCase + "][^" + chars.lowerCase + "’])";
   
   let singleCharBeforeRegex = new RegExp(singleCharBeforeUpperCase, "g");
 
@@ -601,9 +599,9 @@ export function processUpperCase(string, direction){
 
 
   let singleCharAfterUpperCase =
-      "([" + upperCaseChars + "’][\\s])"
-    + "([" + upperCaseChars + "])"
-    + "([^" + upperCaseChars + "]|$)";
+      "([" + chars.upperCase + "’][\\s])"
+    + "([" + chars.upperCase + "])"
+    + "([^" + chars.upperCase + "]|$)";
   let singleCharAfterRegex = new RegExp(singleCharAfterUpperCase, "g");
   
   string = string.replace(singleCharAfterRegex, function($0, $1, $2, $3){
