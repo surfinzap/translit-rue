@@ -17,8 +17,6 @@ import {
   upperCaseChars,
   allChars,
   mapping,
-  exceptions,
-  exceptionsCapitalized,
  } from "./constants";
 
 
@@ -509,8 +507,8 @@ export function processLatCyr(string) {
   string = mapDoubledDtnlLatCyr(string);
 
   const mappingRules = [
-    exceptionsCapitalized,
-    exceptions,
+    mapping.exceptionsCapitalized,
+    mapping.exceptions,
     mapping.dtnlVowel,
     mapping.johoJomu,
     mapping.hardConsonants,
@@ -541,8 +539,8 @@ export function processCyrLat(string) {
   string = mapDoubledDtnlCyrLat(string);
 
   const mappingRules = [
-    exceptionsCapitalized,
-    exceptions,
+    mapping.exceptionsCapitalized,
+    mapping.exceptions,
     mapping.dtnlVowel,
     mapping.hardConsonants,
     mapping.dtnlAtWordEnd,

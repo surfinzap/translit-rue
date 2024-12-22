@@ -14,13 +14,13 @@ export const lowerCaseChars = "a-z" + nonLatinLowercase;
 export const upperCaseChars = "A-Z" + nonLatinUppercase;
 export const allChars = lowerCaseChars + upperCaseChars;
 
-export const exceptions = {
+const exceptions = {
   "text": "текст",
   "taxi": "таксі",
   "jožk": "йожк",
 };
 
-export const exceptionsCapitalized = {};
+const exceptionsCapitalized = {};
 
 for (const [key, value] of Object.entries(exceptions)) {
   const capitalizedKey = key.charAt(0).toUpperCase() + key.slice(1);
@@ -326,6 +326,8 @@ export const mapping = {
     "jov": "ёв",
     "Jov": "Ёв",
   },
+  "exceptions": exceptions,
+  "exceptionsCapitalized": exceptionsCapitalized
 };
 
 
