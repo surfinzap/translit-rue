@@ -1,7 +1,4 @@
 import {
-  mapSuperlativeLatCyr,
-  mapConsecutiveSoftWovelsLatCyr,
-  mapConsecutiveSoftWovelsCyrLat,
   mapSoftVowelBeginningWordLatCyr,
   mapSoftVowelBeginningWordCyrLat,
   mapSoftVowelAfterHardVowelLatCyr,
@@ -104,7 +101,7 @@ describe("(unit) Superlative transliteration:\n", () => {
 
   Object.keys(testCase).forEach((key) => {
     it("Latin → Cyrillic:\n", () => {
-      assert.equal(mapSuperlativeLatCyr(key), testCase[key]);
+      assert.equal(latCyr.mapSuperlative(key), testCase[key]);
     });
 
   });
@@ -155,10 +152,10 @@ describe("(unit) consecutive soft vowels (ja, je, ji, jo, ju):\n", () => {
 
   Object.keys(testCase).forEach((key) => {
     it("Latin → Cyrillic:\n", () => {
-      assert.equal(mapConsecutiveSoftWovelsLatCyr(key), testCase[key]);
+      assert.equal(latCyr.mapSoftVowelsSequence(key), testCase[key]);
     });
     it("Cyrillic → Latin:\n", () => {
-      assert.equal(mapConsecutiveSoftWovelsCyrLat(testCase[key]), key);
+      assert.equal(cyrLat.mapSoftVowelsSequence(testCase[key]), key);
     });
   });
 });
