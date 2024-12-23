@@ -70,3 +70,73 @@ export function mapSoftVowelsSequence(string) {
     return $1 + applyTranslitRule($2, mapping.softVowels, "cyrLat");
   });
 }
+
+
+
+/*
+  Transliterate я, є, ї, ё, ю at the beginning of the word
+
+  Transliteration rules:
+  ja ↔ я
+  je ↔ є
+  ji ↔ ї
+  jo ↔ ё
+  ju ↔ ю
+
+  Examples
+  jabčanka ↔ ябчaнка
+  jedenastka ↔ єденастка
+  jidnaňa ↔ їднaня
+  joho ↔ ёгo
+  o-jo-joj ↔ о-ё-ёй
+  jubilant ↔ юбілaнт
+    
+  Counterexamples
+  jedenadc’atŷj ↔ єденадцятый (ja in the middle)
+  každopadňi ↔ каждопаднї
+  zrivňovaty ↔ зрiвнёвати
+  čeľustnŷj ↔ чeлюстный
+
+  @param {string} string - cyrillic text for mapping
+  @returns {string} - latin text with mapped я, є, ї, ё, ю
+
+*/
+export function mapSoftVowelAtWordStart(string) {
+  let pattern =
+    "([^" + chars.all + "]|^)"
+  + "([" + vowelsLowerCase.cyrillicSoft + "])";
+  let re = new RegExp(pattern, "gi");
+
+  return string.replace(re, function ($0, $1, $2) {
+    return $1 + applyTranslitRule($2, mapping.softVowels, "cyrLat");
+  });
+}
+
+
+
+/**
+  Transliterate я, є, ї, ё, ю before a vowel (а, е, і, о, у, и, ы)
+
+  Examples
+  bajusatŷj	↔ баюсaтый
+  akciji ↔ aкції
+  čornyjova ↔ чорниёвa
+  oklejuju ↔ оклеюю
+  svojoj ↔ своёй
+  šŷje ↔ šŷje
+  ujidaty ↔ уїдaти
+
+  @param {string} string - latin text for mapping
+  @returns {string} - cyrillic text with mapped я, є, ї, ё, ю
+*/
+export function mapSoftVowelAfterHardVowel(string) {
+
+  let pattern =
+      "([" + vowelsLowerCase.cyrillicHard + "])"
+    + "([" + vowelsLowerCase.cyrillicSoft + "])";
+  let re = new RegExp(pattern, "gi");
+
+  return string.replace(re, function($0, $1, $2){
+    return $1 + applyTranslitRule($2, mapping.softVowels, "cyrLat");
+  });
+}

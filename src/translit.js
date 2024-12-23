@@ -25,208 +25,6 @@ import * as cyrLat from "./cyr_to_lat";
 
 
 
-
-
-
-
-
-
-
-/**
-  Transliterate words that begin with joj-, jov- from latin to cyrillic
-
-  Transliteration rules:
-  jojkaňa → ёйканя
-  Jovha → Ёвга 
-
-  @param {string} string - latin text for mapping
-  @returns {string} - cyrillic text with mapped joj-, jov- 
-*/
-export function mapJojJovBeginningWordLatCyr(string) {
-  let pattern =
-      "(\\b)"
-    + "(joj|jov)";
-  let re = new RegExp(pattern, "gi");
-
-  return string.replace(re, function($0, $1, $2){
-    return $1 + applyTranslitRule($2, mapping.jojJov, "latCyr");
-  });
-}
-
-
-
-/**
-  Transliterate single word “jo”
-
-  Transliteration rules:
-  jo → ё
-  Jo → Ё 
-
-  @param {string} string - latin text for mapping
-  @returns {string} - cyrillic text with mapped jo 
-*/
-export function mapSingleJoLatCyr(string) {
-  let pattern =
-      "(^|[^" + chars.all + "])"
-    + "(jo)"
-    + "([^" + chars.all + "]|$)";
-  let re = new RegExp(pattern, "gi");
-
-  return string.replace(re, function($0, $1, $2, $3){
-    return $1 + applyTranslitRule($2, mapping.softVowels, "latCyr") + $3;
-  });
-}
-
-
-
-/**
-  Transliterate ja, je, ji, ju at the beginning of the word
-
-  Transliteration rules:
-  ja ↔ я
-  je ↔ є
-  ji ↔ ї
-  ju ↔ ю
-  
-  Exception
-  jo ↔ ё
-  We don’t map “jo” here as it a special case handled in separate functions:
-  - mapSoftVowelsSequence
-  - applyTranslitRule(string, exceptions, direction)
-  - mapJojJovBeginningWordLatCyr
-  - mapJojJovBeginningWordCyrLat
-
-
-  Examples
-  jabčanka ↔ ябчaнка
-  jedenastka ↔ єденастка
-  jidnaňa ↔ їднaня
-  joho ↔ ёгo
-  o-jo-joj ↔ о-ё-ёй
-  jubilant ↔ юбілaнт
-    
-  Counterexamples
-  jedenadc’atŷj ↔ єденадцятый (ja in the middle)
-  každopadňi ↔ каждопаднї
-  zrivňovaty ↔ зрiвнёвати
-  čeľustnŷj ↔ чeлюстный
-
-  @param {string} string - latin text for mapping
-  @returns {string} - cyrillic text with mapped ja, je, ji, jo, ju
-*/
-export function mapSoftVowelBeginningWordLatCyr(string) {
-  let pattern =
-      "(\\b)"
-    + "(j)"
-    + "([aeiuyŷ])";
-  let re = new RegExp(pattern, "gi");
-
-  return string.replace(re, function($0, $1, $2, $3){
-    return $1 + applyTranslitRule($2 + $3, mapping.softVowels, "latCyr");
-  });
-}
-
-
-
-/*
-  Transliterate я, є, ї, ё, ю at the beginning of the word
-
-  Transliteration rules:
-  ja ↔ я
-  je ↔ є
-  ji ↔ ї
-  jo ↔ ё
-  ju ↔ ю
-
-  Examples
-  jabčanka ↔ ябчaнка
-  jedenastka ↔ єденастка
-  jidnaňa ↔ їднaня
-  joho ↔ ёгo
-  o-jo-joj ↔ о-ё-ёй
-  jubilant ↔ юбілaнт
-    
-  Counterexamples
-  jedenadc’atŷj ↔ єденадцятый (ja in the middle)
-  každopadňi ↔ каждопаднї
-  zrivňovaty ↔ зрiвнёвати
-  čeľustnŷj ↔ чeлюстный
-
-  @param {string} string - cyrillic text for mapping
-  @returns {string} - latin text with mapped я, є, ї, ё, ю
-
-*/
-export function mapSoftVowelBeginningWordCyrLat(string) {
-  let pattern =
-      "([^" + chars.all + "]|^)"
-    + "([" + vowelsLowerCase.cyrillicSoft + "])";
-  let re = new RegExp(pattern, "gi");
-
-  return string.replace(re, function($0, $1, $2){
-    return $1 + applyTranslitRule($2, mapping.softVowels, "cyrLat");
-  });
-}
-
-
-
-/** 
-  Transliterate ja, je, ji, jo, ju before a vowel (a, e, i, o, u, y, ŷ)
-
-  Examples
-  bajusatŷj	↔ баюсaтый
-  akciji ↔ aкції
-  čornyjova ↔ чорниёвa
-  oklejuju ↔ оклеюю
-  svojoj ↔ своёй
-  šŷje ↔ šŷje
-  ujidaty ↔ уїдaти
-
-  @param {string} string - latin text for mapping
-  @returns {string} - cyrillic text with mapped ja, je, ji, jo, ju
-*/
-export function mapSoftVowelAfterHardVowelLatCyr(string) {
-
-  let pattern =
-      "([" + vowelsLowerCase.latin + "])"
-    + "(ja|je|ji|jo|ju)";
-  let re = new RegExp(pattern, "gi");
-
-  return string.replace(re, function($0, $1, $2){
-    return $1 + applyTranslitRule($2, mapping.softVowels, "latCyr");
-  });
-}
-
-
-
-/**
-  Transliterate я, є, ї, ё, ю before a vowel (а, е, і, о, у, и, ы)
-
-  Examples
-  bajusatŷj	↔ баюсaтый
-  akciji ↔ aкції
-  čornyjova ↔ чорниёвa
-  oklejuju ↔ оклеюю
-  svojoj ↔ своёй
-  šŷje ↔ šŷje
-  ujidaty ↔ уїдaти
-
-  @param {string} string - latin text for mapping
-  @returns {string} - cyrillic text with mapped я, є, ї, ё, ю
-*/
-export function mapSoftVowelAfterHardVowelCyrLat(string) {
-
-  let pattern =
-      "([" + vowelsLowerCase.cyrillicHard + "])"
-    + "([" + vowelsLowerCase.cyrillicSoft + "])";
-  let re = new RegExp(pattern, "gi");
-
-  return string.replace(re, function($0, $1, $2){
-    return $1 + applyTranslitRule($2, mapping.softVowels, "cyrLat");
-  });
-}
-
-
-
 /**
  * Processes a string by applying a series of transliteration rules to convert Latin text to Cyrillic. 
  *
@@ -237,10 +35,10 @@ export function processLatCyr(string) {
   string = normalizeApostrophes(string);
   string = latCyr.mapSuperlative(string);
   string = latCyr.mapSoftVowelsSequence(string);
-  string = mapJojJovBeginningWordLatCyr(string);
-  string = mapSingleJoLatCyr(string);
-  string = mapSoftVowelBeginningWordLatCyr(string);
-  string = mapSoftVowelAfterHardVowelLatCyr(string);
+  string = latCyr.mapJojJovBeginningWord(string);
+  string = latCyr.mapSingleJo(string);
+  string = latCyr.mapSoftVowelAtWordStart(string);
+  string = latCyr.mapSoftVowelAfterHardVowel(string);
   string = latCyr.mapDtnlDoubled(string);
 
   const mappingRules = [
@@ -271,8 +69,8 @@ export function processLatCyr(string) {
  */
 export function processCyrLat(string) {
   string = cyrLat.mapSoftVowelsSequence(string);
-  string = mapSoftVowelBeginningWordCyrLat(string);
-  string = mapSoftVowelAfterHardVowelCyrLat(string);
+  string = cyrLat.mapSoftVowelAtWordStart(string);
+  string = cyrLat.mapSoftVowelAfterHardVowel(string);
   string = cyrLat.mapDtnlDoubled(string);
 
   const mappingRules = [

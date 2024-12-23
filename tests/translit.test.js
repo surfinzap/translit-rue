@@ -1,8 +1,4 @@
 import {
-  mapSoftVowelBeginningWordLatCyr,
-  mapSoftVowelBeginningWordCyrLat,
-  mapSoftVowelAfterHardVowelLatCyr,
-  mapSoftVowelAfterHardVowelCyrLat,
   processUpperCase,
   translit,
 } from "../src/translit.js";
@@ -187,10 +183,10 @@ describe("(unit) Ja, je, ji, jo, ju at the beginning of the word:\n", () => {
 
   Object.keys(testCase).forEach((key) => {
     it("Latin → Cyrillic:\n", () => {
-      assert.equal(mapSoftVowelBeginningWordLatCyr(key), testCase[key]);
+      assert.equal(latCyr.mapSoftVowelAtWordStart(key), testCase[key]);
     });
     it("Cyrillic → Latin:\n", () => {
-      assert.equal(mapSoftVowelBeginningWordCyrLat(testCase[key]), key);
+      assert.equal(cyrLat.mapSoftVowelAtWordStart(testCase[key]), key);
     });
   });
 });
@@ -344,7 +340,7 @@ describe("(unit, lat) Ja, je, ji, jo, ju before a vowel:\n", () => {
 
   Object.keys(testCase).forEach((key) => {
     it("Latin → Cyrillic:\n", () => {
-      assert.equal(mapSoftVowelAfterHardVowelLatCyr(key), testCase[key]);
+      assert.equal(latCyr.mapSoftVowelAfterHardVowel(key), testCase[key]);
     });
   });
 });
@@ -405,7 +401,7 @@ describe("(unit, cyr) Ja, je, ji, jo, ju before a vowel:\n", () => {
 
   Object.keys(testCase).forEach((key) => {
     it("Cyrillic → Latin:\n", () => {
-      assert.equal(mapSoftVowelAfterHardVowelCyrLat(testCase[key]), key);
+      assert.equal(cyrLat.mapSoftVowelAfterHardVowel(testCase[key]), key);
     });
   });
 });
