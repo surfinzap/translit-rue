@@ -32,14 +32,22 @@ import * as cyrLat from "./cyr_to_lat";
  * @returns {string} - The processed string in Cyrillic script.
  */
 export function processLatCyr(string) {
-  string = normalizeApostrophes(string);
-  string = latCyr.mapSuperlative(string);
-  string = latCyr.mapSoftVowelsSequence(string);
-  string = latCyr.mapJojJovBeginningWord(string);
-  string = latCyr.mapSingleJo(string);
-  string = latCyr.mapSoftVowelAtWordStart(string);
-  string = latCyr.mapSoftVowelAfterHardVowel(string);
-  string = latCyr.mapDtnlDoubled(string);
+
+  const transformations = [
+    normalizeApostrophes,
+    latCyr.mapSuperlative,
+    latCyr.mapSoftVowelsSequence,
+    latCyr.mapJojJovBeginningWord,
+    latCyr.mapSingleJo,
+    latCyr.mapSoftVowelAtWordStart,
+    latCyr.mapSoftVowelAfterHardVowel,
+    latCyr.mapDtnlDoubled,
+  ];
+
+  string = transformations.reduce(
+    (result, transform) => transform(result),
+    string
+  );
 
   const mappingRules = [
     mapping.exceptionsCapitalized,
@@ -68,10 +76,17 @@ export function processLatCyr(string) {
  * @returns {string} - The processed string in Latin script.
  */
 export function processCyrLat(string) {
-  string = cyrLat.mapSoftVowelsSequence(string);
-  string = cyrLat.mapSoftVowelAtWordStart(string);
-  string = cyrLat.mapSoftVowelAfterHardVowel(string);
-  string = cyrLat.mapDtnlDoubled(string);
+  const transformations = [
+    cyrLat.mapSoftVowelsSequence,
+    cyrLat.mapSoftVowelAtWordStart,
+    cyrLat.mapSoftVowelAfterHardVowel,
+    cyrLat.mapDtnlDoubled,
+  ];
+
+  string = transformations.reduce(
+    (result, transform) => transform(result),
+    string
+  );
 
   const mappingRules = [
     mapping.exceptionsCapitalized,
