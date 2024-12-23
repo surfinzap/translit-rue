@@ -140,3 +140,41 @@ export function mapSoftVowelAfterHardVowel(string) {
     return $1 + applyTranslitRule($2, mapping.softVowels, "cyrLat");
   });
 }
+
+
+
+/**
+ * Processes a string by applying a series of transliteration rules to convert Cyrillic text to Latin.
+ *
+ * @param {string} string - The input string in Cyrillic script.
+ * @returns {string} - The processed string in Latin script.
+ */
+export function applyTransformations(string) {
+  const transformations = [
+    mapSoftVowelsSequence,
+    mapSoftVowelAtWordStart,
+    mapSoftVowelAfterHardVowel,
+    mapDtnlDoubled,
+  ];
+
+  string = transformations.reduce(
+    (result, transform) => transform(result),
+    string
+  );
+
+  const mappingRules = [
+    mapping.exceptionsCapitalized,
+    mapping.exceptions,
+    mapping.dtnlVowel,
+    mapping.hardConsonants,
+    mapping.dtnlAtWordEnd,
+    mapping.digraphs,
+    mapping.singleChars,
+  ];
+
+  for (const mappingRule of mappingRules) {
+    string = applyTranslitRule(string, mappingRule, "cyrLat");
+  }
+
+  return string;
+}

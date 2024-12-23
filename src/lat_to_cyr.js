@@ -1,5 +1,5 @@
 import { vowelsLowerCase, chars, mapping } from "./constants";
-import { applyTranslitRule } from "./utils";
+import { applyTranslitRule,normalizeApostrophes } from "./utils";
 
 /**  
   Consolidate letter group (ďď | ťť | ňň | ľľ) followed by aeiou
@@ -231,4 +231,48 @@ export function mapSingleJo(string) {
   return string.replace(re, function($0, $1, $2, $3){
     return $1 + applyTranslitRule($2, mapping.softVowels, "latCyr") + $3;
   });
+}
+
+
+
+/**
+ * Processes a string by applying a series of transliteration rules to convert Latin text to Cyrillic. 
+ *
+ * @param {string} string - The input string in Latin script.
+ * @returns {string} - The processed string in Cyrillic script.
+ */
+export function applyTransformations(string) {
+
+  const transformations = [
+    normalizeApostrophes,
+    mapSuperlative,
+    mapSoftVowelsSequence,
+    mapJojJovBeginningWord,
+    mapSingleJo,
+    mapSoftVowelAtWordStart,
+    mapSoftVowelAfterHardVowel,
+    mapDtnlDoubled,
+  ];
+
+  string = transformations.reduce(
+    (result, transform) => transform(result),
+    string
+  );
+
+  const mappingRules = [
+    mapping.exceptionsCapitalized,
+    mapping.exceptions,
+    mapping.dtnlVowel,
+    mapping.johoJomu,
+    mapping.hardConsonants,
+    mapping.dtnlAtWordEnd,
+    mapping.digraphs,
+    mapping.singleChars,
+  ];
+
+  for (const mappingRule of mappingRules) {
+    string = applyTranslitRule(string, mappingRule, "latCyr");
+  }
+
+  return string;
 }

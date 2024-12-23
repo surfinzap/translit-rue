@@ -1,14 +1,7 @@
-import {
-  processUpperCase,
-  translit,
-} from "../src/translit.js";
-
+import { translit } from "../src/translit.js";
 import * as latCyr from "../src/lat_to_cyr.js";
 import * as cyrLat from "../src/cyr_to_lat.js";
-
-
-
-import { normalizeApostrophes } from "../src/utils.js";
+import { normalizeApostrophes, processUpperCase } from "../src/utils.js";
 import assert from "assert";
 
 function mapToUppercase(testCase) {
@@ -972,10 +965,10 @@ describe("(unit) Uppercase tests:\n", () => {
 
   Object.keys(testCase).forEach((key) => {
     it("Latin → Cyrillic:\n", () => {
-      assert.equal(processUpperCase(key, 'latCyr'), testCase[key]);
+      assert.equal(processUpperCase(key, "latCyr"), testCase[key]);
     });
     it("Cyrillic → Latin:\n", () => {
-      assert.equal(processUpperCase(testCase[key], 'cyrLat'), key);
+      assert.equal(processUpperCase(testCase[key], "cyrLat"), key);
     });
   });
 });
