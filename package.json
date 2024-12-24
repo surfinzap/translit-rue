@@ -9,19 +9,21 @@
   },
   "scripts": {
     "build": "gulp build",
-    "test": "mocha --require @babel/register ./tests/**/*.test.js -R min",
-    "test:dev": "mocha --require @babel/register ./tests/**/*.test.js -R min -w"
+    "test": "mocha --require @babel/register ./tests/**/*.test.js -R min --no-colors",
+    "test:dev": "mocha --require @babel/register ./tests/**/*.test.js -R min -w",
+    "lint": "eslint src/ tests/ gulpfile.js",
+    "prepare": "husky"
   },
   "main": "dist/translit_dist.min.js",
-	"files": [
+  "files": [
     "dist/translit_dist.min.js"
   ],
   "repository": {
     "type": "git",
-    "url": "https://github.com/surfinzap/translit"
+    "url": "https://github.com/surfinzap/translit-rue"
   },
   "bugs": {
-    "url": "https://github.com/surfinzap/translit/issues"
+    "url": "https://github.com/surfinzap/translit-rue/issues"
   },
   "keywords": [
     "transliteration",
@@ -31,19 +33,22 @@
     "node": ">=6.9.4"
   },
   "devDependencies": {
-    "@babel/cli": "^7.25.9",
+    "@babel/cli": "^7.26.4",
     "@babel/core": "^7.26.0",
     "@babel/preset-env": "^7.26.0",
     "@babel/register": "^7.25.9",
     "babelify": "^10.0.0",
     "browserify": "^17.0.1",
+    "eslint": "^9.17.0",
     "gulp": "^5.0.0",
-    "gulp-babel": "^8.0.0",
     "gulp-cli": "^3.0.0",
-    "gulp-concat": "^2.6.1",
+    "gulp-header": "^2.0.9",
+    "gulp-replace": "^1.1.4",
     "gulp-uglify": "^3.0.2",
-    "mocha": "^10.8.2",
+    "husky": "^9.1.7",
+    "mocha": "^11.0.1",
     "vinyl-buffer": "^1.0.1",
     "vinyl-source-stream": "^2.0.0"
   }
 }
+

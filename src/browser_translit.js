@@ -1,5 +1,3 @@
-import { translitLatCyr,
- 				 translitCyrLat} from './translit';
+import { translit } from "./translit";
 
-window.translitCyrLat = translitCyrLat;
-window.translitLatCyr = translitLatCyr;
+window.translit = translit;

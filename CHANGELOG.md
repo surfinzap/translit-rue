@@ -1,5 +1,34 @@
 # Changelog for Rusyn transliterate
 
+## 3.0.0 //
+
+### 💥 Breaking changes
+In previous versions, there were two functions for the transliteration:
+- `translitCyrLat(string)` - Transliterate text from the Cyrillic script to the Latin alphabet.
+- `translitLatCyr(string)` - Transliterate text from the Latin alphabet to the Cyrillic script.
+
+As of version 3.0.0, these functions have been replaced with a single function that accepts a transliteration direction parameter:
+- `translit(string, direction)`
+- Example:
+  - `translit("Коровкы", "cyrLat")` → `Korovkŷ`
+  - `translit("Korovkŷ", "latCyr")` → `Коровкы`
+
+### 💪 Improvements
+Translit now supports homoglyph characters—characters that look identical across different alphabets but have different Unicode code points. For instance, the Latin `C` (`U+0043`) and the Cyrillic `С` (`U+0421`) appear the same but are distinct. Previously, if you used Cyrillic characters accidentally in a Latin word (e.g., `Сejlon`), the transliteration would fail, resulting in `Сейлон`. Now, mixed Latin and Cyrillic input like `Сejlon` is correctly transliterated to `Цейлон`.
+
+### 🐛 Fixes
+- Added exception for the name “Jožko”
+  - ⛔ before: Jožko → Ёжко
+  - ✅ now: Jožko → Йожко
+
+### 🔨 Maintenance
+- Updated packages to their latest versions
+- Improved function documentation
+- Reorganized code for better structure and readability
+- Automated the release pipeline
+
+
+
 ## 2.1.1 // 2024-12-01
 
 ### 🔨 Maintenance
@@ -88,7 +117,7 @@ There are no changes in functionality in this release
 
 ## 2.0.0 // 2019-12-28
 * Refactor translit so it can be used as NPM package ([translit-rue](https://www.npmjs.com/package/translit-rue)) or minified JavaScript library
-* Labeled as major version because it introduces breaking changes (different function names). ([View README.md](https://github.com/surfinzap/translit/blob/master/README.md)) for details of use.
+* Labeled as major version because it introduces breaking changes (different function names). ([View README.md](https://github.com/surfinzap/translit-rue/blob/master/README.md)) for details of use.
 
 
 
