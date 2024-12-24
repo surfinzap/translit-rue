@@ -2,7 +2,6 @@
 
 ## 3.0.0 //
 
-
 ### 💥 Breaking changes
 In previous versions, there were two functions for the transliteration:
 - `translitCyrLat(string)` - Transliterate text from the Cyrillic script to the Latin alphabet.
