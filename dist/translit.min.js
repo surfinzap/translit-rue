@@ -1,5 +1,5 @@
 /*!
- * Translit v2.1.1 (Rusyn transliteration)
+ * Translit v3.0.0 (Rusyn transliteration)
  * Copyright 2014–2024 Braňo Šandala (https://brano.me)
  * 
  * app: https://tota.sk/translit

@@ -1,6 +1,6 @@
 # Changelog for Rusyn transliterate
 
-## 3.0.0 //
+## 3.0.0 // 2024-12-24
 
 ### 💥 Breaking changes
 In previous versions, there were two functions for the transliteration:
