@@ -17,15 +17,15 @@ As of version 3.0.0, these functions have been replaced with a single function t
 Translit now supports homoglyph characters—characters that look identical across different alphabets but have different Unicode code points. For instance, the Latin `C` (`U+0043`) and the Cyrillic `С` (`U+0421`) appear the same but are distinct. Previously, if you used Cyrillic characters accidentally in a Latin word (e.g., `Сejlon`), the transliteration would fail, resulting in `Сейлон`. Now, mixed Latin and Cyrillic input like `Сejlon` is correctly transliterated to `Цейлон`.
 
 ### 🐛 Fixes
-- adding exception for the name “Jožko”
+- Added exception for the name “Jožko”
   - ⛔ before: Jožko → Ёжко
   - ✅ now: Jožko → Йожко
 
 ### 🔨 Maintenance
-- Update packages to their latest versions
-- Improve documentation of the functions
-- Reorganize code 
-- Automate release pipeline
+- Updated packages to their latest versions
+- Improved function documentation
+- Reorganized code for better structure and readability
+- Automated the release pipeline
 
 
 

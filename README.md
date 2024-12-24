@@ -2,6 +2,7 @@
 
 ![GitHub package.json version](https://img.shields.io/github/package-json/v/surfinzap/translit-rue?color=7b00cb&style=flat)
 ![GitHub](https://img.shields.io/github/license/surfinzap/translit-rue?color=7b00cb&style=flat)
+![Tests](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/surfinzap/translit-rue/main/tests-status.json)
 
 The Rusyn language is written in the Cyrillic script, which can be challenging to type if you don’t have the right keyboard or software.
 

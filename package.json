@@ -9,7 +9,7 @@
   },
   "scripts": {
     "build": "gulp build",
-    "test": "mocha --require @babel/register ./tests/**/*.test.js -R min",
+    "test": "mocha --require @babel/register ./tests/**/*.test.js -R min --no-colors",
     "test:dev": "mocha --require @babel/register ./tests/**/*.test.js -R min -w",
     "lint": "eslint src/ tests/ gulpfile.js",
     "prepare": "husky"
@@ -51,3 +51,4 @@
     "vinyl-source-stream": "^2.0.0"
   }
 }
+
