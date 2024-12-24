@@ -11,7 +11,7 @@
     "build": "gulp build",
     "test": "mocha --require @babel/register ./tests/**/*.test.js -R min",
     "test:dev": "mocha --require @babel/register ./tests/**/*.test.js -R min -w",
-    "lint": "eslint src/",
+    "lint": "eslint src/ tests/ gulpfile.js",
     "prepare": "husky"
   },
   "main": "dist/translit_dist.min.js",
@@ -41,9 +41,7 @@
     "browserify": "^17.0.1",
     "eslint": "^9.17.0",
     "gulp": "^5.0.0",
-    "gulp-babel": "^8.0.0",
     "gulp-cli": "^3.0.0",
-    "gulp-concat": "^2.6.1",
     "gulp-header": "^2.0.9",
     "gulp-replace": "^1.1.4",
     "gulp-uglify": "^3.0.2",

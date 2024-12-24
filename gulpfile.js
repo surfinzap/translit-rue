@@ -1,6 +1,4 @@
 var gulp = require("gulp");
-var babel = require("gulp-babel");
-var concat = require("gulp-concat");
 const replace = require("gulp-replace");
 const header = require("gulp-header");
 var uglify = require("gulp-uglify");
@@ -45,7 +43,7 @@ const copyrightBanner = `/*!
 
 
 function updateCopyrightBanner() {
-  const bannerRegex = /\/\*\![\s\S]*?\*\/\s*/;
+  const bannerRegex = /\/\*![\s\S]*?\*\/\s*/;
 
   return gulp
     .src(paths.copyright.src)
