@@ -3,9 +3,9 @@
  * Copyright 2014–2024 Braňo Šandala (https://brano.me)
  * 
  * app: https://tota.sk/translit
- * src: https://github.com/surfinzap/translit
+ * src: https://github.com/surfinzap/translit-rue
  * 
- * Licensed under MIT (https://github.com/surfinzap/translit/blob/main/LICENSE.txt)
+ * Licensed under MIT (https://github.com/surfinzap/translit-rue/blob/main/LICENSE.txt)
  */
 import { 
   mapping

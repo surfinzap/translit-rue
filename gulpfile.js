@@ -1,14 +1,14 @@
-var gulp = require("gulp");
+const gulp = require("gulp");
 const replace = require("gulp-replace");
 const header = require("gulp-header");
-var uglify = require("gulp-uglify");
+const uglify = require("gulp-uglify");
 const browserify = require("browserify");
 const babelify = require("babelify");
 const source = require("vinyl-source-stream");
 const buffer = require("vinyl-buffer");
 
 
-var paths = {
+const paths = {
   browser: {
     src: "src/browser_translit.js",
     name: "translit.min.js",
@@ -63,6 +63,7 @@ function browserBuild() {
     .pipe(source(paths.browser.name))
     .pipe(buffer())
     .pipe(uglify())
+    .pipe(header(copyrightBanner))
     .pipe(gulp.dest(paths.browser.dest));
 }
 
@@ -77,6 +78,7 @@ function npmBuild() {
     .pipe(source(paths.npm.name))
     .pipe(buffer())
     .pipe(uglify())
+    .pipe(header(copyrightBanner))
     .pipe(gulp.dest(paths.npm.dest));
 }
 
@@ -88,7 +90,7 @@ function watch() {
 /*
  * Specify if tasks run in series or parallel using `gulp.series` and `gulp.parallel`
  */
-var build = gulp.parallel(npmBuild, browserBuild);
+const build = gulp.parallel(npmBuild, browserBuild);
 
 /*
  * You can use CommonJS `exports` module notation to declare tasks
