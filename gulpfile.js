@@ -1,6 +1,8 @@
 var gulp = require("gulp");
 var babel = require("gulp-babel");
 var concat = require("gulp-concat");
+const replace = require("gulp-replace");
+const header = require("gulp-header");
 var uglify = require("gulp-uglify");
 const browserify = require("browserify");
 const babelify = require("babelify");
@@ -12,15 +14,45 @@ var paths = {
   browser: {
     src: "src/browser_translit.js",
     name: "translit.min.js",
-    dest: "dist/"
+    dest: "dist/",
   },
   npm: {
     src: "src/translit.js",
     name: "translit_dist.min.js",
-    dest: "dist/"
-  }
+    dest: "dist/",
+  },
+  copyright: {
+    src: "src/translit.js",
+    dest: "src/",
+  },
 };
 
+const packageJson = require("./package.json");
+const currentYear = new Date().getFullYear();
+
+
+// Copyright banner for the minified files
+const copyrightBanner = `/*!
+ * Translit v${packageJson.version} (Rusyn transliteration)
+ * Copyright 2014–${currentYear} Braňo Šandala (https://brano.me)
+ * 
+ * app: https://tota.sk/translit
+ * src: https://github.com/surfinzap/translit
+ * 
+ * Licensed under MIT (https://github.com/surfinzap/translit/blob/main/LICENSE.txt)
+ */
+`;
+
+
+function updateCopyrightBanner() {
+  const bannerRegex = /\/\*\![\s\S]*?\*\/\s*/;
+
+  return gulp
+    .src(paths.copyright.src)
+    .pipe(replace(bannerRegex, ""))
+    .pipe(header(copyrightBanner))
+    .pipe(gulp.dest(paths.copyright.dest));
+}
 
 /*
  * Define our tasks using plain functions
@@ -67,7 +99,7 @@ var build = gulp.parallel(npmBuild, browserBuild);
 exports.scripts = npmBuild;
 exports.watch = watch;
 exports.build = build;
-/*
- * Define default task that can be called by just running `gulp` from cli
- */
+// default task that can be called by just running `gulp` from cli
 exports.default = build;
+
+exports.updateCopyrightBanner = updateCopyrightBanner;

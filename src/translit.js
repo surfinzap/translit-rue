@@ -1,12 +1,11 @@
 /*!
- * Translit (Rusyn transliteration) 2.1.1
- * code: https://github.com/surfinzap/translit
+ * Translit v2.1.1 (Rusyn transliteration)
+ * Copyright 2014–2024 Braňo Šandala (https://brano.me)
+ * 
  * app: https://tota.sk/translit
- *
- * Copyright 2014-24 Braňo Šandala
- * Released under the MIT license
- *
- * Date: 2024-12-01
+ * src: https://github.com/surfinzap/translit
+ * 
+ * Licensed under MIT (https://github.com/surfinzap/translit/blob/main/LICENSE.txt)
  */
 import { 
   mapping
