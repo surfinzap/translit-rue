@@ -175,7 +175,6 @@ export function mapSoftVowelAtWordStart(string) {
   @returns {string} - cyrillic text with mapped ja, je, ji, jo, ju
 */
 export function mapSoftVowelAfterHardVowel(string) {
-
   let pattern =
       "([" + vowelsLowerCase.latin + "])"
     + "(ja|je|ji|jo|ju)";
