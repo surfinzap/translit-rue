@@ -19,10 +19,10 @@
   ],
   "repository": {
     "type": "git",
-    "url": "https://github.com/surfinzap/translit"
+    "url": "https://github.com/surfinzap/translit-rue"
   },
   "bugs": {
-    "url": "https://github.com/surfinzap/translit/issues"
+    "url": "https://github.com/surfinzap/translit-rue/issues"
   },
   "keywords": [
     "transliteration",

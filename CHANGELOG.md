@@ -117,7 +117,7 @@ There are no changes in functionality in this release
 
 ## 2.0.0 // 2019-12-28
 * Refactor translit so it can be used as NPM package ([translit-rue](https://www.npmjs.com/package/translit-rue)) or minified JavaScript library
-* Labeled as major version because it introduces breaking changes (different function names). ([View README.md](https://github.com/surfinzap/translit/blob/master/README.md)) for details of use.
+* Labeled as major version because it introduces breaking changes (different function names). ([View README.md](https://github.com/surfinzap/translit-rue/blob/master/README.md)) for details of use.
 
 
 
