@@ -62,9 +62,9 @@ export function normalizeApostrophes(string) {
  */
 
 export function normalizeHomoglyphs(text, direction) {
-  const LETTER_REGEX = /\p{L}+/gu;
-  const LATIN_REGEX = /\p{Script=Latin}/gu;
-  const CYRILLIC_REGEX = /\p{Script=Cyrillic}/gu;
+  const LETTER_REGEX = new RegExp(`[${chars.lowerCase}]+`, "giu");
+  const LATIN_REGEX = new RegExp(`[${chars.latinLowerCase}]`, "giu");
+  const CYRILLIC_REGEX = new RegExp(`[${chars.cyrillicLowerCase}]`, "giu");
 
   return text.replace(LETTER_REGEX, (word) => {
     const latCount = (word.match(LATIN_REGEX) || []).length;
