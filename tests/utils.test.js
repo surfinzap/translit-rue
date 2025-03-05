@@ -1,14 +1,123 @@
 import assert from "assert";
 import { translit } from "../src/translit.js";
-import { mapArrayToUpperCase } from "./scaffolding.js";
+import { 
+  mapObjectToUpperCase, 
+  mapArrayToUpperCase, 
+  lowerCaseWords } from "./scaffolding.js";
 import {
+  normalizeApostrophes, 
   normalizeHomoglyphs,
+  processUpperCase,
 } from "../src/utils.js";
 
 
 
+describe("(unit) Normalize apostrophes:\n", () => {
+  const accentChars = ["'", "’", "ʼ", "‘", "‛", "´", "`", "′"];
 
-describe("(cyr) Normalize homoglyphs:\n", () => {
+  function generateAccents(testCase, accentChars) {
+    let result = {};
+
+    for (let [key, value] of Object.entries(testCase)) {
+      let parts = key.split("'");
+
+      if (parts.length === 2) {
+        for (let accent of accentChars) {
+          let variantKey = parts[0] + accent + parts[1];
+          result[variantKey] = value;
+        }
+      } else {
+        result[key] = value;
+      }
+    }
+
+    return result;
+  }
+
+  let hardConsonants = {
+    "kinc'a": "kinc’a",
+    "c'inyla": "c’inyla",
+    "tanc'ovaty": "tanc’ovaty",
+    "misc'u": "misc’u",
+    "s'a": "s’a",
+    "Bis'iduj": "Bis’iduj",
+    "volos'om": "volos’om",
+    "pros'u": "pros’u",
+    "Pr'ašiv": "Pr’ašiv",
+    "mir'i": "mir’i",
+    "tr'och": "tr’och",
+    "chmur'u": "chmur’u",
+    "vz'aty": "vz’aty",
+    "berez'i": "berez’i",
+    "z'ojkla": "z’ojkla",
+    "rez'ume": "rez’ume",
+    "Myž'a": "Myž’a",
+    "Myž'o": "Myž’o",
+    "Myž'u": "Myž’u",
+
+    "str´is´i": "str’is’i",
+  };
+
+  let accentsEnd = {
+    "Otec'": "Otec’",
+    "jes'": "jes’",
+    "teper'": "teper’",
+    "piňaz'": "piňaz’",
+    "ž'": "ž’",
+  };
+
+  let accentsStart = {
+    "'o": "’o",
+  };
+
+  let expectedUseCases = {
+    ...generateAccents(hardConsonants, accentChars),
+    ...mapObjectToUpperCase(generateAccents(hardConsonants, accentChars)),
+    ...generateAccents(accentsEnd, accentChars),
+    ...mapObjectToUpperCase(generateAccents(accentsEnd, accentChars)),
+    ...generateAccents(accentsStart, accentChars),
+    ...mapObjectToUpperCase(generateAccents(accentsStart, accentChars)),
+  };
+
+  Object.keys(expectedUseCases).forEach((key) => {
+    it("should change the apostrophe:\n", () => {
+      assert.equal(normalizeApostrophes(key), expectedUseCases[key]);
+    });
+  });
+
+  let falsePositives = {
+    // combinations of letters where apostrophe shouldn’t appear
+    "d'a": "d'a",
+    "t'a": "t'a",
+    "n'a": "n'a",
+    "l'a": "l'a",
+    "d'e": "d'e",
+    "t'e": "t'e",
+    "n'e": "n'e",
+    "l'e": "l'e",
+    "d'i": "d'i",
+    "t'i": "t'i",
+    "n'i": "n'i",
+    "l'i": "l'i",
+    "d'o": "d'o",
+    "t'o": "t'o",
+    "n'o": "n'o",
+    "l'o": "l'o",
+    "d'u": "d'u",
+    "t'u": "t'u",
+    "n'u": "n'u",
+    "l'u": "l'u",
+  };
+
+  Object.keys(falsePositives).forEach((key) => {
+    it("shouldn’t change the apostrophe:\n", () => {
+      assert.equal(normalizeApostrophes(key), falsePositives[key]);
+    });
+  });
+});
+
+
+describe("(c→l) Normalize homoglyphs:\n", () => {
   // Cyrillic+Stray Latin | Cyrillic | Latin
   let homoglyphsCyrLat = [
     ["Aкорд", "Акорд", "Akord"], // A
@@ -121,7 +230,7 @@ describe("(cyr) Normalize homoglyphs:\n", () => {
 });
 
 
-describe("(lat) Normalize homoglyphs:\n", () => {
+describe("(l→c) Normalize homoglyphs:\n", () => {
   let homoglyphsLatCyr = [
     // Latin+Stray Cyrillic | Latin | Cyrillic
     ["Аkord", "Akord", "Акорд"], // A
@@ -228,4 +337,62 @@ describe("(lat) Normalize homoglyphs:\n", () => {
       });
     }
   );
+});
+
+
+describe("(unit) Uppercase tests:\n", () => {
+  let testCase = {
+    // correct identification of Upper Case
+    "Single uppercase word BRAŇO": "Single uppercase word БРАНЁ",
+
+    // Upper case false positives
+    "lower case string": "lower case string",
+    "Title Case String": "Title Case String",
+    "Sentence case string": "Sentence case string",
+    "A sentence case string": "A sentence case string",
+    "Ŷ": "Ŷ", // SINGLE LETTER WITHOUT UPPERCASE CONTEXT
+    "Ы": "Ы", // SINGLE LETTER WITHOUT UPPERCASE CONTEXT
+
+    // Upper case variations
+    "ONE LETTER G JI UPPER CASE": "ОНЕ ЛЕТТЕР Ґ Ї УППЕР ЦАСЕ",
+    "ONE LETTER G JI JA UPPER CASE": "ОНЕ ЛЕТТЕР Ґ Ї Я УППЕР ЦАСЕ",
+    "ONE LETTER G V V UPPER CASE": "ОНЕ ЛЕТТЕР Ґ В В УППЕР ЦАСЕ",
+    "ONE LETTER G UPPER CASE": "ОНЕ ЛЕТТЕР Ґ УППЕР ЦАСЕ",
+    "G STARTING JU UPPERCASE": "Ґ СТАРТІНҐ Ю УППЕРЦАСЕ",
+    "ENDING JA UPPER CASE G": "ЕНДІНҐ Я УППЕР ЦАСЕ Ґ",
+    "UPPERCASE UPPERCASE": "УППЕРЦАСЕ УППЕРЦАСЕ",
+    "G V UPPERCASE": "Ґ В УППЕРЦАСЕ",
+    "G V V UPPERCASE": "Ґ В В УППЕРЦАСЕ",
+
+    // Special boundaries
+    "G-V-UPPERCASE": "Ґ-В-УППЕРЦАСЕ",
+    "G–V–UPPERCASE": "Ґ–В–УППЕРЦАСЕ",
+    "G—V—UPPERCASE": "Ґ—В—УППЕРЦАСЕ",
+    "«G V V UPPERCASE»": "«Ґ В В УППЕРЦАСЕ»",
+    "«UPPERCASE G V V»": "«УППЕРЦАСЕ Ґ В В»",
+    "„G V V UPPERCASE“": "„Ґ В В УППЕРЦАСЕ“",
+    "„UPPERCASE G V V“": "„УППЕРЦАСЕ Ґ В В“",
+    "UPPERCASE G V V:": "УППЕРЦАСЕ Ґ В В:",
+    "UPPERCASE G V V;": "УППЕРЦАСЕ Ґ В В;",
+
+    "C’ilŷj": "C’ilŷj", //false positive
+    "Цїлый": "Цїлый", //false positive
+
+    ...mapObjectToUpperCase(lowerCaseWords),
+  };
+
+  Object.keys(testCase).forEach((key) => {
+    it("Latin → Cyrillic:\n", () => {
+      assert.equal(processUpperCase(key, "latCyr"), testCase[key]);
+    });
+    it("Cyrillic → Cyrillic:\n", () => {
+      assert.equal(processUpperCase(testCase[key], "latCyr"), testCase[key]);
+    });
+    it("Cyrillic → Latin:\n", () => {
+      assert.equal(processUpperCase(testCase[key], "cyrLat"), key);
+    });
+    it("Latin → Latin (no change):\n", () => {
+      assert.equal(processUpperCase(key, "cyrLat"), key);
+    });
+  });
 });
