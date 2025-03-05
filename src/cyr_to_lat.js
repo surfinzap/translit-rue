@@ -157,11 +157,6 @@ export function applyTransformations(string) {
     mapDtnlDoubled,
   ];
 
-  string = transformations.reduce(
-    (result, transform) => transform(result),
-    string
-  );
-
   const mappingRules = [
     mapping.exceptionsCapitalized,
     mapping.exceptions,
@@ -172,9 +167,15 @@ export function applyTransformations(string) {
     mapping.singleChars,
   ];
 
-  for (const mappingRule of mappingRules) {
-    string = applyTranslitRule(string, mappingRule, "cyrLat");
-  }
+  string = transformations.reduce(
+    (result, transform) => transform(result),
+    string
+  );
+
+  string = mappingRules.reduce(
+    (result, mappingRule) => applyTranslitRule(result, mappingRule, "cyrLat"),
+    string
+  );
 
   return string;
 }
