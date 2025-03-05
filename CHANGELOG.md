@@ -1,5 +1,14 @@
 # Changelog for Rusyn transliterate
 
+## 3.0.1 // 2025-03-05
+
+### 🐛 Fixes
+- Fixed homoglyphs normalization 
+
+### 🔨 Maintenance
+- Updated packages to their latest versions
+- Reorganized test cases
+
 ## 3.0.0 // 2024-12-24
 
 ### 💥 Breaking changes
