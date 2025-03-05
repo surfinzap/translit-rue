@@ -1,9 +1,9 @@
+const babelify = require("babelify");
+const browserify = require("browserify");
 const gulp = require("gulp");
 const replace = require("gulp-replace");
 const header = require("gulp-header");
 const uglify = require("gulp-uglify");
-const browserify = require("browserify");
-const babelify = require("babelify");
 const source = require("vinyl-source-stream");
 const buffer = require("vinyl-buffer");
 
