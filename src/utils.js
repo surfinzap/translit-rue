@@ -1,4 +1,4 @@
-import { chars } from "./constants";
+import { chars, mapping } from "./constants";
 import * as latCyr from "./lat_to_cyr";
 import * as cyrLat from "./cyr_to_lat";
 
@@ -76,7 +76,7 @@ export function applyTranslitRule(string, mappingRule, direction) {
 /** 
   Identify UPPERCASE letters and transliterate them according to a mapping option
 
-  - process upper case words with 2 or more letter
+  - process upper case words with 2 or more letters
   - process single-letter uppercase word in case it is around uppercase words
 
   @param {string} string - text for mapping
@@ -84,7 +84,6 @@ export function applyTranslitRule(string, mappingRule, direction) {
   @returns {string} transliterated upper case text
 */
 export function processUpperCase(string, direction) {
-  /* handle uppercase */
   let spacingChars = "-–—\\s";
 
   let multiCharUpperCaseWord =
@@ -132,4 +131,36 @@ export function processUpperCase(string, direction) {
   });
 
   return string;
+}
+
+/**
+ * Normalize stray homoglyphs on a per-word basis.
+ *
+ * For direction "latCyr": if a word is mostly Latin letters,
+ * then convert any stray Cyrillic homoglyphs to their Latin equivalent.
+ *
+ * For direction "cyrLat": if a word is mostly Cyrillic,
+ * then convert any stray Latin homoglyphs to their Cyrillic equivalent.
+ *
+ * @param {string} text - The input text.
+ * @param {string} direction - "latCyr" or "cyrLat".
+ * @returns {string} - The text with per-word homoglyph fixes.
+ */
+export function normalizeHomoglyphs(text, direction) {
+  // \p{L}+ matches Unicode letters
+  return text.replace(/\p{L}+/gu, (word) => {
+    const latinMatches = word.match(/\p{Script=Latin}/gu) || [];
+    const cyrMatches = word.match(/\p{Script=Cyrillic}/gu) || [];
+    const latCount = latinMatches.length;
+    const cyrCount = cyrMatches.length;
+    let transformDirection;
+
+    if (direction === "latCyr") {
+      transformDirection = cyrCount <= latCount ? "cyrLat" : "latCyr";
+    } else if (direction === "cyrLat" ) {
+      transformDirection = cyrCount >= latCount ? "latCyr" : "cyrLat";
+    }
+
+    return applyTranslitRule(word, mapping.homoglyphs, transformDirection);
+  });
 }
