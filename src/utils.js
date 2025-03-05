@@ -48,6 +48,40 @@ export function normalizeApostrophes(string) {
 }
 
 /**
+ * Normalize stray homoglyphs on a per-word basis.
+ *
+ * For direction "latCyr": if a word is mostly Latin letters,
+ * then convert any stray Cyrillic homoglyphs to their Latin equivalent.
+ *
+ * For direction "cyrLat": if a word is mostly Cyrillic,
+ * then convert any stray Latin homoglyphs to their Cyrillic equivalent.
+ *
+ * @param {string} text - The input text.
+ * @param {string} direction - "latCyr" or "cyrLat".
+ * @returns {string} - The text with per-word homoglyph fixes.
+ */
+
+export function normalizeHomoglyphs(text, direction) {
+  const LETTER_REGEX = /\p{L}+/gu;
+  const LATIN_REGEX = /\p{Script=Latin}/gu;
+  const CYRILLIC_REGEX = /\p{Script=Cyrillic}/gu;
+
+  return text.replace(LETTER_REGEX, (word) => {
+    const latCount = (word.match(LATIN_REGEX) || []).length;
+    const cyrCount = (word.match(CYRILLIC_REGEX) || []).length;
+    let transformDirection;
+
+    if (direction === "latCyr") {
+      transformDirection = cyrCount <= latCount ? "cyrLat" : "latCyr";
+    } else if (direction === "cyrLat") {
+      transformDirection = cyrCount >= latCount ? "latCyr" : "cyrLat";
+    }
+
+    return applyTranslitRule(word, mapping.homoglyphs, transformDirection);
+  });
+}
+
+/**
  * Applies a transliteration mapping rule to a string, replacing patterns
  * based on the specified direction (Cyrillic to Latin or Latin to Cyrillic).
  *
@@ -131,36 +165,4 @@ export function processUpperCase(string, direction) {
   });
 
   return string;
-}
-
-/**
- * Normalize stray homoglyphs on a per-word basis.
- *
- * For direction "latCyr": if a word is mostly Latin letters,
- * then convert any stray Cyrillic homoglyphs to their Latin equivalent.
- *
- * For direction "cyrLat": if a word is mostly Cyrillic,
- * then convert any stray Latin homoglyphs to their Cyrillic equivalent.
- *
- * @param {string} text - The input text.
- * @param {string} direction - "latCyr" or "cyrLat".
- * @returns {string} - The text with per-word homoglyph fixes.
- */
-export function normalizeHomoglyphs(text, direction) {
-  // \p{L}+ matches Unicode letters
-  return text.replace(/\p{L}+/gu, (word) => {
-    const latinMatches = word.match(/\p{Script=Latin}/gu) || [];
-    const cyrMatches = word.match(/\p{Script=Cyrillic}/gu) || [];
-    const latCount = latinMatches.length;
-    const cyrCount = cyrMatches.length;
-    let transformDirection;
-
-    if (direction === "latCyr") {
-      transformDirection = cyrCount <= latCount ? "cyrLat" : "latCyr";
-    } else if (direction === "cyrLat" ) {
-      transformDirection = cyrCount >= latCount ? "latCyr" : "cyrLat";
-    }
-
-    return applyTranslitRule(word, mapping.homoglyphs, transformDirection);
-  });
 }
