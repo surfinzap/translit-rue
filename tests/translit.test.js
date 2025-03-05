@@ -1,10 +1,14 @@
 import { translit } from "../src/translit.js";
 import * as latCyr from "../src/lat_to_cyr.js";
 import * as cyrLat from "../src/cyr_to_lat.js";
-import { normalizeApostrophes, processUpperCase } from "../src/utils.js";
+import {
+  normalizeApostrophes,
+  processUpperCase,
+  normalizeHomoglyphs,
+} from "../src/utils.js";
 import assert from "assert";
 
-function mapToUppercase(testCase) {
+function mapObjectToUpperCase(testCase) {
   let upperCaseMapping = {};
 
   for (const [key, value] of Object.entries(testCase)) {
@@ -13,397 +17,400 @@ function mapToUppercase(testCase) {
   return upperCaseMapping;
 }
 
+function mapArrayToUpperCase(testCase) {
+  return testCase.map((test) => test.map((item) => item.toUpperCase()));
+}
 
 describe("(unit) Superlative transliteration:\n", () => {
   let testCase = {
-
     // lower case
-    "najatraktivňišŷj" :  "найatraktivňišŷj", 
-    "najelegantňišŷj" :   "найelegantňišŷj",
-    "najinteligentňišŷj" : "найinteligentňišŷj",
-    "najužasňišŷj" : "найužasňišŷj",
+    "najatraktivňišŷj": "найatraktivňišŷj",
+    "najelegantňišŷj": "найelegantňišŷj",
+    "najinteligentňišŷj": "найinteligentňišŷj",
+    "najužasňišŷj": "найužasňišŷj",
 
     // Title Case
-    "Najatraktivňišŷj" :  "Найatraktivňišŷj", 
-    "Najelegantňišŷj" :   "Найelegantňišŷj",
-    "Najinteligentňišŷj" : "Найinteligentňišŷj",
-    "Najužasňišŷj" : "Найužasňišŷj",
+    "Najatraktivňišŷj": "Найatraktivňišŷj",
+    "Najelegantňišŷj": "Найelegantňišŷj",
+    "Najinteligentňišŷj": "Найinteligentňišŷj",
+    "Najužasňišŷj": "Найužasňišŷj",
 
     // upper case
-    "NAJATRAKTIVŇIŠŶJ" :  "НАЙATRAKTIVŇIŠŶJ", 
-    "NAJELEGANTŇIŠŶJ" :   "НАЙELEGANTŇIŠŶJ",
-    "NAJINTELIGENTŇIŠŶJ" : "НАЙINTELIGENTŇIŠŶJ",
-    "NAJUŽASŇIŠŶJ" : "НАЙUŽASŇIŠŶJ",
+    "NAJATRAKTIVŇIŠŶJ": "НАЙATRAKTIVŇIŠŶJ",
+    "NAJELEGANTŇIŠŶJ": "НАЙELEGANTŇIŠŶJ",
+    "NAJINTELIGENTŇIŠŶJ": "НАЙINTELIGENTŇIŠŶJ",
+    "NAJUŽASŇIŠŶJ": "НАЙUŽASŇIŠŶJ",
 
-    // inflection 
-    "najobľubleňišŷj" : "найobľubleňišŷj",
-    "najobľubleňišoho" : "найobľubleňišoho",
-    "najobľubleňišomu" : "найobľubleňišomu",
-    "najobľubleňišim" : "найobľubleňišim",
-    "najobľubleňišŷm" : "найobľubleňišŷm",
-    "najobľubleňišŷ" : "найobľubleňišŷ",
-    "najobľubleňišŷch" : "найobľubleňišŷch",
-    "najobľubleňišŷma" : "найobľubleňišŷma",
-    "najobľubleňiša" : "найobľubleňiša",
-    "najobľubleňišoj" : "найobľubleňišoj",
-    "najobľubleňišij" : "найobľubleňišij",
-    "najobľubleňišu" : "найobľubleňišu",
-    "najobľubleňišov" : "найobľubleňišov",
-    "najobľubleňiše" : "найobľubleňiše",
+    // inflection
+    "najobľubleňišŷj": "найobľubleňišŷj",
+    "najobľubleňišoho": "найobľubleňišoho",
+    "najobľubleňišomu": "найobľubleňišomu",
+    "najobľubleňišim": "найobľubleňišim",
+    "najobľubleňišŷm": "найobľubleňišŷm",
+    "najobľubleňišŷ": "найobľubleňišŷ",
+    "najobľubleňišŷch": "найobľubleňišŷch",
+    "najobľubleňišŷma": "найobľubleňišŷma",
+    "najobľubleňiša": "найobľubleňiša",
+    "najobľubleňišoj": "найobľubleňišoj",
+    "najobľubleňišij": "найobľubleňišij",
+    "najobľubleňišu": "найobľubleňišu",
+    "najobľubleňišov": "найobľubleňišov",
+    "najobľubleňiše": "найobľubleňiše",
 
-    "Najobľubleňišŷj" : "Найobľubleňišŷj",
-    "Najobľubleňišoho" : "Найobľubleňišoho",
-    "Najobľubleňišomu" : "Найobľubleňišomu",
-    "Najobľubleňišim" : "Найobľubleňišim",
-    "Najobľubleňišŷm" : "Найobľubleňišŷm",
-    "Najobľubleňišŷ" : "Найobľubleňišŷ",
-    "Najobľubleňišŷch" : "Найobľubleňišŷch",
-    "Najobľubleňišŷma" : "Найobľubleňišŷma",
-    "Najobľubleňiša" : "Найobľubleňiša",
-    "Najobľubleňišoj" : "Найobľubleňišoj",
-    "Najobľubleňišij" : "Найobľubleňišij",
-    "Najobľubleňišu" : "Найobľubleňišu",
-    "Najobľubleňišov" : "Найobľubleňišov",
-    "Najobľubleňiše" : "Найobľubleňiše",
+    "Najobľubleňišŷj": "Найobľubleňišŷj",
+    "Najobľubleňišoho": "Найobľubleňišoho",
+    "Najobľubleňišomu": "Найobľubleňišomu",
+    "Najobľubleňišim": "Найobľubleňišim",
+    "Najobľubleňišŷm": "Найobľubleňišŷm",
+    "Najobľubleňišŷ": "Найobľubleňišŷ",
+    "Najobľubleňišŷch": "Найobľubleňišŷch",
+    "Najobľubleňišŷma": "Найobľubleňišŷma",
+    "Najobľubleňiša": "Найobľubleňiša",
+    "Najobľubleňišoj": "Найobľubleňišoj",
+    "Najobľubleňišij": "Найobľubleňišij",
+    "Najobľubleňišu": "Найobľubleňišu",
+    "Najobľubleňišov": "Найobľubleňišov",
+    "Najobľubleňiše": "Найobľubleňiše",
 
-    "NAJOBĽUBLEŇIŠŶJ" : "НАЙOBĽUBLEŇIŠŶJ",
-    "NAJOBĽUBLEŇIŠOHO" : "НАЙOBĽUBLEŇIŠOHO",
-    "NAJOBĽUBLEŇIŠOMU" : "НАЙOBĽUBLEŇIŠOMU",
-    "NAJOBĽUBLEŇIŠIM" : "НАЙOBĽUBLEŇIŠIM",
-    "NAJOBĽUBLEŇIŠŶM" : "НАЙOBĽUBLEŇIŠŶM",
-    "NAJOBĽUBLEŇIŠŶ" : "НАЙOBĽUBLEŇIŠŶ",
-    "NAJOBĽUBLEŇIŠŶCH" : "НАЙOBĽUBLEŇIŠŶCH",
-    "NAJOBĽUBLEŇIŠŶMA" : "НАЙOBĽUBLEŇIŠŶMA",
-    "NAJOBĽUBLEŇIŠA" : "НАЙOBĽUBLEŇIŠA",
-    "NAJOBĽUBLEŇIŠOJ" : "НАЙOBĽUBLEŇIŠOJ",
-    "NAJOBĽUBLEŇIŠIJ" : "НАЙOBĽUBLEŇIŠIJ",
-    "NAJOBĽUBLEŇIŠU" : "НАЙOBĽUBLEŇIŠU",
-    "NAJOBĽUBLEŇIŠOV" : "НАЙOBĽUBLEŇIŠOV",
-    "NAJOBĽUBLEŇIŠE" : "НАЙOBĽUBLEŇIŠE",
-    
-    
+    "NAJOBĽUBLEŇIŠŶJ": "НАЙOBĽUBLEŇIŠŶJ",
+    "NAJOBĽUBLEŇIŠOHO": "НАЙOBĽUBLEŇIŠOHO",
+    "NAJOBĽUBLEŇIŠOMU": "НАЙOBĽUBLEŇIŠOMU",
+    "NAJOBĽUBLEŇIŠIM": "НАЙOBĽUBLEŇIŠIM",
+    "NAJOBĽUBLEŇIŠŶM": "НАЙOBĽUBLEŇIŠŶM",
+    "NAJOBĽUBLEŇIŠŶ": "НАЙOBĽUBLEŇIŠŶ",
+    "NAJOBĽUBLEŇIŠŶCH": "НАЙOBĽUBLEŇIŠŶCH",
+    "NAJOBĽUBLEŇIŠŶMA": "НАЙOBĽUBLEŇIŠŶMA",
+    "NAJOBĽUBLEŇIŠA": "НАЙOBĽUBLEŇIŠA",
+    "NAJOBĽUBLEŇIŠOJ": "НАЙOBĽUBLEŇIŠOJ",
+    "NAJOBĽUBLEŇIŠIJ": "НАЙOBĽUBLEŇIŠIJ",
+    "NAJOBĽUBLEŇIŠU": "НАЙOBĽUBLEŇIŠU",
+    "NAJOBĽUBLEŇIŠOV": "НАЙOBĽUBLEŇIŠOV",
+    "NAJOBĽUBLEŇIŠE": "НАЙOBĽUBLEŇIŠE",
 
     // false positive
-    "najidž" : "najidž",
-    "najveksyj" : "najveksyj" //naj following a consonant
+    "najidž": "najidž",
+    "najveksyj": "najveksyj", //naj following a consonant
   };
 
   Object.keys(testCase).forEach((key) => {
     it("Latin → Cyrillic:\n", () => {
       assert.equal(latCyr.mapSuperlative(key), testCase[key]);
     });
-
+    it("Cyrillic → Cyrillic (no change):\n", () => {
+      assert.equal(latCyr.mapSuperlative(testCase[key]), testCase[key]);
+    });
   });
 });
 
-
-
 describe("(unit) consecutive soft vowels (ja, je, ji, jo, ju):\n", () => {
   let testCase = {
-  "jajaj" : "яяj",
-  "jajajaj" : "яяяj",
-  "jajejaj" : "яєяj",
-  "jejej" : "єєj",
-  "jejejej" : "єєєj",
-  "jijij" : "їїj",
-  "jijijij" : "їїїj",
-  "jojoj" : "ёёj",
-  "jojojoj" : "ёёёj",
-  "jujuj" : "ююj",
-  "jujujuj" : "юююj",
+    "jajaj": "яяj",
+    "jajajaj": "яяяj",
+    "jajejaj": "яєяj",
+    "jejej": "єєj",
+    "jejejej": "єєєj",
+    "jijij": "їїj",
+    "jijijij": "їїїj",
+    "jojoj": "ёёj",
+    "jojojoj": "ёёёj",
+    "jujuj": "ююj",
+    "jujujuj": "юююj",
 
-  "Jajaj" : "Яяj",
-  "Jajajaj" : "Яяяj",
-  "Jajejaj" : "Яєяj",
-  "Jejej" : "Єєj",
-  "Jejejej" : "Єєєj",
-  "Jijij" : "Їїj",
-  "Jijijij" : "Їїїj",
-  "Jojoj" : "Ёёj",
-  "Jojojoj" : "Ёёёj",
-  "Jujuj" : "Ююj",
-  "Jujujuj" : "Юююj",
+    "Jajaj": "Яяj",
+    "Jajajaj": "Яяяj",
+    "Jajejaj": "Яєяj",
+    "Jejej": "Єєj",
+    "Jejejej": "Єєєj",
+    "Jijij": "Їїj",
+    "Jijijij": "Їїїj",
+    "Jojoj": "Ёёj",
+    "Jojojoj": "Ёёёj",
+    "Jujuj": "Ююj",
+    "Jujujuj": "Юююj",
 
-  //false positives for unit test
-  "jaj" : "jaj",
-  "jej" : "jej",
-  "jij" : "jij",
-  "joj" : "joj",
-  "juj" : "juj",
-  "яй" : "яй",
-  "єй" : "єй",
-  "їй" : "їй",
-  "ёй" : "ёй",
-  "юй" : "юй",
-
-
+    //false positives for unit test
+    "jaj": "jaj",
+    "jej": "jej",
+    "jij": "jij",
+    "joj": "joj",
+    "juj": "juj",
+    "яй": "яй",
+    "єй": "єй",
+    "їй": "їй",
+    "ёй": "ёй",
+    "юй": "юй",
   };
 
   Object.keys(testCase).forEach((key) => {
     it("Latin → Cyrillic:\n", () => {
       assert.equal(latCyr.mapSoftVowelsSequence(key), testCase[key]);
     });
+    it("Latin → Latin (no change):\n", () => {
+      assert.equal(cyrLat.mapSoftVowelsSequence(key), key);
+    });
     it("Cyrillic → Latin:\n", () => {
       assert.equal(cyrLat.mapSoftVowelsSequence(testCase[key]), key);
+    });
+    it("Cyrillic → Cyrillic (no change):\n", () => {
+      assert.equal(latCyr.mapSoftVowelsSequence(testCase[key]), testCase[key]);
     });
   });
 });
 
-
-
 describe("(unit) Ja, je, ji, jo, ju at the beginning of the word:\n", () => {
   let testCase = {
+    "jabčanka": "яbčanka",
+    "jedenastka": "єdenastka",
+    "jidnaňa": "їdnaňa",
+    "jubilant": "юbilant",
+    "ji": "ї",
 
-  "jabčanka" : "яbčanka",
-  "jedenastka" : "єdenastka",
-  "jidnaňa" : "їdnaňa",
-  "jubilant" : "юbilant",
-  "ji": "ї",
+    "Jabčanka": "Яbčanka",
+    "Jedenastka": "Єdenastka",
+    "Jidnaňa": "Їdnaňa",
+    "Jubilant": "Юbilant",
+    "Ji": "Ї",
 
-  "Jabčanka" : "Яbčanka",
-  "Jedenastka" : "Єdenastka",
-  "Jidnaňa" : "Їdnaňa",
-  "Jubilant" : "Юbilant",
-  "Ji": "Ї",
-
-  // false positives
-  "jedenadc’atŷj" : "єdenadc’atŷj",
-  "každopadňi" : "každopadňi",
-  "zrivňovaty" : "zrivňovaty",
-  "čeľustnŷj" : "čeľustnŷj",
-
+    // false positives
+    "jedenadc’atŷj": "єdenadc’atŷj",
+    "každopadňi": "každopadňi",
+    "zrivňovaty": "zrivňovaty",
+    "čeľustnŷj": "čeľustnŷj",
   };
 
   Object.keys(testCase).forEach((key) => {
     it("Latin → Cyrillic:\n", () => {
       assert.equal(latCyr.mapSoftVowelAtWordStart(key), testCase[key]);
     });
+    it("Latin → Latin (no change):\n", () => {
+      assert.equal(cyrLat.mapSoftVowelAtWordStart(key), key);
+    });
     it("Cyrillic → Latin:\n", () => {
       assert.equal(cyrLat.mapSoftVowelAtWordStart(testCase[key]), key);
+    });
+    it("Cyrillic → Cyrillic (no change):\n", () => {
+      assert.equal(
+        latCyr.mapSoftVowelAtWordStart(testCase[key]),
+        testCase[key]
+      );
     });
   });
 });
 
-
-
 describe("(unit, lat) Consolidate letter group (ďď | ťť | ňň | ľľ) followed by aeiou:\n", () => {
   let testCase = {
-    
     // matches
-    "oďďilena" : "oдďilena",
-    "žyťťa" : "žyтťa",
-    "raňňij" : "raнňij",
-    "Os’iňňe" : "Os’iнňe",
-    "ľľuť" : "лľuť",
-    "ľľaty" : "лľaty",
+    "oďďilena": "oдďilena",
+    "žyťťa": "žyтťa",
+    "raňňij": "raнňij",
+    "Os’iňňe": "Os’iнňe",
+    "ľľuť": "лľuť",
+    "ľľaty": "лľaty",
 
-    "Ďďilena" : "Дďilena",
-    "Ťťa" : "Тťa",
-    "Ňňij" : "Нňij",
-    "Ňňe" : "Нňe",
-    "Ľľuť" : "Лľuť",
-    "Ľľaty" : "Лľaty",
+    "Ďďilena": "Дďilena",
+    "Ťťa": "Тťa",
+    "Ňňij": "Нňij",
+    "Ňňe": "Нňe",
+    "Ľľuť": "Лľuť",
+    "Ľľaty": "Лľaty",
 
     // false positives, no accents on dtnl
-    "oddŷchly" : "oddŷchly",
-    "piddaty" : "piddaty",
-    "nadderaty" : "nadderaty",
-    "naddobaty" : "naddobaty",
-    "naddunajskŷj" : "naddunajskŷj",
-    "Latta" : "Latta",
-    "alegretto" : "alegretto",
-    "motto" : "motto",
-    "Rotterdam" : "Rotterdam",
-    "neperestanno" : "neperestanno",
-    "každodennŷj" : "každodennŷj",
-    "Humenne" : "Humenne",
-    "bulla" : "bulla",
-    "Tallin" : "Tallin",
+    "oddŷchly": "oddŷchly",
+    "piddaty": "piddaty",
+    "nadderaty": "nadderaty",
+    "naddobaty": "naddobaty",
+    "naddunajskŷj": "naddunajskŷj",
+    "Latta": "Latta",
+    "alegretto": "alegretto",
+    "motto": "motto",
+    "Rotterdam": "Rotterdam",
+    "neperestanno": "neperestanno",
+    "každodennŷj": "každodennŷj",
+    "Humenne": "Humenne",
+    "bulla": "bulla",
+    "Tallin": "Tallin",
 
     //false positive, mix of d-t-n-l
-    "odťikaty" : "odťikaty",
-
-
+    "odťikaty": "odťikaty",
   };
 
   Object.keys(testCase).forEach((key) => {
     it("Latin → Cyrillic:\n", () => {
       assert.equal(latCyr.mapDtnlDoubled(key), testCase[key]);
     });
+    it("Cyrillic → Cyrillic (no change):\n", () => {
+      assert.equal(latCyr.mapDtnlDoubled(testCase[key]), testCase[key]);
+    });
   });
 });
 
-
-
 describe("(unit, cyr) Consolidate letter group (дд | тт | нн | лл) followed by яєїёю:\n", () => {
   let testCase = {
-    
     // matches
-    "оďдїлена" : "оддїлена",
-    "жиťтя" : "життя",
-    "рaňнїй" : "рaннїй",
-    "Осїňнє" : "Осїннє",
-    "Ľлють" : "Ллють",
-    "Ľляти" : "Лляти",
-    
-    "Ďдїлена" : "Ддїлена",
-    "Ťтя" : "Ття",
-    "Ňнїй" : "Ннїй",
-    "Ňнє" : "Ннє",
-    
+    "оďдїлена": "оддїлена",
+    "жиťтя": "життя",
+    "рaňнїй": "рaннїй",
+    "Осїňнє": "Осїннє",
+    "Ľлють": "Ллють",
+    "Ľляти": "Лляти",
+
+    "Ďдїлена": "Ддїлена",
+    "Ťтя": "Ття",
+    "Ňнїй": "Ннїй",
+    "Ňнє": "Ннє",
+
     // false positives, no accents on dtnl
-    "оддыхли" : "оддыхли",
-    "піддати" : "піддати",
-    "наддерaти" : "наддерaти",
-    "наддoбати" : "наддoбати",
-    "наддунaйскый" : "наддунaйскый",
-    "Латта" : "Латта",
-    "алеґрeтто" : "алеґрeтто",
-    "мотто" : "мотто",
-    "Роттердaм" : "Роттердaм",
-    "неперестанно" : "неперестанно",
-    "каждоденный" : "каждоденный",
-    "Гумeнне" : "Гумeнне",
-    "булла" : "булла",
-    "Тaллін" : "Тaллін",
-    
+    "оддыхли": "оддыхли",
+    "піддати": "піддати",
+    "наддерaти": "наддерaти",
+    "наддoбати": "наддoбати",
+    "наддунaйскый": "наддунaйскый",
+    "Латта": "Латта",
+    "алеґрeтто": "алеґрeтто",
+    "мотто": "мотто",
+    "Роттердaм": "Роттердaм",
+    "неперестанно": "неперестанно",
+    "каждоденный": "каждоденный",
+    "Гумeнне": "Гумeнне",
+    "булла": "булла",
+    "Тaллін": "Тaллін",
+
     //false positive, mix of d-t-n-l
-    "одтїкaти" : "одтїкaти",
-
-
+    "одтїкaти": "одтїкaти",
   };
 
   Object.keys(testCase).forEach((key) => {
     it("Latin → Cyrillic:\n", () => {
       assert.equal(cyrLat.mapDtnlDoubled(testCase[key]), key);
     });
+    it("Latin → Latin (no change):\n", () => {
+      assert.equal(cyrLat.mapDtnlDoubled(key), key);
+    });
   });
 });
 
-
-
 describe("(unit, lat) Ja, je, ji, jo, ju before a vowel:\n", () => {
   let testCase = {
+    "bajusatŷj": "baюsatŷj",
+    "Bajerivc’i": "Baєrivc’i",
+    "hajik": "haїk",
+    "zajačaty": "zaяčaty",
+    "lyšajovŷj": "lyšaёvŷj",
 
-    "bajusatŷj" : "baюsatŷj",
-    "Bajerivc’i" : "Baєrivc’i",
-    "hajik" : "haїk",
-    "zajačaty" : "zaяčaty",
-    "lyšajovŷj" : "lyšaёvŷj",
+    "akceleracija": "akceleraciя",
+    "akciji": "akciї",
+    "funkcijov": "funkciёv",
+    "archijerej": "archiєrej",
+    "policiju": "policiю",
 
-    "akceleracija" : "akceleraciя",
-    "akciji" : "akciї",
-    "funkcijov" : "funkciёv",
-    "archijerej" : "archiєrej",
-    "policiju" : "policiю",
+    "pryjata": "pryяta",
+    "pryjimaňa": "pryїmaňa",
+    "spryjemnenŷj": "spryєmnenŷj",
+    "čornyjova": "čornyёva",
+    "vyjuť": "vyюť",
 
-    "pryjata" : "pryяta",
-    "pryjimaňa" : "pryїmaňa",
-    "spryjemnenŷj" : "spryєmnenŷj",
-    "čornyjova" : "čornyёva",
-    "vyjuť" : "vyюť",
+    "glejovŷj": "gleёvŷj",
+    "naklejity": "nakleїty",
+    "nejeden": "neєden",
+    "nejadrovŷj": "neяdrovŷj",
+    "oklejuju": "okleюju",
 
-    "glejovŷj" : "gleёvŷj",
-    "naklejity" : "nakleїty",
-    "nejeden" : "neєden",
-    "nejadrovŷj" : "neяdrovŷj",
-    "oklejuju" : "okleюju",
+    "ojalovity": "oяlovity",
+    "pereprojektovaty": "pereproєktovaty",
+    "pidhojity": "pidhoїty",
+    "svoju": "svoю",
+    "svojoj": "svoёj",
 
-    "ojalovity" : "oяlovity",
-    "pereprojektovaty" : "pereproєktovaty",
-    "pidhojity" : "pidhoїty",
-    "svoju" : "svoю",
-    "svojoj" : "svoёj",
+    "šŷje": "šŷє",
+    "vŷjasnyť": "vŷяsnyť",
+    "šŷju": "šŷю",
+    "šŷji": "šŷї",
+    "Kŷjovčan": "Kŷёvčan",
 
-    "šŷje" : "šŷє",
-    "vŷjasnyť" : "vŷяsnyť",
-    "šŷju" : "šŷю",
-    "šŷji" : "šŷї",
-    "Kŷjovčan" : "Kŷёvčan",
+    "kuju": "kuю",
+    "kulminuje": "kulminuє",
+    "tuja": "tuя",
+    "ujidaty": "uїdaty",
 
-    "kuju" : "kuю",
-    "kulminuje" : "kulminuє",
-    "tuja" : "tuя",
-    "ujidaty" : "uїdaty",
-
-    "tvojoj" : "tvoёj",
-    "Bardejov" : "Bardeёv",
-
+    "tvojoj": "tvoёj",
+    "Bardejov": "Bardeёv",
   };
 
   Object.keys(testCase).forEach((key) => {
     it("Latin → Cyrillic:\n", () => {
       assert.equal(latCyr.mapSoftVowelAfterHardVowel(key), testCase[key]);
     });
+    it("Cyrillic → Cyrillic (no change):\n", () => {
+      assert.equal(
+        latCyr.mapSoftVowelAfterHardVowel(testCase[key]),
+        testCase[key]
+      );
+    });
   });
 });
-
-
 
 describe("(unit, cyr) Ja, je, ji, jo, ju before a vowel:\n", () => {
   let testCase = {
     // there are cyrillic vowels before ja, je,...
 
-    "bаjusatŷj" : "bаюsatŷj",
-    "Bаjerivc’i" : "Bаєrivc’i",
-    "hаjik" : "hаїk",
-    "zаjačaty" : "zаяčaty",
-    "lyšаjovŷj" : "lyšаёvŷj",
+    "bаjusatŷj": "bаюsatŷj",
+    "Bаjerivc’i": "Bаєrivc’i",
+    "hаjik": "hаїk",
+    "zаjačaty": "zаяčaty",
+    "lyšаjovŷj": "lyšаёvŷj",
 
-    "akceleracіja" : "akceleracія",
-    "akcіji" : "akcії",
-    "funkcіjov" : "funkcіёv",
-    "archіjerej" : "archієrej",
-    "policіju" : "policію",
+    "akceleracіja": "akceleracія",
+    "akcіji": "akcії",
+    "funkcіjov": "funkcіёv",
+    "archіjerej": "archієrej",
+    "policіju": "policію",
 
-    "prиjata" : "prияta",
-    "prиjimaňa" : "prиїmaňa",
-    "sprиjemnenŷj" : "sprиєmnenŷj",
-    "čornиjova" : "čornиёva",
-    "vиjuť" : "vиюť",
+    "prиjata": "prияta",
+    "prиjimaňa": "prиїmaňa",
+    "sprиjemnenŷj": "sprиєmnenŷj",
+    "čornиjova": "čornиёva",
+    "vиjuť": "vиюť",
 
-    "glеjovŷj" : "glеёvŷj",
-    "naklеjity" : "naklеїty",
-    "nеjedеn" : "nеєdеn",
-    "nеjadrovŷj" : "nеяdrovŷj",
-    "oklеjuju" : "oklеюju",
+    "glеjovŷj": "glеёvŷj",
+    "naklеjity": "naklеїty",
+    "nеjedеn": "nеєdеn",
+    "nеjadrovŷj": "nеяdrovŷj",
+    "oklеjuju": "oklеюju",
 
-    "оjalоvity" : "ояlоvity",
-    "pereprоjektоvaty" : "pereprоєktоvaty",
-    "pidhоjity" : "pidhоїty",
-    "svоju" : "svою",
-    "svоjoj" : "svоёj",
+    "оjalоvity": "ояlоvity",
+    "pereprоjektоvaty": "pereprоєktоvaty",
+    "pidhоjity": "pidhоїty",
+    "svоju": "svою",
+    "svоjoj": "svоёj",
 
-    "šыje" : "šыє",
-    "vыjasnyť" : "vыяsnyť",
-    "šыju" : "šыю",
-    "šыji" : "šыї",
-    "Kыjovčan" : "Kыёvčan",
+    "šыje": "šыє",
+    "vыjasnyť": "vыяsnyť",
+    "šыju": "šыю",
+    "šыji": "šыї",
+    "Kыjovčan": "Kыёvčan",
 
-    "kуju" : "kую",
-    "kulminуje" : "kulminує",
-    "tуja" : "tуя",
-    "уjidaty" : "уїdaty",
+    "kуju": "kую",
+    "kulminуje": "kulminує",
+    "tуja": "tуя",
+    "уjidaty": "уїdaty",
 
-    "tvоjoj" : "tvоёj",
-    "Bardеjov" : "Bardеёv",
-    
-    "naďїjov" : "naďїёv",
+    "tvоjoj": "tvоёj",
+    "Bardеjov": "Bardеёv",
 
+    "naďїjov": "naďїёv",
   };
 
   Object.keys(testCase).forEach((key) => {
     it("Cyrillic → Latin:\n", () => {
       assert.equal(cyrLat.mapSoftVowelAfterHardVowel(testCase[key]), key);
     });
+    it("Latin → Latin (no change):\n", () => {
+      assert.equal(cyrLat.mapSoftVowelAfterHardVowel(key), key);
+    });
   });
 });
 
-
-
-
 describe("(unit) Normalize apostrophes:\n", () => {
-
   const accentChars = ["'", "’", "ʼ", "‘", "‛", "´", "`", "′"];
 
   function generateAccents(testCase, accentChars) {
@@ -424,7 +431,6 @@ describe("(unit) Normalize apostrophes:\n", () => {
 
     return result;
   }
-
 
   let hardConsonants = {
     "kinc'a": "kinc’a",
@@ -448,9 +454,8 @@ describe("(unit) Normalize apostrophes:\n", () => {
     "Myž'u": "Myž’u",
 
     "str´is´i": "str’is’i",
-
   };
-  
+
   let accentsEnd = {
     "Otec'": "Otec’",
     "jes'": "jes’",
@@ -465,13 +470,13 @@ describe("(unit) Normalize apostrophes:\n", () => {
 
   let expectedUseCases = {
     ...generateAccents(hardConsonants, accentChars),
-    ...mapToUppercase(generateAccents(hardConsonants, accentChars)),
+    ...mapObjectToUpperCase(generateAccents(hardConsonants, accentChars)),
     ...generateAccents(accentsEnd, accentChars),
-    ...mapToUppercase(generateAccents(accentsEnd, accentChars)),
+    ...mapObjectToUpperCase(generateAccents(accentsEnd, accentChars)),
     ...generateAccents(accentsStart, accentChars),
-    ...mapToUppercase(generateAccents(accentsStart, accentChars)),
+    ...mapObjectToUpperCase(generateAccents(accentsStart, accentChars)),
   };
-  
+
   Object.keys(expectedUseCases).forEach((key) => {
     it("should change the apostrophe:\n", () => {
       assert.equal(normalizeApostrophes(key), expectedUseCases[key]);
@@ -507,84 +512,225 @@ describe("(unit) Normalize apostrophes:\n", () => {
       assert.equal(normalizeApostrophes(key), falsePositives[key]);
     });
   });
-  
 });
 
+describe("(unit) Normalize homoglyphs:\n", () => {
+  // Cyrillic+Stray Latin | Cyrillic | Latin
+  let homoglyphsCyrLat = [
+    ["Aкорд", "Акорд", "Akord"], // A
+    ["Вера", "Вера", "Vera"], // a
+    ["Bеранда", "Веранда", "Veranda"], // B
+    ["Cтраа", "Страа", "Straa"], // C
+    ["cтраа", "страа", "straa"], // c
+    ["Eбола", "Ебола", "Ebola"], // E
+    ["ебола", "ебола", "ebola"], // e
+    ["Hаїдж", "Наїдж", "Najidž"], // H
+    ["Iля", "Іля", "Iľa"], // I
+    ["iз", "із", "iz", "skipStray"], // i
+    ["Kажда", "Кажда", "Každa"], // K
+    ["Mосква", "Москва", "Moskva"], // M
+    ["Oрличaн", "Орличан", "Orlyčan"], // O
+    ["oчі", "очі", "oči"], // o
+    ["Pозточaн", "Розточан", "Roztočan"], // P
+    ["pомaнтік", "романтік", "romantik"], // p
+    ["Tакый", "Такый", "Takŷj"], // T
+    ["Xрістoс", "Хрістос", "Christos"], // X
+    ["xрін", "хрін", "chrin"], // x
+    ["xpін", "хрін", "chrin", "skipStray"], // xp
+    ["Yж", "Уж", "Už", "skipStray"], // Y
+    ["yжытём", "ужытём", "užŷťom"], // y
+  ];
 
-
-describe("Normalize homoglyphs:\n", () => {
-
-  let homoglyphsCyrLat = {
-    "Aкорд": "Akord", // A
-    "Вера": "Vera", // a
-    "Bеранда": "Veranda", // B
-    "Cтраа": "Straa", // C
-    "cтраа": "straa", // c
-    "Eбола": "Ebola", // E
-    "ебола": "ebola", // e
-    "Hаїдж": "Najidž", // H
-    "Iля": "Iľa", // I
-    "iз": "iz", // i
-    "Kажда": "Každa", // K
-    "Mосква": "Moskva", // M
-    "Oрличaн": "Orlyčan", // O
-    "oчі": "oči", // o
-    "Pозточaн": "Roztočan", // P
-    "pомaнтік": "romantik", // p
-    "Tакый": "Takŷj", // T
-    "Xрістoс": "Christos", // X
-    "xрiн": "chrin", // x
-    "Yж": "Už", // Y
-    "yжытём": "užŷťom", // y
-  };
-
-  homoglyphsCyrLat = {
+  homoglyphsCyrLat = [
     ...homoglyphsCyrLat,
-    ...mapToUppercase(homoglyphsCyrLat)
-  }
- 
-  Object.keys(homoglyphsCyrLat).forEach((key) => {
-    it("(cyr → lat) should change the homoglyphs:\n", () => {
-      assert.equal(translit(key, "cyrLat"), homoglyphsCyrLat[key]);
-    });
-  });
+    ...mapArrayToUpperCase(homoglyphsCyrLat),
+  ];
 
+  homoglyphsCyrLat.forEach(
+    ([input, expectedCyrillic, expectedLatin, exception]) => {
+      if (exception == undefined) {
+        it("(cyr → cyr) should consolidate stray Latin characters:\n", () => {
+          assert.equal(normalizeHomoglyphs(input, "latCyr"), expectedCyrillic);
+        });
 
+        it("(cyr → cyr → cyr) should consolidate stray Latin characters:\n", () => {
+          assert.equal(
+            normalizeHomoglyphs(normalizeHomoglyphs(input, "latCyr"), "latCyr"),
+            expectedCyrillic
+          );
+        });
 
-  let homoglyphsLatCyr = {
-    "Аkord": "Акорд", // A
-    "аkord": "акорд", // a
-    "Вraňo": "Бранё", // B
-    "Сejlon": "Цейлон", // C
-    "сela": "цела", // c
-    "Еvakuacija": "Евакуація", // E
-    "еvakuacija": "евакуація", // e
-    "Нirkŷ": "Гіркы", // H
-    "Іľa": "Іля", // I
-    "іz": "із", // i
-    "Кoňi": "Конї", // K
-    "Мyž’o": "Мижё", // M
-    "Оtec’": "Отець", // O
-    "оtec’": "отець", // o
-    "Рtašata": "Пташата", // P
-    "рtašata": "пташата", // P
-    "Тeper’": "Теперь", // T
-    "Teхt": "Текст", // x
-    "vŷstupуtу": "выступити", // y
-  };
+        it("(cyr → cyr) (module) should consolidate stray Latin characters:\n", () => {
+          assert.equal(translit(input, "latCyr"), expectedCyrillic);
+        });
+      }
 
-  homoglyphsLatCyr = {
+      it("(lat → lat) shouldn’t change Latin words:\n", () => {
+        assert.equal(
+          normalizeHomoglyphs(expectedLatin, "cyrLat"),
+          expectedLatin
+        );
+      });
+
+      it("(lat → lat → lat) shouldn’t change Latin words:\n", () => {
+        assert.equal(
+          normalizeHomoglyphs(
+            normalizeHomoglyphs(expectedLatin, "cyrLat"),
+            "cyrLat"
+          ),
+          expectedLatin
+        );
+      });
+
+      it("(cyr → cyr) shouldn’t change Cyrillic words:\n", () => {
+        assert.equal(
+          normalizeHomoglyphs(expectedCyrillic, "latCyr"),
+          expectedCyrillic
+        );
+      });
+
+      it("(cyr → cyr → cyr) shouldn’t change Cyrillic words:\n", () => {
+        assert.equal(
+          normalizeHomoglyphs(
+            normalizeHomoglyphs(expectedCyrillic, "latCyr"),
+            "latCyr"
+          ),
+          expectedCyrillic
+        );
+      });
+
+      it("(cyr → lat → cyr) shouldn’t change Cyrillic words:\n", () => {
+        assert.equal(
+          normalizeHomoglyphs(
+            normalizeHomoglyphs(expectedCyrillic, "cyrLat"),
+            "latCyr"
+          ),
+          expectedCyrillic
+        );
+      });
+
+      it("(lat → cyr → lat) shouldn’t change Latin words:\n", () => {
+        assert.equal(
+          normalizeHomoglyphs(
+            normalizeHomoglyphs(expectedLatin, "latCyr"),
+            "cyrLat"
+          ),
+          expectedLatin
+        );
+      });
+
+      it("(cyr → lat) (module) should convert to Latin correctly:\n", () => {
+        assert.equal(translit(input, "cyrLat"), expectedLatin);
+      });
+    }
+  );
+
+  let homoglyphsLatCyr = [
+    // Latin+Stray Cyrillic | Latin | Cyrillic
+    ["Аkord", "Akord", "Акорд"], // A
+    ["аkord", "akord", "акорд"], // a
+    ["Вraňo", "Braňo", "Бранё"], // B
+    ["Сejlon", "Cejlon", "Цейлон"], // C
+    ["сela", "cela", "цела"], // c
+    ["Еvakuacija", "Evakuacija", "Евакуація"], // E
+    ["еvakuacija", "evakuacija", "евакуація"], // e
+    ["Нirkŷ", "Hirkŷ", "Гіркы"], // H
+    ["Іľa", "Iľa", "Іля"], // I
+    ["іz", "iz", "із", "skipStray"], // i
+    ["Кoňi", "Koňi", "Конї"], // K
+    ["Мyž’o", "Myž’o", "Мижё"], // M
+    ["Оtec’", "Otec’", "Отець"], // O
+    ["оtec’", "otec’", "отець"], // o
+    ["Рtašata", "Ptašata", "Пташата"], // P
+    ["рtašata", "ptašata", "пташата"], // P
+    ["Тeper’", "Teper’", "Теперь"], // T
+    ["Teхt", "Text", "Текст"], // x
+    ["vŷstupуtу", "vŷstupyty", "выступити"], // y
+  ];
+
+  homoglyphsLatCyr = [
     ...homoglyphsLatCyr,
-    ...mapToUppercase(homoglyphsLatCyr),
-  };
+    ...mapArrayToUpperCase(homoglyphsLatCyr),
+  ];
 
-  Object.keys(homoglyphsLatCyr).forEach((key) => {
-    it("(lat → cyr) should change the homoglyphs:\n", () => {
-      assert.equal(translit(key, "latCyr"), homoglyphsLatCyr[key]);
-    });
-  });
+  homoglyphsLatCyr.forEach(
+    ([input, expectedLatin, expectedCyrillic, exception]) => {
+      if (exception == undefined) {
+        it("(lat → lat) should consolidate stray Cyrillic characters:\n", () => {
+          assert.equal(normalizeHomoglyphs(input, "cyrLat"), expectedLatin);
+        });
 
+        it("(lat → lat → lat) should consolidate stray Cyrillic characters:\n", () => {
+          assert.equal(
+            normalizeHomoglyphs(normalizeHomoglyphs(input, "cyrLat"), "cyrLat"),
+            expectedLatin
+          );
+        });
+      }
 
+      it("(cyr → cyr) shouldn’t change Cyrillic words:\n", () => {
+        assert.equal(
+          normalizeHomoglyphs(expectedCyrillic, "latCyr"),
+          expectedCyrillic
+        );
+      });
+
+      it("(cyr → cyr → cyr) shouldn’t change Cyrillic words:\n", () => {
+        assert.equal(
+          normalizeHomoglyphs(
+            normalizeHomoglyphs(expectedCyrillic, "latCyr"),
+            "latCyr"
+          ),
+          expectedCyrillic
+        );
+      });
+
+      it("(lat → lat) shouldn’t change Latin words:\n", () => {
+        assert.equal(
+          normalizeHomoglyphs(expectedLatin, "cyrLat"),
+          expectedLatin
+        );
+      });
+
+      it("(lat → lat → lat) shouldn’t change Latin words:\n", () => {
+        assert.equal(
+          normalizeHomoglyphs(
+            normalizeHomoglyphs(expectedLatin, "cyrLat"),
+            "cyrLat"
+          ),
+          expectedLatin
+        );
+      });
+
+      it("(lat → cyr → lat) shouldn’t change Latin words:\n", () => {
+        assert.equal(
+          normalizeHomoglyphs(
+            normalizeHomoglyphs(expectedLatin, "latCyr"),
+            "cyrLat"
+          ),
+          expectedLatin
+        );
+      });
+
+      it("(cyr → lat → cyr) shouldn’t change Cyrillic words:\n", () => {
+        assert.equal(
+          normalizeHomoglyphs(
+            normalizeHomoglyphs(expectedCyrillic, "cyrLat"),
+            "latCyr"
+          ),
+          expectedCyrillic
+        );
+      });
+
+      it("(lat → cyr) (module) should convert to Cyrillic correctly:\n", () => {
+        assert.equal(translit(input, "latCyr"), expectedCyrillic);
+      });
+
+      it("(lat → lat) (module) should consolidate stray Cyrillic characters:\n", () => {
+        assert.equal(translit(input, "cyrLat"), expectedLatin);
+      });
+    }
+  );
 });
 
 let testLowerCaseWords = {
@@ -884,14 +1030,12 @@ let testLowerCaseWords = {
   "bulla": "булла",
   "Tallin": "Таллін",
   "odťikaty": "одтїкати",
+  "vŷstupyty": "выступити",
 };
 
-let testUpperCaseWords = mapToUppercase(testLowerCaseWords);
-
+let testUpperCaseWords = mapObjectToUpperCase(testLowerCaseWords);
 
 describe("Module tests:\n", () => {
-
-
   let testCase = {
     "ji": "ї",
     "ŷ": "ы",
@@ -902,63 +1046,64 @@ describe("Module tests:\n", () => {
   };
 
   Object.keys(testCase).forEach((key) => {
-    it("Latin → Cyrillic:\n", () => {
+    it("Lat → Cyr:\n", () => {
       assert.equal(translit(key, "latCyr"), testCase[key]);
     });
-    it("Cyrillic → Latin:\n", () => {
+    it("Lat → Lat (no change):\n", () => {
+      assert.equal(translit(key, "cyrLat"), key);
+    });
+    it("Lat → Cyr → Lat (no change):\n", () => {
+      assert.equal(translit(translit(key, "latCyr"), "cyrLat"), key);
+    });
+    it("Cyr → Lat:\n", () => {
       assert.equal(translit(testCase[key], "cyrLat"), key);
+    });
+    it("Cyr → Cyr (no change):\n", () => {
+      assert.equal(translit(testCase[key], "latCyr"), testCase[key]);
+    });
+    it("Cyr → Lat → Cyr (no change):\n", () => {
+      assert.equal(translit(translit(testCase[key], "cyrLat"), "latCyr"), testCase[key]);
     });
   });
 });
 
-
-
-
-
 describe("(unit) Uppercase tests:\n", () => {
   let testCase = {
-    
     // correct identification of Upper Case
-    "Single uppercase word BRAŇO": 
-    "Single uppercase word БРАНЁ",
-
+    "Single uppercase word BRAŇO": "Single uppercase word БРАНЁ",
 
     // Upper case false positives
-    "lower case string" : "lower case string",
-    "Title Case String" : "Title Case String",
-    "Sentence case string" : "Sentence case string",
-    "A sentence case string" : "A sentence case string",
+    "lower case string": "lower case string",
+    "Title Case String": "Title Case String",
+    "Sentence case string": "Sentence case string",
+    "A sentence case string": "A sentence case string",
     "Ŷ": "Ŷ", // SINGLE LETTER WITHOUT UPPERCASE CONTEXT
     "Ы": "Ы", // SINGLE LETTER WITHOUT UPPERCASE CONTEXT
 
-    
-
     // Upper case variations
-    "ONE LETTER G JI UPPER CASE" : "ОНЕ ЛЕТТЕР Ґ Ї УППЕР ЦАСЕ",
-    "ONE LETTER G JI JA UPPER CASE" : 
-    "ОНЕ ЛЕТТЕР Ґ Ї Я УППЕР ЦАСЕ",
-    "ONE LETTER G V V UPPER CASE" : 
-    "ОНЕ ЛЕТТЕР Ґ В В УППЕР ЦАСЕ",
-    "ONE LETTER G UPPER CASE" : "ОНЕ ЛЕТТЕР Ґ УППЕР ЦАСЕ",
-    "G STARTING JU UPPERCASE" : "Ґ СТАРТІНҐ Ю УППЕРЦАСЕ",
-    "ENDING JA UPPER CASE G" : "ЕНДІНҐ Я УППЕР ЦАСЕ Ґ",
-    "UPPERCASE UPPERCASE" : "УППЕРЦАСЕ УППЕРЦАСЕ",
-    "G V UPPERCASE" : "Ґ В УППЕРЦАСЕ",
-    "G V V UPPERCASE" : "Ґ В В УППЕРЦАСЕ",
+    "ONE LETTER G JI UPPER CASE": "ОНЕ ЛЕТТЕР Ґ Ї УППЕР ЦАСЕ",
+    "ONE LETTER G JI JA UPPER CASE": "ОНЕ ЛЕТТЕР Ґ Ї Я УППЕР ЦАСЕ",
+    "ONE LETTER G V V UPPER CASE": "ОНЕ ЛЕТТЕР Ґ В В УППЕР ЦАСЕ",
+    "ONE LETTER G UPPER CASE": "ОНЕ ЛЕТТЕР Ґ УППЕР ЦАСЕ",
+    "G STARTING JU UPPERCASE": "Ґ СТАРТІНҐ Ю УППЕРЦАСЕ",
+    "ENDING JA UPPER CASE G": "ЕНДІНҐ Я УППЕР ЦАСЕ Ґ",
+    "UPPERCASE UPPERCASE": "УППЕРЦАСЕ УППЕРЦАСЕ",
+    "G V UPPERCASE": "Ґ В УППЕРЦАСЕ",
+    "G V V UPPERCASE": "Ґ В В УППЕРЦАСЕ",
 
     // Special boundaries
-    "G-V-UPPERCASE" : "Ґ-В-УППЕРЦАСЕ",
-    "G–V–UPPERCASE" : "Ґ–В–УППЕРЦАСЕ",
-    "G—V—UPPERCASE" : "Ґ—В—УППЕРЦАСЕ",
-    "«G V V UPPERCASE»" : "«Ґ В В УППЕРЦАСЕ»",
-    "«UPPERCASE G V V»" : "«УППЕРЦАСЕ Ґ В В»",
-    "„G V V UPPERCASE“" : "„Ґ В В УППЕРЦАСЕ“",
-    "„UPPERCASE G V V“" : "„УППЕРЦАСЕ Ґ В В“",
-    "UPPERCASE G V V:" : "УППЕРЦАСЕ Ґ В В:",
-    "UPPERCASE G V V;" : "УППЕРЦАСЕ Ґ В В;",
+    "G-V-UPPERCASE": "Ґ-В-УППЕРЦАСЕ",
+    "G–V–UPPERCASE": "Ґ–В–УППЕРЦАСЕ",
+    "G—V—UPPERCASE": "Ґ—В—УППЕРЦАСЕ",
+    "«G V V UPPERCASE»": "«Ґ В В УППЕРЦАСЕ»",
+    "«UPPERCASE G V V»": "«УППЕРЦАСЕ Ґ В В»",
+    "„G V V UPPERCASE“": "„Ґ В В УППЕРЦАСЕ“",
+    "„UPPERCASE G V V“": "„УППЕРЦАСЕ Ґ В В“",
+    "UPPERCASE G V V:": "УППЕРЦАСЕ Ґ В В:",
+    "UPPERCASE G V V;": "УППЕРЦАСЕ Ґ В В;",
 
-    "C’ilŷj" : "C’ilŷj", //false positive
-    "Цїлый" : "Цїлый", //false positive
+    "C’ilŷj": "C’ilŷj", //false positive
+    "Цїлый": "Цїлый", //false positive
 
     ...testUpperCaseWords,
   };
@@ -967,8 +1112,14 @@ describe("(unit) Uppercase tests:\n", () => {
     it("Latin → Cyrillic:\n", () => {
       assert.equal(processUpperCase(key, "latCyr"), testCase[key]);
     });
+    it("Cyrillic → Cyrillic:\n", () => {
+      assert.equal(processUpperCase(testCase[key], "latCyr"), testCase[key]);
+    });
     it("Cyrillic → Latin:\n", () => {
       assert.equal(processUpperCase(testCase[key], "cyrLat"), key);
+    });
+    it("Latin → Latin (no change):\n", () => {
+      assert.equal(processUpperCase(key, "cyrLat"), key);
     });
   });
 });
